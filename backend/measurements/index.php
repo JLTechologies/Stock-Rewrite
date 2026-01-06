@@ -6,10 +6,13 @@
   <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
   <?php
   include('../../config.php');
-  $_SESSION['message'] = '';
+  session_start();
+
+  if (isset($_GET['logout'])) {
+    session_destroy();
+  }
 
   include('../queries.php');
-  include('../server.php');
 
   $name = mysqli_query($conn, $sitename);
   if (! $name) {
@@ -108,7 +111,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="../measurements/" class="nav-link">
+			<a href="./" class="nav-link active">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Measurements
@@ -120,7 +123,7 @@
           $getroot = mysqli_query($conn, $rootcategories);
 
           if (! $getroot) {
-            die('Could not fetch data: '.mysqli_error($conn));
+            die('Could not fetch data: '.mysqi_error($conn));
           }
 
           while ($row2 = mysqli_fetch_assoc($getroot)) {
@@ -132,7 +135,7 @@
           ?>
         </ul>
 		  <li class="nav-item">
-			<a href="./" class="nav-link active">
+			<a href="../users/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Users
@@ -140,7 +143,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="./groups/" class="nav-link">
+			<a href="../users/groups/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Groups
@@ -183,9 +186,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="../">Admin</a></li>
-              <li class="breadcrumb-item"><a href="../">Dashboard</a></li>
-              <li class="breadcrumb-item">Users</li>
+              <li class="breadcrumb-item"><a href="./">Admin</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -196,7 +198,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <?php include ('../errors.php');?>
+        <div class="row">
           <!-- notification message -->
   	<?php if (isset($_SESSION['success'])) : ?>
       <div class="error success" >
@@ -207,59 +209,45 @@
       	</h3>
       </div>
   	<?php endif ?>
-        <div class="row">
     <div class="col-lg-6">
             <div class="card">
-              <div class="card-body">
-              <div class="card-header">
-                <h3 class="card-title">List Users</h3>
-              </div>
+              <div class="card-body table-responsive p-0">
                 <table class="table">
                   <thead>
                     <tr>
                       <th>Index</th>
                       <th>Name</th>
-                      <th>Last Name</th>
-                      <th>Group</th>
-                      <th>Details</th>
+                      <th>Shortcode</th>
                       <th>Edit</th>
                       <th>Remove</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                      $getusers = mysqli_query($conn, $userlist);
+                      $getmeasurements = mysqli_query($conn, $measurements);
 
-                      if (! $getusers) {
+                      if (! $getmeasurements) {
                         die('Could not fetch data: '.mysqli_error($conn));
                       }
 
-                      while($row = mysqli_fetch_assoc($getusers)) {
+                      while($row = mysqli_fetch_assoc($getmeasurements)) {
                         ?>
                         <tr class="align-middle">
-                          <td class="text-center"><?php echo htmlspecialchars($row['userid']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['first_name']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['last_name']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['measureID']);?></td>
                           <td class="text-center"><?php echo htmlspecialchars($row['name']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['shortcode']);?></td>
                           <td>
-                            <form name="userdetails" action="./details.php" method="post">
-                              <input type="hidden" name="userdetails" value="<?php echo htmlspecialchars($row['userid']);?>"/>
+                            <form name="measureedit" action="./edit.php" method="post">
+                              <input type="hidden" name="measureedit" value="<?php echo htmlspecialchars($row['measureID']);?>"/>
                               <input type="submit" value="edit brand"/>
                             </form>
                           </td>
                           <td>
-                            <form name="useredit" action="./edit.php" method="post">
-                              <input type="hidden" name="useredit" value="<?php echo htmlspecialchars($row['userid']);?>"/>
-                              <input type="submit" value="edit brand"/>
-                            </form>
-                          </td>
-                          <td>
-                            <form name="userremove" action="./index.php" method="post">
-                              <input type="hidden" name="userremove" value="<?php htmlspecialchars($row['userid']);?>"/>
+                            <form name="measureremove" action="./index.php" method="post">
+                              <input type="hidden" name="measureremove" value="<?php htmlspecialchars($row['measureID']);?>"/>
                               <input type="submit" value="remove brand"/>
                             </form>
-                          </td>
-                      </tr>    
+                          </td>        
                      <?php };
                     ?>
                   </tbody>
@@ -270,59 +258,21 @@
           <div class="col-md-6">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add User</h3>
+                <h3 class="card-title">Add Measurement</h3>
               </div>
-              <form name="admin_reg_user" action="./index.php" method="post">
+              <form name="measureadd" action="./index.php" method="post">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="userfirstname">Name</label>
-                    <input type="text" class="form-control" id="userfirstname" placeholder="Enter Name">
+                    <label for="measurename">Name</label>
+                    <input type="text" class="form-control" id="measurename" placeholder="Enter Name">
                   </div>
                   <div class="form-group">
-                    <label for="userlastname">Last Name</label>
-                    <input type="text" class="form-control" id="userlastname" placeholder="Enter Last Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="useremail">Email</label>
-                    <input type="text" class="form-control" id="useremail" placeholder="Enter Email">
-                  </div>
-                  <div class="form-group">
-                    <label for="userphone">Phone</label>
-                    <input type="text" class="form-control" id="userphone" placeholder="Enter Work Phone">
-                  </div>
-                  <div class="form-group">
-                    <label for="usergroup">Select Group</label>
-                    <select class="custom-select form-control border border-width-2" id="usergroup">
-                      <?php
-                        $getgrouplist = mysqli_query($conn, $grouplist);
-
-                        if (! $getgrouplist) {
-                          die('Could not fetch data: '.mysqli_error($conn));
-                        }
-                        while ($row1 = mysqli_fetch_assoc($getgrouplist)) {?>
-                          <option value="<?php htmlspecialchars($row1['groupID']) ;?>"><?php echo htmlspecialchars($row1['name']);?></option>
-                        <?php };
-                        ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="useractive">User Active?</label>                    
-                    <select class="custom-select form-control border border-width-2" id="useractive">
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="password1">Password</label>
-                    <input type="text" class="form-control" id="password1" placeholder="Enter Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="password2">Verify Password</label>
-                    <input type="text" class="form-control" id="password2" placeholder="Re-enter Password">
+                    <label for="measureshortcode">Shortcode</label>
+                    <input type="text" class="form-control" id="measureshortcode" placeholder="Enter Shortcode">
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Add User</button>
+                  <button type="submit" class="btn btn-primary">Add Measurement</button>
                 </div>
               </form>
             </div>
@@ -337,7 +287,7 @@
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- Default to the left -->
-	<?php include('../footer.php'); ?>
+	<?php include('./footer.php'); ?>
   </footer>
 </div>
 <!-- ./wrapper -->
