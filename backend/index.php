@@ -7,7 +7,6 @@
   <?php
   include('./config.php');
   include('./backend.php');
-  include('../authentication.php');
 
   if (isset($_GET['logout'])) {
     session_destroy();
@@ -195,7 +194,7 @@
 			</li>
       <li class="nav-item">
 			<a href="./users/groups" class="nav-link">
-				<i class="nav-icon fas fa-th"></i>
+				<i class="nav-icon fas fa-users"></i>
 				<p>
 					Groups
 				</p>
@@ -211,7 +210,7 @@
 			</li>
 			<li class="nav-item">
 			<a href="./settings.php" class="nav-link">
-				<i class="nav-icon fas fa-th"></i>
+				<i class="nav-icon fas fa-cog"></i>
 				<p>
 					Settings
 				</p>

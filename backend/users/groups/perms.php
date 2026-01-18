@@ -4,7 +4,10 @@
     <?php
   include('../../config.php');
   include('../../backend.php');
-  include ('../../errors.php');
+  
+  $_SESSION['message'] = '';
+  $id = $_GET['id'];
+  $getgroupinfo = "SELECT * FROM groups WHERE GroupID = $id";
   ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,6 +52,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="../../css/adminlte.min.css">
 </head>
+
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
@@ -76,20 +80,21 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index.php" class="brand-link">
+    <a href="../index.php" class="brand-link">
       <img src="../../img/<?php echo $falo;?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light"><?php echo $site; ?></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
+
       <!-- Sidebar Menu -->
       <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="./" class="nav-link">
+            <a href="../../" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -97,7 +102,7 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="./locations" class="nav-link">
+            <a href="../../locations/" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Locations
@@ -105,7 +110,7 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="./locations/cowcodes.php" class="nav-link">
+            <a href="../../locations/cowcodes.php" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Cow-Codes
@@ -113,7 +118,7 @@
             </a>
           </li>
           <li class="nav-item">
-			<a href="./categories/" class="nav-link">
+			<a href="../../categories/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Categories
@@ -121,7 +126,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="./brands/" class="nav-link">
+			<a href="../../brands/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Brands
@@ -129,7 +134,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="./brands/contact/" class="nav-link">
+			<a href="../../brands/contact/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Contacts
@@ -144,7 +149,7 @@
 				</p>
 			</a>
 			</li>
-      <li class="nav-item menu-closed">
+		  <li class="nav-item menu-closed">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-tree"></i>
             <p>
@@ -153,6 +158,9 @@
             </p>
         </a>
         <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="../../items" class="nav-link">Complete List</a>
+            </li>
           <?php
           $getroot = mysqli_query($conn, $rootcat);
 
@@ -163,7 +171,11 @@
           while ($row2 = mysqli_fetch_assoc($getroot)) {
             ?>
             <li class="nav-item">
-              <a href="../items/list.php?id=<?php echo htmlspecialchars($row2['categoryid']);?>" class="nav-link"><?php echo htmlspecialchars($row2['name']);?></a>
+              <a href="../../items/list.php?id=<?php echo htmlspecialchars($row2['categoryid']);?>" class="nav-link" <?php if(htmlspecialchars($row2['active']) == 'false') 
+              {?>
+              hidden
+              <?php };
+              ?>><?php echo htmlspecialchars($row2['name']);?></a>
             </li>
           <?php };
           ?>
@@ -234,114 +246,48 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <div class="row">
-          <!-- notification message -->
-  	<?php if (isset($_SESSION['success'])) : ?>
+  	<?php 
+    $getgroupdetails = mysqli_query($conn, $getgroupinfo);
+    if (! $getgroupdetails) {
+        die('Could not fetch data:' .mysqli_error($conn));
+    }
+    while ($row2 = mysqli_fetch_assoc($getgroupdetails)) {
+        $groupid = htmlspecialchars($row2['GroupID']);
+        $groupname = htmlspecialchars($row2['Group_Name']);
+    }
+
+    include('../../errors.php');?>
+    <div class="row">
+    <?php
+    if (isset($_SESSION['success'])) : ?>
       <div class="error success" >
       	<h3>
           <?php 
           	echo $_SESSION['success'];
+            unset($_SESSION["success"]);
           ?>
       	</h3>
       </div>
-  	<?php endif ?>
-    <div class="col-lg-6">
-            <div class="card">
-              <div class="card-body table-responsive p-0">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Index</th>
-                      <th>Name</th>
-                      <th>Edit</th>
-                      <th>Permissions</th>
-                      <th>Remove</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                      $getgroups = mysqli_query($conn, $groups);
-
-                      if (! $getgroups) {
-                        die('Could not fetch data: '.mysqli_error($conn));
-                      }
-
-                      while($row = mysqli_fetch_assoc($getgroups)) {
-                        ?>
-                        <tr class="align-middle">
-                          <td class="text-center"><?php echo htmlspecialchars($row['groupID']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['name']);?></td>
-                          <td>
-                            <form name="groupedit" action="./edit.php" method="post">
-                              <input type="hidden" name="groupedit" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="edit group"/>
-                            </form>
-                          </td>
-                          <td>
-                            <form name="groupperms" action="./perms.php" method="post">
-                              <input type="hidden" name="groupperms" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="edit permissions"/>
-                            </form>
-                          </td>
-                          <td>
-                            <form name="groupremove" action="./index.php" method="post">
-                              <input type="hidden" name="groupremove" value="<?php htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="remove group"/>
-                            </form>
-                          </td>        
-                     <?php };
-                    ?>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
+  	<?php endif ?><div class="col-lg-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add Group</h3>
+                <h3 class="card-title">Edit Group</h3>
               </div>
-              <form name="measureadd" action="./index.php" method="post">
+              <form action="./edit.php" method="post">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="measurename">Name</label>
-                    <input type="text" class="form-control" id="measurename" placeholder="Enter Name">
+                    <label for="groupname">Name</label>
+                    <input type="hidden" name="new_name" value="<?php echo htmlspecialchars($id);?>"/>
+                    <input type="text" class="form-control" id="groupname" name="groupname" placeholder="<?php echo $groupname;?>">
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Add Group</button>
+                  <button type="submit" class="btn btn-primary btn-block" name="edit_group">Update Group</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-        
-        <div class="modal fade" id="open-editgroupname">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Groupname</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="./index.php" method="post">
-                <input type="hidden" id="groupid" name="groupid" value="">
-                <label for="newgroupname">New Groupname</label>
-                <input type="text" class="form-control" id="newgroupname" name="newgroupname" placeholder="Enter new groupname"></input>
-                </div>
-                <div class="modal-footer justify-content-between">
-                  <button type="submit" name="edit_groupname" class="btn btn-primary">Confirm</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-              </form>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -351,7 +297,7 @@
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- Default to the left -->
-	<?php include('../../../footer.php'); ?>
+	<?php include('../../footer.php'); ?>
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -365,14 +311,11 @@
 <!-- AdminLTE App -->
 <script src="../../js/adminlte.min.js"></script>
 <!-- Toaster -->
-<script src="../../plugins/toastr/toastr.min.js"></script>
+<script src="../../plguins/toastr/toastr.min.js"></script>
 <!-- Sweetalert -->
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
-<script>
-  $(document).on("click", ".open-editgroupname", function () {
-    var groupid = $(this).data('groupedit');
-    $(".modal-body #groupid").val( groupid );
-  });
-</script>
+
+<!-- Required php code -->
+
 </body>
 </html>
