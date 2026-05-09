@@ -32,8 +32,9 @@ session_start();
 $username = "";
 $email = "";
 
-// connect to database
+require('config.php');
 
+/*// connect to database
 $host = "localhost";
 $user = "jerlag";
 $password = "VTIkontich.05";
@@ -45,7 +46,7 @@ print $conn->error;
 
 if (mysqli_connect_error()) {
     echo "Failed to connect to database :$database @ $host" . mysqli_connect_error();
-}
+}*/
 
 $errors = array();
 
@@ -94,12 +95,12 @@ if (isset($_POST['admin_reg_user'])) {
 
   // Finally, register user if there are no errors in the form
   if (count($errors) == 0) {
-  	$password = md5($password_1);//encrypt the password before saving in the database
+  	$password = md5($password1);//encrypt the password before saving in the database
 
   	$query = "INSERT INTO users (First_Name, Last_Name, Email, Phone, Active, TeamID, GroupID, Password, User_Language) 
   			  VALUES('$userfirstname', '$userlastname', '$useremail', '$userphone', '$useractive', '$userteamid', '$usergroup', '$password', '$userlanguage')";
   	mysqli_query($conn, $query);
-  	$_SESSION['success'] = "$userlastname $userfirtname is now registered";
+  	$_SESSION['success'] = "$userlastname $userfirstname is now registered";
   	header('location: ./index.php');
   }
 }

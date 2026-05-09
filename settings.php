@@ -4,7 +4,7 @@
     <?php
   include('./config.php');
   include('./backend.php');
-  include ('./errors.php');
+  include('./errors.php');
   ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -157,7 +157,7 @@
           $getroot = mysqli_query($conn, $rootcat);
 
           if (! $getroot) {
-            die('Could not fetch data: '.mysqi_error($conn));
+            die('Could not fetch data: '.mysqli_error($conn));
           }
 
           while ($row2 = mysqli_fetch_assoc($getroot)) {
