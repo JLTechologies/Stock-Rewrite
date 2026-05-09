@@ -1,0 +1,15 @@
+<?php
+
+$host = "localhost";
+$user = "jerlag";
+$password = "VTIkontich.05";
+$database = "erp";
+
+$conn = new mysqli($host, $user, $password, $database);
+$conn->connect_errno;
+print $conn->error;
+
+if (mysqli_connect_error()) {
+    echo "Failed to connect to database :$database @ $host" . mysqli_connect_error();
+}
+?>
