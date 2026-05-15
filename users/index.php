@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
   <?php
-  include('../../config.php');
+  include('../config.php');
   $_SESSION['message'] = '';
-
-  include('../queries.php');
-  include('../server.php');
+  include('../backend.php');
+ 
+  $faviconlogo = mysqli_query($conn, $logo);
+  if (! $faviconlogo) {
+    die('Logo does not exist: '.mysqli_error($conn));
+  }
+  while($favlog = mysqli_fetch_assoc($faviconlogo)) {?>
+  <link rel="shortcut icon" href="../img/<?php $falo = htmlspecialchars($favlog['Favicon']); echo $falo;?>" type="image/x-icon">
+  <?php };
 
   $name = mysqli_query($conn, $sitename);
   if (! $name) {
     die('Could not load sitename: '.mysqli_error($conn));
   }
-  while($row = mysqli_fetch_assoc($name)) {?>
-  <title>Admin | <?php $site = htmlspecialchars($row['sitename']); echo $site ;?></title>
+  while($row10 = mysqli_fetch_assoc($name)) {?>
+  <title>Admin | <?php $site = htmlspecialchars($row10['Sitename']); echo $site ;?></title>
   <?php }
   ?>
 
@@ -55,7 +60,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../index.php" class="brand-link">
-      <img src="./logo.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="../img/<?php echo $falo;?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light"><?php echo $site; ?></span>
     </a>
 
@@ -117,7 +122,7 @@
 			</li>
       <ul class="nav nav-treeview">
           <?php
-          $getroot = mysqli_query($conn, $rootcategories);
+          $getroot = mysqli_query($conn, $rootcat);
 
           if (! $getroot) {
             die('Could not fetch data: '.mysqli_error($conn));
@@ -228,7 +233,7 @@
                   </thead>
                   <tbody>
                     <?php
-                      $getusers = mysqli_query($conn, $userlist);
+                      $getusers = mysqli_query($conn, $users);
 
                       if (! $getusers) {
                         die('Could not fetch data: '.mysqli_error($conn));
@@ -294,7 +299,7 @@
                     <label for="usergroup">Select Group</label>
                     <select class="custom-select form-control border border-width-2" id="usergroup">
                       <?php
-                        $getgrouplist = mysqli_query($conn, $grouplist);
+                        $getgrouplist = mysqli_query($conn, $groups);
 
                         if (! $getgrouplist) {
                           die('Could not fetch data: '.mysqli_error($conn));
@@ -337,7 +342,7 @@
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- Default to the left -->
-	<?php include('../footer.php'); ?>
+	<?php include('../../footer.php'); ?>
   </footer>
 </div>
 <!-- ./wrapper -->
