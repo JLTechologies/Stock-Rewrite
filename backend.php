@@ -20,7 +20,7 @@ $contacts = "SELECT * FROM contacts";
 //$assets = "SELECT * FROM assets";
 $sorting = "SELECT * FROM sorting";
 $settings = "SELECT * FROM settings";
-//$sites = "SELECT * FROM sites INNER JOIN countries ON sites.countryID = countries.countryid";
+$sites = "SELECT * FROM sites INNER JOIN countries ON sites.countryID = countries.countryid";
 $countcowcodes = "SELECT COUNT(cowcode) 'amountsites' FROM sites";
 $countusers = "SELECT COUNT(Last_Name) 'amountusers' FROM users";
 $countitems = "SELECT COUNT(prod_Name) 'amountitems' FROM products";
@@ -291,10 +291,46 @@ if (isset($_POST['add_group'])) {
 // remove asset
 
 // add team
+if (isset($_POST['create_team'])) {
+  $teamname = mysqli_real_escape_string($conn, $_POST['teamname']);
+
+  if (empty($teamname)) {
+    array_push($errors, "Teamname is required");
+  }
+
+  if (count($errors) == 0) {
+    $addteam = "INSERT INTO teams (Team_Name)" ."VALUES ('$teamname')";
+    mysqli_query($conn,$addteam);
+    $_SESSION['success'] = "New team created";
+    header('location: ./index.php');
+  }
+}
 
 // update team
+if (isset($_POST['update_team'])) {
+  $teamid = mysqli_real_escape_string($conn, $_POST['teamid']);
+  $teamname = mysqli_real_escape_string($conn, $_POST['teamname']);
+
+  if (empty($teamname)) {
+    array_push($errors, "Teamname is required");
+  }
+
+  if (count($errors) == 0) {
+    $updateteam = "UPDATE teams SET Team_Name = '$teamname' WHERE TeamID = '$teamid'";
+    mysqli_query($conn, $updateteam);
+    $_SESSION['success'] = "Team has been updated";
+    header('location: ./index.php');
+  }
+}
 
 // remove team
+if (isset($_POST['remove_team'])) {
+  $teamid = mysqli_real_escape_string($conn, $_POST['teamid']);
+  $removeteam = "DELETE FROM teams WHERE TeamID = '$teamid'";
+  mysqli_query($conn, $removeteam);
+  $_SESSION['success'] = "Team has been removed";
+  header('location: ./index.php');
+}
 
 // add order
 
@@ -333,4 +369,22 @@ if (isset($_POST['update_favicon'])) {
     } else {
       array_push($errors, "Select a file to upload");
     }
+  }
+
+// fetch sitename
+$sitenamefetch = mysqli_query($conn, $sitename);
+if (! $sitenamefetch) {
+  die('Could not load sitename: '.mysqli_error($conn));
+}
+while ($row = mysqli_fetch_assoc($sitenamefetch)) {
+  $site = htmlspecialchars($row['Sitename']);
+}
+
+// fetch favicon
+$faviconlogo = mysqli_query($conn, $logo);
+  if (! $faviconlogo) {
+    die('Logo does not exist: '.mysqli_error($conn));
+  }
+  while($favlog = mysqli_fetch_assoc($faviconlogo)) {
+    $falo = htmlspecialchars($favlog['Favicon']);
   }
