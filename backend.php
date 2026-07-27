@@ -25,6 +25,7 @@ $countcowcodes = "SELECT COUNT(cowcode) 'amountsites' FROM sites";
 $countusers = "SELECT COUNT(Last_Name) 'amountusers' FROM users";
 $countitems = "SELECT COUNT(prod_Name) 'amountitems' FROM products";
 $countlocations = "SELECT COUNT(Loc_name) 'amountlocations' FROM locations";
+$userlist = "SELECT * FROM users INNER JOIN teams ON users.TeamID = teams.TeamID INNER JOIN groups ON users.GroupID = groups.GroupID";
 
 session_start();
 
@@ -60,7 +61,7 @@ if (isset($_POST['admin_reg_user'])) {
   $useractive = mysqli_real_escape_string($conn, $_POST['useractive']);
   $usergroup = mysqli_real_escape_string($conn, $_POST['usergroup']);
   $userlanguage = mysqli_real_escape_string($conn, $_POST['userlanguage']);
-  $userteamid = mysqli_real_escape_string($conn, $_POST['userteamid']);
+  $userteamid = mysqli_real_escape_string($conn, $_POST['userteam']);
   $password1 = mysqli_real_escape_string($conn, $_POST['password1']);
   $password2 = mysqli_real_escape_string($conn, $_POST['password2']);
 
@@ -72,6 +73,7 @@ if (isset($_POST['admin_reg_user'])) {
   if (empty($userphone)) { array_push($errors, "Email is required"); }
   if (empty($useractive)) { array_push($errors, "Active status is required"); }
   if (empty($usergroup)) { array_push($errors, "Group selection is required"); }
+  if (empty($userteamid)) { array_push($errors, "Team selection is required"); }
   if (empty($password1)) { array_push($errors, "Password is required"); }
   if ($password1 != $password2) {
 	array_push($errors, "The two passwords do not match");
