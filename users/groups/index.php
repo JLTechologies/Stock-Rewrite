@@ -4,19 +4,13 @@
     <?php
   include('../../config.php');
   include('../../backend.php');
-  include ('../../errors.php');
+  include('../../errors.php');
   ?>
+  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?php 
-  $faviconlogo = mysqli_query($conn, $logo);
-  if (! $faviconlogo) {
-    die('Logo does not exist: '.mysqli_error($conn));
-  }
-  while($favlog = mysqli_fetch_assoc($faviconlogo)) {?>
-  <link rel="shortcut icon" href="../../img/<?php $falo = htmlspecialchars($favlog['Favicon']); echo $falo;?>" type="image/x-icon">
-  <?php };
-
+  <link rel="shortcut icon" href="../../img/<?php echo $falo;?>" type="image/x-icon">
+  <?php
   //if (!isset($_SESSION['email'])) {
    // $_SESSION['msg'] = "You must log in first";
     //header('location: ../login.php');
@@ -32,20 +26,20 @@
   if (isset($_GET['logout'])) {
     session_destroy();
   }
-
-  $name = mysqli_query($conn, $sitename);
-  if (! $name) {
-    die('Could not load sitename: '.mysqli_error($conn));
-  }
-  while($row = mysqli_fetch_assoc($name)) {?>
-  <title>Admin | <?php $site = htmlspecialchars($row['Sitename']); echo $site ;?></title>
-  <?php }
   ?>
+  <title>Admin | <?php echo $site ;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../css/adminlte.min.css">
 </head>
@@ -62,10 +56,11 @@
     </ul>
 
     <!-- Right navbar links -->
+     <button class="btn btn-primary open-creategroup" data-target="#open-creategroup" data-toggle="modal" data-namevalue="" >Create Group</button>
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-        <a class="nav-link" href="../">
+        <a class="nav-link" href="../../">
           <i class="fas fa-th-large"></i>
         </a>
       </li>
@@ -89,7 +84,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="./" class="nav-link">
+            <a href="../../" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -97,7 +92,7 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="./locations" class="nav-link">
+            <a href="../../locations" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Locations
@@ -105,7 +100,7 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="./locations/cowcodes.php" class="nav-link">
+            <a href="../../locations/cowcodes.php" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Cow-Codes
@@ -113,7 +108,7 @@
             </a>
           </li>
           <li class="nav-item">
-			<a href="./categories/" class="nav-link">
+			<a href="../../categories/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Categories
@@ -121,7 +116,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="./brands/" class="nav-link">
+			<a href="../../brands/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Brands
@@ -129,7 +124,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="./brands/contact/" class="nav-link">
+			<a href="../../brands/contact/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Contacts
@@ -157,13 +152,13 @@
           $getroot = mysqli_query($conn, $rootcat);
 
           if (! $getroot) {
-            die('Could not fetch data: '.mysqi_error($conn));
+            die('Could not fetch data: '.mysqli_error($conn));
           }
 
           while ($row2 = mysqli_fetch_assoc($getroot)) {
             ?>
             <li class="nav-item">
-              <a href="../items/list.php?id=<?php echo htmlspecialchars($row2['categoryid']);?>" class="nav-link"><?php echo htmlspecialchars($row2['name']);?></a>
+              <a href="../../items/list.php?id=<?php echo htmlspecialchars($row2['categoryid']);?>" class="nav-link"><?php echo htmlspecialchars($row2['name']);?></a>
             </li>
           <?php };
           ?>
@@ -182,6 +177,14 @@
 				<i class="nav-icon fas fa-users"></i>
 				<p>
 					Groups
+				</p>
+			</a>
+			</li>
+      <li class="nav-item">
+			<a href="../../teams/" class="nav-link">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Teams
 				</p>
 			</a>
 			</li>
@@ -241,19 +244,20 @@
       	<h3>
           <?php 
           	echo $_SESSION['success'];
+            unset($_SESSION['success']);
           ?>
       	</h3>
       </div>
   	<?php endif ?>
-    <div class="col-lg-6">
+    <div class="col-lg-12">
             <div class="card">
               <div class="card-body table-responsive p-0">
-                <table class="table">
+                <table class="table table-bordered table-striped" id="main">
                   <thead>
                     <tr>
                       <th>Index</th>
                       <th>Name</th>
-                      <th>Edit</th>
+                      <th>Edit Name</th>
                       <th>Permissions</th>
                       <th>Remove</th>
                     </tr>
@@ -269,25 +273,19 @@
                       while($row = mysqli_fetch_assoc($getgroups)) {
                         ?>
                         <tr class="align-middle">
-                          <td class="text-center"><?php echo htmlspecialchars($row['groupID']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['name']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['GroupID']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['Group_Name']);?></td>
                           <td>
-                            <form name="groupedit" action="./edit.php" method="post">
-                              <input type="hidden" name="groupedit" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="edit group"/>
+                              <button class="btn btn-danger open-editgroupname" data-target="#open-editgroupname" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['GroupID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Group_Name']);?>" >Edit Group</button>
+                          </td>
+                          <td>
+                            <form name="groupedit" action="./perms.php" method="post">
+                              <input type="hidden" name="permsedit" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
+                              <input type="submit" value="Edit Permissions"/>
                             </form>
                           </td>
                           <td>
-                            <form name="groupperms" action="./perms.php" method="post">
-                              <input type="hidden" name="groupperms" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="edit permissions"/>
-                            </form>
-                          </td>
-                          <td>
-                            <form name="groupremove" action="./index.php" method="post">
-                              <input type="hidden" name="groupremove" value="<?php htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="remove group"/>
-                            </form>
+                              <button class="btn btn-danger open-removegroup" data-target="#open-removegroup" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['GroupID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Group_Name']);?>" >Remove Group</button>
                           </td>        
                      <?php };
                     ?>
@@ -296,27 +294,62 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Add Group</h3>
-              </div>
-              <form name="measureadd" action="./index.php" method="post">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="measurename">Name</label>
-                    <input type="text" class="form-control" id="measurename" placeholder="Enter Name">
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Add Group</button>
+        </div><div class="modal fade" id="open-creategroup">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Create New Group</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="./index.php" method="post">
+                <label for="groupname">Group Name</label>
+                <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Insertgroup name"></input>
+                <label for="groupactive">Group Active</label>
+                <select class="custom-select form-control border border-width-2" name="groupactive">
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="create_group" class="btn btn-primary">Create Group</button>
                 </div>
               </form>
             </div>
           </div>
+          <!-- /.modal-content -->
         </div>
-        
-        <div class="modal fade" id="open-editgroupname">
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <div class="modal fade" id="open-removegroup">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Remove Group</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="./index.php" method="post">
+                <label for="group_id">Are you sure that you want to remove this group?</label>
+                <input type="hidden" id="group_id" name="group_id" value=""></input>
+              </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="remove_group" class="btn btn-primary">Confirm Removal</button>
+                </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+       <div class="modal fade" id="open-editgroupname">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -327,13 +360,13 @@
             </div>
             <div class="modal-body">
               <form action="./index.php" method="post">
-                <input type="hidden" id="groupid" name="groupid" value="">
-                <label for="newgroupname">New Groupname</label>
-                <input type="text" class="form-control" id="newgroupname" name="newgroupname" placeholder="Enter new groupname"></input>
-                </div>
+                <label for="groupid">Enter the new group name:</label>
+                <input type="hidden" id="groupid" name="groupid" value=""></input>
+                <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Insert new group name"></input>
+              </div>
                 <div class="modal-footer justify-content-between">
-                  <button type="submit" name="edit_groupname" class="btn btn-primary">Confirm</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="update_groupname" class="btn btn-primary">Confirm Update</button>
                 </div>
               </form>
           </div>
@@ -362,15 +395,50 @@
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../js/adminlte.min.js"></script>
-<!-- Toaster -->
-<script src="../../plugins/toastr/toastr.min.js"></script>
-<!-- Sweetalert -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- SweetAlert2 -->
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="../../plugins/toastr/toastr.min.js"></script>
+<!-- Page specific script -->
 <script>
+  $(function () {
+    $("#main").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": false, "info": true, "ordering": true, "paging": true,
+      "buttons": [""]
+    }).buttons().container().appendTo('#main_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+  $(document).on("click", ".open-creategroup",function () {
+  });
+
+  $(document).on("click", ".open-removegroup", function () {
+    var groupid = $(this).data('id1');
+    $(".modal-body #group_id").val(groupid);
+  });
+
   $(document).on("click", ".open-editgroupname", function () {
-    var groupid = $(this).data('groupedit');
+    var groupid = $(this).data('id1');
     $(".modal-body #groupid").val( groupid );
   });
 </script>
