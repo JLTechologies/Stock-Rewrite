@@ -185,6 +185,14 @@
 				</p>
 			</a>
 			</li>
+      <li class="nav-item">
+			<a href="./teams/" class="nav-link">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Teams
+				</p>
+			</a>
+			</li>
 			<li class="nav-item">
 			<a href="./settings.php" class="nav-link active">
 				<i class="nav-icon fas fa-cog"></i>
