@@ -173,19 +173,19 @@
 				</p>
 			</a>
 			</li>
-		  <li class="nav-item">
-			<a href="./" class="nav-link active">
-				<i class="nav-icon fas fa-th"></i>
-				<p>
-					Teams
-				</p>
-			</a>
-			</li>
       <li class="nav-item">
 			<a href="../users/groups" class="nav-link">
 				<i class="nav-icon fas fa-users"></i>
 				<p>
 					Groups
+				</p>
+			</a>
+			</li>
+		  <li class="nav-item">
+			<a href="./" class="nav-link active">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Teams
 				</p>
 			</a>
 			</li>
