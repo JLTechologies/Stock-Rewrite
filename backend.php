@@ -26,6 +26,7 @@ $countusers = "SELECT COUNT(Last_Name) 'amountusers' FROM users";
 $countitems = "SELECT COUNT(prod_Name) 'amountitems' FROM products";
 $countlocations = "SELECT COUNT(Loc_name) 'amountlocations' FROM locations";
 $userlist = "SELECT * FROM users INNER JOIN teams ON users.TeamID = teams.TeamID INNER JOIN groups ON users.GroupID = groups.GroupID";
+$getuserdetails = "SELECT * FROM users INNER JOIN teams ON users.TeamID = teams.TeamID INNER JOIN groups ON users.GroupID = groups.GroupID WHERE UserID = '$fetchedid'";
 
 session_start();
 
