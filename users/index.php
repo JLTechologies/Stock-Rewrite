@@ -8,22 +8,11 @@
   $_SESSION['message'] = '';
   include('../backend.php');
  
-  $faviconlogo = mysqli_query($conn, $logo);
-  if (! $faviconlogo) {
-    die('Logo does not exist: '.mysqli_error($conn));
-  }
-  while($favlog = mysqli_fetch_assoc($faviconlogo)) {?>
-  <link rel="shortcut icon" href="../img/<?php $falo = htmlspecialchars($favlog['Favicon']); echo $falo;?>" type="image/x-icon">
-  <?php };
-
-  $name = mysqli_query($conn, $sitename);
-  if (! $name) {
-    die('Could not load sitename: '.mysqli_error($conn));
-  }
-  while($row10 = mysqli_fetch_assoc($name)) {?>
-  <title>Admin | <?php $site = htmlspecialchars($row10['Sitename']); echo $site ;?></title>
-  <?php }
   ?>
+  
+  <link rel="shortcut icon" href="../img/<?php echo $falo;?>" type="image/x-icon">
+
+  <title>Admin | <?php echo $site ;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
