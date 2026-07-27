@@ -174,7 +174,7 @@
 			</a>
 			</li>
 		  <li class="nav-item">
-			<a href="./" class="nav-link" active>
+			<a href="./" class="nav-link active">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Teams
@@ -238,7 +238,6 @@
         <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <?php include ('../errors.php'); ?>
         <div class="row">
           <!-- notification message -->
   	<?php if (isset($_SESSION['success'])) : ?>
@@ -306,31 +305,6 @@
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                   <button type="submit" name="create_team" class="btn btn-primary">Create Team</button>
-                </div>
-              </form>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-       <div class="modal fade" id="open-removeteam">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Remove Team</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="./index.php" method="post">
-                <label for="teamid">Are you sure that you want to remove this team?</label>
-                <input type="hidden" id="teamid" name="teamid" value=""></input>
-              </div>
-                <div class="modal-footer justify-content-between">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="submit" name="remove_team" class="btn btn-primary">Confirm Removal</button>
                 </div>
               </form>
           </div>
