@@ -10,6 +10,7 @@
   include('../errors.php');
 
   $fetchedid = $_GET['id'];
+  $getuserdetails = "SELECT * FROM users INNER JOIN teams ON users.TeamID = teams.TeamID INNER JOIN groups ON users.GroupID = groups.GroupID WHERE UserID = '$fetchedid'";
   $getuserinfo = mysqli_query($conn, $getuserdetails);
 
   if (! $getuserinfo) {

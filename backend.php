@@ -26,7 +26,6 @@ $countusers = "SELECT COUNT(Last_Name) 'amountusers' FROM users";
 $countitems = "SELECT COUNT(prod_Name) 'amountitems' FROM products";
 $countlocations = "SELECT COUNT(Loc_name) 'amountlocations' FROM locations";
 $userlist = "SELECT * FROM users INNER JOIN teams ON users.TeamID = teams.TeamID INNER JOIN groups ON users.GroupID = groups.GroupID";
-$getuserdetails = "SELECT * FROM users INNER JOIN teams ON users.TeamID = teams.TeamID INNER JOIN groups ON users.GroupID = groups.GroupID WHERE UserID = '$fetchedid'";
 
 session_start();
 
@@ -139,7 +138,7 @@ if (isset($_POST['login_user'])) {
   }
 
 // ADD GROUP
-if (isset($_POST['add_group'])) {
+if (isset($_POST['create_group'])) {
     $gname = mysqli_real_escape_string($conn, $_POST['groupname']);
     $gactive = mysqli_real_escape_string($conn, $_POST['groupactive']);
 
@@ -162,7 +161,7 @@ if (isset($_POST['add_group'])) {
   //FUNCTION ADD PERMS PER GROUP
   function add_perm($gname, $conn) {
     $newgroupadd = "SELECT GroupID FROM groups WHERE Group_Name = '$gname'";
-      $amountperm = "SELECT COUNT(permissionID) as aantalperms FROM permissionslist";
+      $amountperm = "SELECT COUNT(permlistID) as aantalperms FROM permissionslist";
 
       $getnewgroupadd = mysqli_query($conn, $newgroupadd);
       $getamountperm = mysqli_query($conn, $amountperm);
@@ -188,18 +187,25 @@ if (isset($_POST['add_group'])) {
   }
 
   // REMOVE GROUP
-  if (isset($_POST['group_remove'])) {
-    $groupid2 = mysqli_real_escape_string($conn, $_POST['groupremove']);
+  if (isset($_POST['remove_group'])) {
+    $groupid2 = mysqli_real_escape_string($conn, $_POST['group_id']);
     $groupremove = "DELETE FROM groups WHERE GroupID = '$groupid2'";
-    mysqli_query($conn, $groupremove);
-    $_SESSION['success'] = "Group has been removed";
-    header('location: ./index.php');
+
+    if (empty($groupid2)) {
+      array_push($errors, "GroupID is required to be filled in");
+    }
+
+    if (count($errors) == 0) {
+        mysqli_query($conn, $groupremove);
+        $_SESSION['success'] = "Group has been removed";
+        header('location: ./index.php');
+    }
   }
 
-  //UPDATE GROUP
-  if (isset($_POST['edit_group'])) {
+  //UPDATE GROUPNAME
+  if (isset($_POST['update_groupname'])) {
     $groupid3 = mysqli_real_escape_string($conn, $_POST['groupid']);
-    $newgroupname = mysqli_real_escape_string($conn, $_POST['newgroupname']);
+    $newgroupname = mysqli_real_escape_string($conn, $_POST['groupname']);
     
     if (empty($newgroupname)) {
       array_push($errors, "Groupname is required to be filled in");
