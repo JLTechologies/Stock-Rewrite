@@ -5,28 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
   <?php
-  include('../../config.php');
-  session_start();
-
+  include('../config.php');
+  include('../backend.php');
+  include('../errors.php');
+  ?>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
+  <?php
   if (isset($_GET['logout'])) {
     session_destroy();
   }
-
-  include('../queries.php');
-
-  $name = mysqli_query($conn, $sitename);
-  if (! $name) {
-    die('Could not load sitename: '.mysqli_error($conn));
-  }
-  while($row = mysqli_fetch_assoc($name)) {?>
-  <title>Admin | <?php $site = htmlspecialchars($row['sitename']); echo $site ;?></title>
-  <?php }
   ?>
+  <title>Admin | <?php echo $site;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../css/adminlte.min.css">
 </head>
@@ -43,6 +46,8 @@
     </ul>
 
     <!-- Right navbar links -->
+     <button class="btn btn-primary open-createmeasurement" data-target="#open-createmeasurement" data-toggle="modal" data-namevalue="" >Create Measurement</button>
+    
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
@@ -54,20 +59,19 @@
   </nav>
   <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
+   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../index.php" class="brand-link">
-      <img src="./logo.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="./index.php" class="brand-link">
+      <img src="../img/<?php echo $falo;?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light"><?php echo $site; ?></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
@@ -79,10 +83,18 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="../locations/" class="nav-link">
+            <a href="../locations" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Locations
+              </p>
+            </a>
+          </li>
+		  <li class="nav-item">
+            <a href="../locations/cowcodes.php" class="nav-link">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                Cow-Codes
               </p>
             </a>
           </li>
@@ -103,7 +115,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="../brands/contacts/" class="nav-link">
+			<a href="../brands/contact/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Contacts
@@ -118,12 +130,20 @@
 				</p>
 			</a>
 			</li>
-      <ul class="nav nav-treeview">
+      <li class="nav-item menu-closed">
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-tree"></i>
+            <p>
+              Items
+              <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
           <?php
-          $getroot = mysqli_query($conn, $rootcategories);
+          $getroot = mysqli_query($conn, $rootcat);
 
           if (! $getroot) {
-            die('Could not fetch data: '.mysqi_error($conn));
+            die('Could not fetch data: '.mysqli_error($conn));
           }
 
           while ($row2 = mysqli_fetch_assoc($getroot)) {
@@ -134,8 +154,9 @@
           <?php };
           ?>
         </ul>
+      </li>
 		  <li class="nav-item">
-			<a href="../users/" class="nav-link">
+			<a href="./users/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Users
@@ -143,16 +164,24 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="../users/groups/" class="nav-link">
-				<i class="nav-icon fas fa-th"></i>
+			<a href="./groups/" class="nav-link">
+				<i class="nav-icon fas fa-users"></i>
 				<p>
 					Groups
 				</p>
 			</a>
 			</li>
+      <li class="nav-item">
+			<a href="../teams/" class="nav-link">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Teams
+				</p>
+			</a>
+			</li>
 			<li class="nav-item">
 			<a href="../settings.php" class="nav-link">
-				<i class="nav-icon fas fa-th"></i>
+				<i class="nav-icon fas fa-cog"></i>
 				<p>
 					Settings
 				</p>
@@ -186,8 +215,9 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="./">Admin</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item"><a href="../">Admin</a></li>
+              <li class="breadcrumb-item"><a href="../">Dashboard</a></li>
+              <li class="breadcrumb-item">Measurements</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -205,11 +235,12 @@
       	<h3>
           <?php 
           	echo $_SESSION['success'];
+            unset($_SESSION['success']);
           ?>
       	</h3>
       </div>
   	<?php endif ?>
-    <div class="col-lg-6">
+    <div class="col-lg-12">
             <div class="card">
               <div class="card-body table-responsive p-0">
                 <table class="table">
@@ -233,20 +264,14 @@
                       while($row = mysqli_fetch_assoc($getmeasurements)) {
                         ?>
                         <tr class="align-middle">
-                          <td class="text-center"><?php echo htmlspecialchars($row['measureID']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['name']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['shortcode']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['Measure_ID']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['Measure_Name']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['Shortcode']);?></td>
                           <td>
-                            <form name="measureedit" action="./edit.php" method="post">
-                              <input type="hidden" name="measureedit" value="<?php echo htmlspecialchars($row['measureID']);?>"/>
-                              <input type="submit" value="edit brand"/>
-                            </form>
+                              <button class="btn btn-warning open-editmeasurement" data-target="#open-editmeasurement" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['Measure_ID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Measure_Name']);?>" >Edit Measurement</button>
                           </td>
                           <td>
-                            <form name="measureremove" action="./index.php" method="post">
-                              <input type="hidden" name="measureremove" value="<?php htmlspecialchars($row['measureID']);?>"/>
-                              <input type="submit" value="remove brand"/>
-                            </form>
+                              <button class="btn btn-danger open-removemeasurement" data-target="#open-removemeasurement" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['Measure_ID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Measure_Name']);?>" >Remove Measurement</button>
                           </td>        
                      <?php };
                     ?>
@@ -255,28 +280,87 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Add Measurement</h3>
-              </div>
-              <form name="measureadd" action="./index.php" method="post">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="measurename">Name</label>
-                    <input type="text" class="form-control" id="measurename" placeholder="Enter Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="measureshortcode">Shortcode</label>
-                    <input type="text" class="form-control" id="measureshortcode" placeholder="Enter Shortcode">
-                  </div>
+          
+          <div class="modal fade" id="open-createmeasurement">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Create New Measurement</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="./index.php" method="post">
+                <label for="measurementname">Measurement Name</label>
+                <input type="text" class="form-control" id="measurementname" name="measurementname" placeholder="Insert measurement name"></input>
+                <label for="measurementshortcode">Measurement Shortcode</label>
+                <input type="text" class="form-control" id="measurementshortcode" name="measurementshortcode" placeholder="Insert measurement shortcode"></input>
                 </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Add Measurement</button>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="create_measurement" class="btn btn-primary">Create Measurement</button>
                 </div>
               </form>
-            </div>
           </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+       <div class="modal fade" id="open-removemeasurement">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Remove Measurement</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="./index.php" method="post">
+                <label for="measurementid">Are you sure that you want to remove this measurement?</label>
+                <input type="hidden" id="measurementid" name="measurementid" value=""></input>
+              </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="remove_measurement" class="btn btn-primary">Confirm Removal</button>
+                </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+       <div class="modal fade" id="open-editmeasurement">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Measurement</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="./index.php" method="post">
+                <label for="measurementid">Enter the new measurement name:</label>
+                <input type="hidden" id="measurementid" name="measurementid" value=""></input>
+                <input type="text" class="form-control" id="measurementname" name="measurementname" placeholder="Insert measurement name"></input>
+                <label for="measurementshortcode">Measurement Shortcode</label>
+                <input type="text" class="form-control" id="measurementshortcode" name="measurementshortcode" placeholder="Insert measurement shortcode"></input>
+              </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="update_measurement" class="btn btn-primary">Confirm Update</button>
+                </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
         </div>
       </div><!-- /.container-fluid -->
     </div>
@@ -287,7 +371,7 @@
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- Default to the left -->
-	<?php include('./footer.php'); ?>
+	<?php include('../../footer.php'); ?>
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -298,7 +382,52 @@
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../js/adminlte.min.js"></script>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="../plugins/toastr/toastr.min.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#main").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": false, "info": true, "ordering": true, "paging": true,
+      "buttons": [""]
+    }).buttons().container().appendTo('#main_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+  $(document).on("click", ".open-createmeasurement", function () {
+  });
+
+  $(document).on("click", ".open-removemeasurement", function () {
+    var measurementid = $(this).data('id1');
+    $(".modal-body #measurementid").val(measurementid);
+  });
+  $(document).on("click", ".open-editmeasurement", function () {
+    var measurementid = $(this).data('id1');
+    $(".modal-body #measurementid").val(measurementid);
+  });
+
+</script>
 </body>
 </html>

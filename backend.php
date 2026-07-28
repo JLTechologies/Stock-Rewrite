@@ -273,11 +273,47 @@ if (isset($_POST['create_group'])) {
 // remove location
 
 // add measurement
+if (isset($_POST['create_measurement'])) {
+  $measurementname = mysqli_real_escape_string($conn, $_POST['measurementname']);
+  $measurementshortcode = mysqli_real_escape_string($conn, $_POST['measurementshortcode']);
+
+  if (empty($measurementname) || empty($measurementshortcode)) {
+    array_push($errors, "Both measurement name and shortcode are required");
+  }
+
+  if (count($errors) == 0) {
+    $addmeasurement = "INSERT INTO measurement (Shortcode, Measure_Name)" ."VALUES ('$measurementshortcode', '$measurementname')";
+    mysqli_query($conn,$addmeasurement);
+    $_SESSION['success'] = "New measurement created";
+    header('location: ./index.php');
+  }
+}
 
 // update measurement
+if (isset($_POST['update_measurement'])) {
+  $measurementid = mysqli_real_escape_string($conn, $_POST['measurementid']);
+  $measurementname = mysqli_real_escape_string($conn, $_POST['measurementname']);
+  $measurementshortcode = mysqli_real_escape_string($conn, $_POST['measurementshortcode']);
 
+  if (empty($measurementname) || empty($measurementshortcode)) {
+    array_push($errors, "Both measurement name and shortcode are required");
+  }
+
+  if (count($errors) == 0) {
+    $updatemeasurement = "UPDATE measurement SET Measure_Name = '$measurementname', Shortcode = '$measurementshortcode' WHERE Measure_ID = '$measurementid'";
+    mysqli_query($conn, $updatemeasurement);
+    $_SESSION['success'] = "Measurement has been updated";
+    header('location: ./index.php');
+  }
+}
 // remove measurement
-
+if (isset($_POST['remove_measurement'])) {
+  $measurementid = mysqli_real_escape_string($conn, $_POST['measurementid']);
+  $removemeasurement = "DELETE FROM measurement WHERE Measure_ID = '$measurementid'";
+  mysqli_query($conn, $removemeasurement);
+  $_SESSION['success'] = "Measurement has been removed";
+  header('location: ./index.php');
+}
 // add sorting
 
 // update sorting
