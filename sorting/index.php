@@ -57,7 +57,7 @@
     </ul>
 
     <!-- Right navbar links -->
-     <button class="btn btn-primary open-createmeasurement" data-target="#open-createmeasurement" data-toggle="modal" data-namevalue="" >Create Measurement</button>
+     <button class="btn btn-primary open-createsorting" data-target="#open-createsorting" data-toggle="modal" data-namevalue="" >Create Sorting Index</button>
     
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
@@ -134,10 +134,18 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="./" class="nav-link active">
+			<a href="../measurements/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Measurements
+				</p>
+			</a>
+			</li>
+      <li class="nav-item">
+			<a href="./" class="nav-link active">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Sorting
 				</p>
 			</a>
 			</li>
@@ -259,30 +267,30 @@
                     <tr>
                       <th>Index</th>
                       <th>Name</th>
-                      <th>Shortcode</th>
+                      <th>Count</th>
                       <th>Edit</th>
                       <th>Remove</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                      $getmeasurements = mysqli_query($conn, $measurements);
+                      $getsortinglist = mysqli_query($conn, $sorting);
 
-                      if (! $getmeasurements) {
+                      if (! $getsortinglist) {
                         die('Could not fetch data: '.mysqli_error($conn));
                       }
 
-                      while($row = mysqli_fetch_assoc($getmeasurements)) {
+                      while($row = mysqli_fetch_assoc($getsortinglist)) {
                         ?>
                         <tr class="align-middle">
-                          <td class="text-center"><?php echo htmlspecialchars($row['Measure_ID']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['Measure_Name']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['Shortcode']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['SortID']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['peramount_desc']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['peramount']);?></td>
                           <td>
-                              <button class="btn btn-warning open-editmeasurement" data-target="#open-editmeasurement" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['Measure_ID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Measure_Name']);?>" >Edit Measurement</button>
+                              <button class="btn btn-warning open-editsorting" data-target="#open-editsorting" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['SortID']);?>" data-namevalue="<?php echo htmlspecialchars($row['peramount_desc']);?>" >Edit Sorting</button>
                           </td>
                           <td>
-                              <button class="btn btn-danger open-removemeasurement" data-target="#open-removemeasurement" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['Measure_ID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Measure_Name']);?>" >Remove Measurement</button>
+                              <button class="btn btn-danger open-removesorting" data-target="#open-removesorting" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['SortID']);?>" data-namevalue="<?php echo htmlspecialchars($row['peramount_desc']);?>" >Remove Sorting</button>
                           </td>        
                      <?php };
                     ?>
@@ -292,50 +300,25 @@
             </div>
           </div>
           
-          <div class="modal fade" id="open-createmeasurement">
+          <div class="modal fade" id="open-createsorting">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Create New Measurement</h4>
+              <h4 class="modal-title">Create New Sorting Index</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form action="./index.php" method="post">
-                <label for="measurementname">Measurement Name</label>
-                <input type="text" class="form-control" id="measurementname" name="measurementname" placeholder="Insert measurement name"></input>
-                <label for="measurementshortcode">Measurement Shortcode</label>
-                <input type="text" class="form-control" id="measurementshortcode" name="measurementshortcode" placeholder="Insert measurement shortcode"></input>
+                <label for="sortingname">Sorting Description</label>
+                <input type="text" class="form-control" id="sortingname" name="sortingname" placeholder="Insert sorting description"></input>
+                <label for="sortingshortcode">Sorting Amount</label>
+                <input type="text" class="form-control" id="sortingshortcode" name="sortingshortcode" placeholder="Insert sorting amount"></input>
                 </div>
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="submit" name="create_measurement" class="btn btn-primary">Create Measurement</button>
-                </div>
-              </form>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-       <div class="modal fade" id="open-removemeasurement">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Remove Measurement</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="./index.php" method="post">
-                <label for="measurementid">Are you sure that you want to remove this measurement?</label>
-                <input type="hidden" id="measurementid" name="measurementid" value=""></input>
-              </div>
-                <div class="modal-footer justify-content-between">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="submit" name="remove_measurement" class="btn btn-primary">Confirm Removal</button>
+                  <button type="submit" name="create_sorting" class="btn btn-primary">Create Sorting Index</button>
                 </div>
               </form>
           </div>
@@ -344,26 +327,51 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-       <div class="modal fade" id="open-editmeasurement">
+       <div class="modal fade" id="open-removesorting">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Measurement</h4>
+              <h4 class="modal-title">Remove Sorting Index</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form action="./index.php" method="post">
-                <label for="measurementid">Enter the new measurement name:</label>
-                <input type="hidden" id="measurementid" name="measurementid" value=""></input>
-                <input type="text" class="form-control" id="measurementname" name="measurementname" placeholder="Insert measurement name"></input>
-                <label for="measurementshortcode">Measurement Shortcode</label>
-                <input type="text" class="form-control" id="measurementshortcode" name="measurementshortcode" placeholder="Insert measurement shortcode"></input>
+                <label for="sortingid">Are you sure that you want to remove this sorting index?</label>
+                <input type="hidden" id="sortingid" name="sortingid" value=""></input>
               </div>
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="submit" name="update_measurement" class="btn btn-primary">Confirm Update</button>
+                  <button type="submit" name="remove_sorting" class="btn btn-primary">Confirm Removal</button>
+                </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+       <div class="modal fade" id="open-editsorting">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Sorting Index</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="./index.php" method="post">
+                <label for="sortingid">Enter the new sorting description:</label>
+                <input type="hidden" id="sortingid" name="sortingid" value=""></input>
+                <input type="text" class="form-control" id="sortingname" name="sortingname" placeholder="Insert sorting name"></input>
+                <label for="sortingshortcode">Sorting Index</label>
+                <input type="text" class="form-control" id="sortingshortcode" name="sortingshortcode" placeholder="Insert sorting index amount"></input>
+              </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" name="update_sorting" class="btn btn-primary">Confirm Update</button>
                 </div>
               </form>
           </div>
@@ -427,16 +435,16 @@
     });
   });
 
-  $(document).on("click", ".open-createmeasurement", function () {
+  $(document).on("click", ".open-createsorting", function () {
   });
 
-  $(document).on("click", ".open-removemeasurement", function () {
-    var measurementid = $(this).data('id1');
-    $(".modal-body #measurementid").val(measurementid);
+  $(document).on("click", ".open-removesorting", function () {
+    var sortingid = $(this).data('id1');
+    $(".modal-body #sortingid").val(sortingid);
   });
-  $(document).on("click", ".open-editmeasurement", function () {
-    var measurementid = $(this).data('id1');
-    $(".modal-body #measurementid").val(measurementid);
+  $(document).on("click", ".open-editsorting", function () {
+    var sortingid = $(this).data('id1');
+    $(".modal-body #sortingid").val(sortingid);
   });
 
 </script>

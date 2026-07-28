@@ -315,10 +315,47 @@ if (isset($_POST['remove_measurement'])) {
   header('location: ./index.php');
 }
 // add sorting
+if (isset($_POST['create_sorting'])) {
+  $sortingname = mysqli_real_escape_string($conn, $_POST['sortingname']);
+  $sortingshortcode = mysqli_real_escape_string($conn, $_POST['sortingshortcode']);
+
+  if (empty($sortingname) || empty($sortingshortcode)) {
+    array_push($errors, "Both sorting name and shortcode are required");
+  }
+
+  if (count($errors) == 0) {
+    $addsorting = "INSERT INTO sorting (peramount, peramount_desc)" ."VALUES ('$sortingshortcode', '$sortingname')";
+    mysqli_query($conn,$addsorting);
+    $_SESSION['success'] = "New sorting index created";
+    header('location: ./index.php');
+  }
+}
 
 // update sorting
+if (isset($_POST['update_sorting'])) {
+  $sortingid = mysqli_real_escape_string($conn, $_POST['sortingid']);
+  $sortingname = mysqli_real_escape_string($conn, $_POST['sortingname']);
+  $sortingshortcode = mysqli_real_escape_string($conn, $_POST['sortingshortcode']);
 
+  if (empty($sortingname) || empty($sortingshortcode)) {
+    array_push($errors, "Both sorting name and shortcode are required");
+  }
+
+  if (count($errors) == 0) {
+    $updatesorting = "UPDATE sorting SET peramount_desc = '$sortingname', peramount = '$sortingshortcode' WHERE SortID = '$sortingid'";
+    mysqli_query($conn, $updatesorting);
+    $_SESSION['success'] = "Sorting index has been updated";
+    header('location: ./index.php');
+  }
+}
 // remove sorting
+if (isset($_POST['remove_sorting'])) {
+  $sortingid = mysqli_real_escape_string($conn, $_POST['sortingid']);
+  $removesorting = "DELETE FROM sorting WHERE SortID = '$sortingid'";
+  mysqli_query($conn, $removesorting);
+  $_SESSION['success'] = "Sorting index has been removed";
+  header('location: ./index.php');
+}
 
 // adjust sitename
 
