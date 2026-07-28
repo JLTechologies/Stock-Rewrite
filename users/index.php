@@ -334,7 +334,7 @@
                           die('Could not fetch data: '.mysqli_error($conn));
                         }
                         while ($row1 = mysqli_fetch_assoc($getgrouplist)) {?>
-                          <option value="<?php htmlspecialchars($row1['groupID']) ;?>"><?php echo htmlspecialchars($row1['name']);?></option>
+                          <option value="<?php htmlspecialchars($row1['GroupID']) ;?>"><?php echo htmlspecialchars($row1['Group_Name']);?></option>
                         <?php };
                         ?>
                     </select>
