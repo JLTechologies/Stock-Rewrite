@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="../img/<?php echo $falo;?>" type="image/x-icon">
     <?php
   include('../../config.php');
   include('../../backend.php');
   include('../../errors.php');
+  ?>
   
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="../../img/<?php echo $falo;?>" type="image/x-icon">
+  <?php
   $_SESSION['message'] = '';
-  $id = $_GET['useredit'];
-  $getgrouppermissions = "SELECT * FROM permissions WHERE GroupID = $id";
+  if (isset($_POST['permsedit'])) {
+    $id = htmlspecialchars($_POST['permsedit']);
+  }
+  else {
+    $id = $currentgroupid;
+  }
+  
+  $getgrouppermissions = "SELECT * FROM permissions INNER JOIN permissionslist ON permissions.PermissionID = permissionslist.permlistID INNER JOIN groups ON permissions.groupID = groups.GroupID WHERE groups.GroupID = $id";
   ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,20 +40,6 @@
   }
   ?>
   <title>Admin | <?php echo $site ;?></title>
-  <?php
-
-  //if (!isset($_SESSION['email'])) {
-   // $_SESSION['msg'] = "You must log in first";
-    //header('location: ../login.php');
-  //}
-  //if (isset($_GET['logout'])) {
-    //session_destroy();
-    //unset($_SESSION['email']);
-    //unset($_SESSION['success']);
-    //header("location: ../login.php");
-  //}
-
-  ?>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -276,35 +270,44 @@
                     <tr>
                       <th>Index</th>
                       <th>Permission</th>
-                      <th>State</th>
-                      <th>Update</th>
+                      <th>Syntax</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                      $getgroups = mysqli_query($conn, $groups);
+                      $getperms = mysqli_query($conn, $getgrouppermissions);
 
-                      if (! $getgroups) {
+                      if (! $getperms) {
                         die('Could not fetch data: '.mysqli_error($conn));
                       }
 
-                      while($row = mysqli_fetch_assoc($getgroups)) {
+                      while($row = mysqli_fetch_assoc($getperms)) {
+                        $perm_active = htmlspecialchars($row['setting']);
                         ?>
                         <tr class="align-middle">
-                          <td class="text-center"><?php echo htmlspecialchars($row['GroupID']);?></td>
-                          <td class="text-center"><?php echo htmlspecialchars($row['Group_Name']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['permissionsID']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['permfriendly']);?></td>
+                          <td class="text-center"><?php echo htmlspecialchars($row['permlistname']);?> <div class="badge badge-info"><?php echo htmlspecialchars($row['permlistdesc']);?></div></td>
                           <td>
-                              <button class="btn btn-danger open-editgroupname" data-target="#open-editgroupname" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['GroupID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Group_Name']);?>" >Edit Group</button>
-                          </td>
-                          <td>
-                            <form name="groupedit" action="./perms.php" method="post">
-                              <input type="hidden" name="permsedit" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="Edit Permissions"/>
+                            <form action="./perms.php" method="post">
+                            <input type="hidden" name="permid" value="<?php echo htmlspecialchars($row['permissionsID']);?>">
+                            <input type="hidden" name="permsedit2" value="<?php echo $id;?>"/>
+                            <label for="new_status" class="control-label">Perm Status</label>
+                              <select name="new_status" class="form-control">
+                                <?php
+                                  if($perm_active === "true") {?>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                  <?php }
+                                  else {?>
+                                    <option value="false">No</option>
+                                    <option value="true">Yes</option>
+                                  <?php } ?>
+                                </select>
+                              <button type="submit" class="btn btn-warning btn-block" name="edit_perm">Update Perm</button>
                             </form>
-                          </td>
-                          <td>
-                              <button class="btn btn-danger open-removegroup" data-target="#open-removegroup" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['GroupID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Group_Name']);?>" >Remove Group</button>
-                          </td>        
+                          </td>       
                      <?php };
                     ?>
                   </tbody>

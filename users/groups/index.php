@@ -276,12 +276,12 @@
                           <td class="text-center"><?php echo htmlspecialchars($row['GroupID']);?></td>
                           <td class="text-center"><?php echo htmlspecialchars($row['Group_Name']);?></td>
                           <td>
-                              <button class="btn btn-danger open-editgroupname" data-target="#open-editgroupname" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['GroupID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Group_Name']);?>" >Edit Group</button>
+                              <button class="btn btn-primary open-editgroupname" data-target="#open-editgroupname" data-toggle="modal" data-id1="<?php echo htmlspecialchars($row['GroupID']);?>" data-namevalue="<?php echo htmlspecialchars($row['Group_Name']);?>" >Edit Group</button>
                           </td>
                           <td>
-                            <form name="groupedit" action="./perms.php" method="post">
+                            <form name="perms" action="./perms.php" method="post">
                               <input type="hidden" name="permsedit" value="<?php echo htmlspecialchars($row['GroupID']);?>"/>
-                              <input type="submit" value="Edit Permissions"/>
+                              <button type="submit" class="btn btn-warning">Edit Permissions</button>
                             </form>
                           </td>
                           <td>

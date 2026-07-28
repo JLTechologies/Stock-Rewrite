@@ -220,6 +220,17 @@ if (isset($_POST['create_group'])) {
   }
 
   //Update group permission
+    if (isset($_POST['edit_perm'])) {
+      $permid = mysqli_real_escape_string($conn, $_POST['permid']);
+      $newstatus = mysqli_real_escape_string($conn, $_POST['new_status']);
+      $currentgroupid = mysqli_real_escape_string($conn, $_POST['permsedit2']);
+
+      $updateperm = "UPDATE permissions SET setting = '$newstatus' WHERE permissionID = $permid";
+      mysqli_query($conn, $updateperm);
+      $_SESSION['success'] = "Permission has been updated";
+      return $currentgroupid;
+      header("location: ./perms.php");
+    }
 
 // Add Product
 
