@@ -11,8 +11,19 @@
   ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/<?php echo $falo;?>" type="image/x-icon">
   <?php
+  //if (!isset($_SESSION['email'])) {
+   // $_SESSION['msg'] = "You must log in first";
+    //header('location: ../login.php');
+  //}
+  //if (isset($_GET['logout'])) {
+    //session_destroy();
+    //unset($_SESSION['email']);
+    //unset($_SESSION['success']);
+    //header("location: ../login.php");
+  //}
+  
   if (isset($_GET['logout'])) {
     session_destroy();
   }
