@@ -140,6 +140,14 @@
 				</p>
 			</a>
 			</li>
+      <li class="nav-item">
+			<a href="../sorting/" class="nav-link">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Sorting
+				</p>
+			</a>
+			</li>
       <li class="nav-item menu-closed">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-tree"></i>
