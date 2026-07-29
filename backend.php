@@ -7,7 +7,7 @@ $logo ="SELECT Favicon FROM settings";
 $users = "SELECT * FROM users";
 $groups = "SELECT * FROM groups";
 $products = "SELECT * FROM products";
-$locations = "SELECT * FROM locations";
+$locations = "SELECT * FROM locations INNER JOIN countries ON locations.Loc_CountryID = countries.countryid";
 $rootcat = "SELECT * FROM rootcategories";
 $childcat = "SELECT * FROM childcategories";
 $teams = "SELECT * FROM teams";
@@ -267,10 +267,46 @@ if (isset($_POST['create_group'])) {
 // remove contact
 
 // add location
+if (isset($_POST['create_location'])) {
+  $locationname = mysqli_real_escape_string($conn, $_POST['locationname']);
+  $locationstreet = mysqli_real_escape_string($conn, $_POST['locationstreet']);
+  $locationnumber = mysqli_real_escape_string($conn, $_POST['locationnumber']);
+  $locationaddition = mysqli_real_escape_string($conn, $_POST['locationaddition']);
+  $locationzipcode = mysqli_real_escape_string($conn, $_POST['locationzipcode']);
+  $locationcity = mysqli_real_escape_string($conn, $_POST['locationcity']);
+  $locationstate = mysqli_real_escape_string($conn, $_POST['locationstate']);
+  $locationcountryid = mysqli_real_escape_string($conn, $_POST['locationcountryid']);
+
+  if (empty($locationname) || empty($locationstreet) || empty($locationnumber) || empty($locationzipcode) || empty($locationcity) || empty($locationstate) || empty($locationcountryid)) {
+    array_push($errors, "All fields are required");
+  }
+
+  if (empty($locationaddition)) {
+    if (count($errors) == 0) {
+    $addlocation = "INSERT INTO locations (Loc_name, Loc_Street, Loc_number, Loc_zipcode, Loc_city, Loc_state, Loc_CountryID)" ."VALUES ('$locationname', '$locationstreet', '$locationnumber', '$locationzipcode', '$locationcity', '$locationstate', '$locationcountryid')";
+    mysqli_query($conn,$addlocation);
+    $_SESSION['success'] = "New location created";
+    header('location: ./index.php');
+    }
+  }
+  elseif (count($errors) == 0) {
+    $addlocation = "INSERT INTO locations (Loc_name, Loc_Street, Loc_number, Loc_addition, Loc_zipcode, Loc_city, Loc_state, Loc_CountryID)" ."VALUES ('$locationname', '$locationstreet', '$locationnumber', '$locationaddition', '$locationzipcode', '$locationcity', '$locationnicename', '$locationcountryid')";
+    mysqli_query($conn,$addlocation);
+    $_SESSION['success'] = "New location created";
+    header('location: ./index.php');
+  }
+}
 
 // update location
 
 // remove location
+if (isset($_POST['remove_location'])) {
+  $locationid = mysqli_real_escape_string($conn, $_POST['locationid']);
+  $removelocation = "DELETE FROM locations WHERE LocationID = '$locationid'";
+  mysqli_query($conn, $removelocation);
+  $_SESSION['success'] = "Location has been removed";
+  header('location: ./index.php');
+}
 
 // add measurement
 if (isset($_POST['create_measurement'])) {
