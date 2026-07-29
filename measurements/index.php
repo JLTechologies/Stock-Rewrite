@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
   <?php
   include('../config.php');
   include('../backend.php');
@@ -262,7 +259,7 @@
     <div class="col-lg-12">
             <div class="card">
               <div class="card-body table-responsive p-0">
-                <table class="table">
+                <table class="table table-borderd table-stripe" id="main">
                   <thead>
                     <tr>
                       <th>Index</th>
