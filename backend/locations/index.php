@@ -342,7 +342,7 @@
                           die('Could not fetch data: '.mysqli_error($conn));
                         }
                         while ($row1 = mysqli_fetch_assoc($getcountries)) {?>
-                          <option value="<?php htmlspecialchars($row1['countryid']) ;?>"><?php echo htmlspecialchars($row1['nicename']);?></option>
+                          <option value="<?php echo htmlspecialchars($row1['countryid']) ;?>"><?php echo htmlspecialchars($row1['nicename']);?></option>
                         <?php };
                         ?>
                     </select>

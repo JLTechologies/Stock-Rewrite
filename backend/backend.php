@@ -298,6 +298,28 @@ if (isset($_POST['create_location'])) {
 }
 
 // update location
+if (isset($_POST['edit_location'])) {
+  $newlocationid = mysqli_real_escape_string($conn, $_POST['locationid']);
+  $newlocationname = mysqli_real_escape_string($conn, $_POST['locationname']);
+  $newlocationstreet = mysqli_real_escape_string($conn, $_POST['locationstreet']);
+  $newlocationnumber = mysqli_real_escape_string($conn, $_POST['locationnumber']);
+  $newlocationaddition = mysqli_real_escape_string($conn, $_POST['locationaddition']);
+  $newlocationzipcode = mysqli_real_escape_string($conn, $_POST['locationzipcode']);
+  $newlocationcity = mysqli_real_escape_string($conn, $_POST['locationcity']);
+  $newlocationstate = mysqli_real_escape_string($conn, $_POST['locationstate']);
+  $newlocationcountryid = mysqli_real_escape_string($conn, $_POST['locationcountryid']);
+
+  if (empty($newlocationname) || empty($newlocationstreet) || empty($newlocationnumber) || empty($newlocationzipcode) || empty($newlocationaddition) || empty($newlocationcity) || empty($newlocationstate) || empty($newlocationcountryid)) {
+    array_push($errors, "All fields are required");
+  }
+
+  if (count($errors) == 0) {
+    $updatelocation = "UPDATE locations SET Loc_name = '$newlocationname', Loc_Street = '$newlocationstreet', Loc_number = '$newlocationnumber', Loc_addition = '$newlocationaddition', Loc_zipcode = '$newlocationzipcode', Loc_city = '$newlocationcity', Loc_state = '$newlocationstate', Loc_CountryID = '$newlocationcountryid' WHERE LocationID = '$newlocationid'";
+    mysqli_query($conn, $updatelocation);
+    $_SESSION['success'] = "Location has been updated";
+    header('location: ./index.php');
+  }
+}
 
 // remove location
 if (isset($_POST['remove_location'])) {
