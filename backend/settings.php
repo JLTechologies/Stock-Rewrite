@@ -8,14 +8,8 @@
   ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?php 
-  $faviconlogo = mysqli_query($conn, $logo);
-  if (! $faviconlogo) {
-    die('Logo does not exist: '.mysqli_error($conn));
-  }
-  while($favlog = mysqli_fetch_assoc($faviconlogo)) {?>
-  <link rel="shortcut icon" href="./img/<?php $falo = htmlspecialchars($favlog['Favicon']); echo $falo;?>" type="image/x-icon">
-  <?php };
+  <link rel="shortcut icon" href="./img/<?php echo $falo;?>" type="image/x-icon">
+  <?php
 
   //if (!isset($_SESSION['email'])) {
    // $_SESSION['msg'] = "You must log in first";
@@ -32,16 +26,9 @@
   if (isset($_GET['logout'])) {
     session_destroy();
   }
-
-  $name = mysqli_query($conn, $sitename);
-  if (! $name) {
-    die('Could not load sitename: '.mysqli_error($conn));
-  }
-  while($row = mysqli_fetch_assoc($name)) {?>
-  <title>Admin | <?php $site = htmlspecialchars($row['Sitename']); echo $site ;?></title>
-  <?php }
   ?>
-
+  <title>Admin | <?php echo $site ;?></title>
+  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
@@ -105,7 +92,7 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="./locations/cowcodes.php" class="nav-link">
+            <a href="./cowcodes" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Cow-Codes

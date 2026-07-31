@@ -118,7 +118,7 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="../locations/cowcodes.php" class="nav-link">
+            <a href="../cowcodes/" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Cow-Codes
