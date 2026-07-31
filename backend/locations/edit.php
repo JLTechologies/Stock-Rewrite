@@ -247,7 +247,6 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <?php include ('../../errors.php'); ?>
         <div class="row">
           <!-- notification message -->
   	<?php if (isset($_SESSION['success'])) : ?>
