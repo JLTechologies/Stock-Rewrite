@@ -262,7 +262,7 @@
     <div class="col-lg-12">
             <div class="card">
               <div class="card-body table-responsive p-0">
-                <table class="table">
+                <table class="table table-borderd table-stripe" id="main">
                   <thead>
                     <tr>
                       <th>Index</th>
