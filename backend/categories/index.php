@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="../favicon.jpg" type="image/x-icon">
   <?php
-  include('../../config.php');
-  include('../server.php');
-  $_SESSION['message'] = '';
+  include('../config.php');
+  include('../backend.php');
+  include('../errors.php');
+  ?>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="../img/<?php echo $falo;?>" type="image/x-icon">
+  <?php
   //if (!isset($_SESSION['email'])) {
    // $_SESSION['msg'] = "You must log in first";
     //header('location: ../login.php');
@@ -19,22 +21,24 @@
     //unset($_SESSION['success']);
     //header("location: ../login.php");
   //}
-
-  include('../queries.php');
-
-  $name = mysqli_query($conn, $sitename);
-  if (! $name) {
-    die('Could not load sitename: '.mysqli_error($conn));
+  
+  if (isset($_GET['logout'])) {
+    session_destroy();
   }
-  while($row = mysqli_fetch_assoc($name)) {?>
-  <title>Admin | <?php $site = htmlspecialchars($row['sitename']); echo $site ;?></title>
-  <?php }
   ?>
+  <title>Admin | <?php echo $site;?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../css/adminlte.min.css">
 </head>
@@ -51,6 +55,8 @@
     </ul>
 
     <!-- Right navbar links -->
+     <button class="btn btn-primary open-createsorting" data-target="#open-createsorting" data-toggle="modal" data-namevalue="" >Create Categories</button>
+    
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
@@ -62,20 +68,19 @@
   </nav>
   <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
+   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../index.php" class="brand-link">
-      <img src="../favicon.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="./index.php" class="brand-link">
+      <img src="../img/<?php echo $falo;?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light"><?php echo $site; ?></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
@@ -87,15 +92,23 @@
             </a>
           </li>
 		  <li class="nav-item">
-            <a href="../locations/" class="nav-link">
+            <a href="../locations" class="nav-link">
               <i class="nav-icon fas fa-users-cog"></i>
               <p>
                 Locations
               </p>
             </a>
           </li>
+		  <li class="nav-item">
+            <a href="../cowcodes/" class="nav-link">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                Cow-Codes
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
-			<a href="../categories/" class="nav-link active">
+			<a href="./" class="nav-link active">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Categories
@@ -111,7 +124,7 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="../brands/contacts/" class="nav-link">
+			<a href="../brands/contact/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Contacts
@@ -126,9 +139,25 @@
 				</p>
 			</a>
 			</li>
-      <ul class="nav nav-treeview">
+      <li class="nav-item">
+			<a href="./" class="nav-link">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Sorting
+				</p>
+			</a>
+			</li>
+      <li class="nav-item menu-closed">
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-tree"></i>
+            <p>
+              Items
+              <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
           <?php
-          $getroot = mysqli_query($conn, $rootcategories);
+          $getroot = mysqli_query($conn, $rootcat);
 
           if (! $getroot) {
             die('Could not fetch data: '.mysqli_error($conn));
@@ -142,8 +171,9 @@
           <?php };
           ?>
         </ul>
+      </li>
 		  <li class="nav-item">
-			<a href="../users/" class="nav-link">
+			<a href="./users/" class="nav-link">
 				<i class="nav-icon fas fa-th"></i>
 				<p>
 					Users
@@ -151,16 +181,24 @@
 			</a>
 			</li>
       <li class="nav-item">
-			<a href="../users/groups/" class="nav-link">
-				<i class="nav-icon fas fa-th"></i>
+			<a href="./groups/" class="nav-link">
+				<i class="nav-icon fas fa-users"></i>
 				<p>
 					Groups
 				</p>
 			</a>
 			</li>
+      <li class="nav-item">
+			<a href="../teams/" class="nav-link">
+				<i class="nav-icon fas fa-th"></i>
+				<p>
+					Teams
+				</p>
+			</a>
+			</li>
 			<li class="nav-item">
 			<a href="../settings.php" class="nav-link">
-				<i class="nav-icon fas fa-th"></i>
+				<i class="nav-icon fas fa-cog"></i>
 				<p>
 					Settings
 				</p>
@@ -195,8 +233,8 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../">Admin</a></li>
-              <li class="breadcrumb-item"><a href ="../">Dashboard</a></li>
-              <li class="breadcrumb-item active">Categories</li>
+              <li class="breadcrumb-item"><a href="../">Dashboard</a></li>
+              <li class="breadcrumb-item">Categories</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -228,7 +266,7 @@
                   </thead>
                   <tbody>
                     <?php
-                      $getrootcategories = mysqli_query($conn, $rootcategories);
+                      $getrootcategories = mysqli_query($conn, $rootcat);
 
                       if (! $getrootcategories) {
                         die('Could not fetch data: '.mysqli_error($conn));
@@ -275,7 +313,7 @@
                   </thead>
                   <tbody>
                     <?php
-                      $getchildcategories = mysqli_query($conn, $childcategories);
+                      $getchildcategories = mysqli_query($conn, $childcat);
 
                       if (! $getchildcategories) {
                         die('Could not fetch data: '.mysqli_error($conn));
@@ -344,13 +382,13 @@
                     <label for="selectroot">Root Category</label>
                     <select class="custom-select form-control border border-width-2" id="selectroot">
                       <?php
-                        $getrootselect = mysqli_query($conn, $rootcategories);
+                        $getrootselect = mysqli_query($conn, $rootcat);
 
                         if (! $getrootselect) {
                           die('Could not fetch data: '.mysqli_error($conn));
                         }
                         while ($row2 = mysqli_fetch_assoc($getrootselect)) {?>
-                          <option value="<?php htmlspecialchars($row2['categoryid']) ;?>"><?php echo htmlspecialchars($row2['name']);?></option>
+                          <option value="<?php echo htmlspecialchars($row2['categoryid']);?>"><?php echo htmlspecialchars($row2['name']);?></option>
                         <?php };
                         ?>
                     </select>
@@ -372,7 +410,7 @@
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- Default to the left -->
-	<?php include('../footer.php'); ?>
+	<?php include('../../footer.php'); ?>
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -383,7 +421,52 @@
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../js/adminlte.min.js"></script>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="../plugins/toastr/toastr.min.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#main").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": false, "info": true, "ordering": true, "paging": true,
+      "buttons": [""]
+    }).buttons().container().appendTo('#main_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+
+  $(document).on("click", ".open-createsorting", function () {
+  });
+
+  $(document).on("click", ".open-removesorting", function () {
+    var sortingid = $(this).data('id1');
+    $(".modal-body #sortingid").val(sortingid);
+  });
+  $(document).on("click", ".open-editsorting", function () {
+    var sortingid = $(this).data('id1');
+    $(".modal-body #sortingid").val(sortingid);
+  });
+
+</script>
 </body>
 </html>
