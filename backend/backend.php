@@ -17,6 +17,7 @@ $fleet = "SELECT * FROM fleet";
 $countries = "SELECT * FROM countries";
 $brands = "SELECT * FROM brands";
 $contacts = "SELECT * FROM contacts";
+$contactpersons = "SELECT * FROM sitecontact;";
 //$assets = "SELECT * FROM assets";
 $sorting = "SELECT * FROM sorting";
 $settings = "SELECT * FROM settings";
@@ -422,10 +423,71 @@ if (isset($_POST['remove_sorting'])) {
 // adjust activestatus site
 
 // add cowcode
+if (isset($_POST['site_add'])) {
+  $cowcode = mysqli_real_escape_string($conn, $_POST['site_name']);
+  $cowcodestreet = mysqli_real_escape_string($conn, $_POST['site_street']);
+  $cowcodenumber = mysqli_real_escape_string($conn, $_POST['site_number']);
+  $cowcodeaddition = mysqli_real_escape_string($conn, $_POST['site_addition']);
+  $cowcodezipcode = mysqli_real_escape_string($conn, $_POST['site_zipcode']);
+  $cowcodecity = mysqli_real_escape_string($conn, $_POST['site_city']);
+  $cowcodestate = mysqli_real_escape_string($conn, $_POST['site_state']);
+  $cowcodecountryid = mysqli_real_escape_string($conn, $_POST['sitecountry']);
+  $cowcodesitecontact = mysqli_real_escape_string($conn, $_POST['sitecontact']);
+
+  if (empty($cowcodeaddition)) {
+    $cowcodeaddition = "";
+  }
+  elseif (empty($cowcode) || empty($cowcodestreet) || empty($cowcodenumber) || empty($cowcodezipcode) || empty($cowcodecity) || empty($cowcodestate) || empty($cowcodecountryid) || empty($cowcodesitecontact)) {
+    array_push($errors, "All fields are required");
+  }
+
+  if (count($errors) == 0) {
+    $addcowcode = "INSERT INTO sites (cowcode, site_street, site_number, site_addition, site_zipcode, site_city, site_state, countryID, site_contactID)" ."VALUES ('$cowcode', '$cowcodestreet', '$cowcodenumber', '$cowcodeaddition', '$cowcodezipcode', '$cowcodecity', '$cowcodestate', '$cowcodecountryid', '$cowcodesitecontact')";
+    mysqli_query($conn,$addcowcode);
+    $_SESSION['success'] = "New cowcode created";
+    header('location: ./index.php');
+  }
+}
 
 // update cowcode
 
 // remove cowcode
+if (isset($_POST['remove_cowcode'])) {
+  $cowcodeid = mysqli_real_escape_string($conn, $_POST['cowcodeid']);
+  $removecowcode = "DELETE FROM sites WHERE siteID = '$cowcodeid'";
+  mysqli_query($conn, $removecowcode);
+  $_SESSION['success'] = "Cowcode has been removed";
+  header('location: ./index.php');
+}
+
+//add sitecontact
+if (isset($_POST['create_sitecontact'])) {
+  $sitecontactfirstname = mysqli_real_escape_string($conn, $_POST['sitecontactfirstname']);
+  $sitecontactlastname = mysqli_real_escape_string($conn, $_POST['sitecontactlastname']);
+  $sitecontactemail = mysqli_real_escape_string($conn, $_POST['sitecontactemail']);
+  $sitecontactphone = mysqli_real_escape_string($conn, $_POST['sitecontactphone']);
+  $sitecontactfirm = mysqli_real_escape_string($conn, $_POST['sitecontactfirm']);
+
+  if (empty($sitecontactfirstname) || empty($sitecontactlastname) || empty($sitecontactemail) || empty($sitecontactphone) || empty($sitecontactfirm)) {
+    array_push($errors, "All fields are required");
+  }
+
+  if (count($errors) == 0) {
+    $addsitecontact = "INSERT INTO sitecontact (site_contactfirstname, site_contactlastname, site_contactemail, site_contactphone, site_contactfirm)" ."VALUES ('$sitecontactfirstname', '$sitecontactlastname', '$sitecontactemail', '$sitecontactphone', '$sitecontactfirm')";
+    mysqli_query($conn,$addsitecontact);
+    $_SESSION['success'] = "New site contact created";
+    header('location: ./index.php');
+  }
+}
+
+//remove sitecontact
+if (isset($_POST['remove_contact'])) {
+  $contactid = mysqli_real_escape_string($conn, $_POST['contactid']);
+  $removecontact = "DELETE FROM sitecontact WHERE site_contactID = '$contactid'";
+  mysqli_query($conn, $removecontact);
+  $_SESSION['success'] = "Region contact has been removed";
+  header('location: ./contacts.php');
+}
 
 // update group perm
 
