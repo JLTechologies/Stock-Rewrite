@@ -16,7 +16,7 @@
     $cowcodeid = '$currentcowcodeid';
   }
 
-  $getcowcodeinfo = "SELECT * FROM sites INNER JOIN countries ON sites.countryID = countries.countryid INNER JOIN sitecontacts ON sites.site_contactID = sitecontact.sites_contactID WHERE siteID = '$cowcodeid'";
+  $getcowcodeinfo = "SELECT * FROM sites INNER JOIN countries ON sites.countryID = countries.countryid INNER JOIN sitecontact ON sites.site_contactID = sitecontact.sites_contactID WHERE siteID = '$cowcodeid'";
   $getinfo = mysqli_query($conn, $getcowcodeinfo);
   if (! $getinfo) {
     die('Could not fetch data: '.mysqli_error($conn));
@@ -31,6 +31,8 @@
     $sitestate = htmlspecialchars($fetchsite['site_state']);
     $countryid = htmlspecialchars($fetchsite['countryID']);
     $countryname = htmlspecialchars($fetchsite['nicename']);
+    $waze = htmlspecialchars($fetchsite['site_waze']);
+    $googlmaps = htmlspecialchars($fetchsite['site_googlemaps']);
     $contactid = htmlspecialchars($fetchsite['sites_contactID']);
     $contactfirstname = htmlspecialchars($fetchsite['site_contactfirstname']);
     $contactlastname = htmlspecialchars($fetchsite['site_contactlastname']);
@@ -293,9 +295,9 @@
           <div class="col-lg-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add Site</h3>
+                <h3 class="card-title">Edit Site</h3>
               </div>
-              <form action="./index.php" method="post">
+              <form action="./edit.php" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="sitename">COW-Code</label>
