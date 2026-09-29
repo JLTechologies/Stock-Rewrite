@@ -52,11 +52,13 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+    </ul>
+    <ul class="navbar-nav">
       <li class="nav-item">
         <button class="btn btn-primary open-createcontact" data-target="#open-createcontact" data-toggle="modal" data-namevalue="" >Create Region contact</button>
       </li>
       <li class="nav-item">
-        <button class="btn btn-info" href="./contacts.php" >Region contactlist</button>
+        <a class="btn btn-info" href="./contacts.php">Region contactlist</a>
       </li>
     </ul>
 
@@ -366,7 +368,22 @@
                           die('Could not fetch data: '.mysqli_error($conn));
                         }
                         while ($fetchcontacts = mysqli_fetch_assoc($getcontactpersons)) {?>
-                          <option value="<?php echo htmlspecialchars($fetchcontacts['sites_contactid']) ;?>"><?php echo htmlspecialchars($fetchcontacts['site_contactfirstname']) . ' ' . htmlspecialchars($fetchcontacts['site_contactlastname']);?></option>
+                          <option value="<?php echo htmlspecialchars($fetchcontacts['sites_contactID']) ;?>"><?php echo htmlspecialchars($fetchcontacts['site_contactfirstname']) . ' ' . htmlspecialchars($fetchcontacts['site_contactlastname']);?></option>
+                        <?php };
+                        ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="sitetype">Site Type</label>
+                    <select class="custom-select form-control border border-width-2" id="sitetype" name="site_type">
+                      <?php
+                        $getcowcodetypes = mysqli_query($conn, $sitetypes);
+
+                        if (! $getcowcodetypes) {
+                          die('Could not fetch data: '.mysqli_error($conn));
+                        }
+                        while ($fetchtypes = mysqli_fetch_assoc($getcowcodetypes)) {?>
+                          <option value="<?php echo htmlspecialchars($fetchtypes['cowcodetype_ID']) ;?>"><?php echo htmlspecialchars($fetchtypes['type_Name']);?></option>
                         <?php };
                         ?>
                     </select>
@@ -428,7 +445,7 @@
               </div>
                 <div class="modal-footer justify-content-between">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="submit" name="remove_cowcode" class="btn btn-primary">Confirm Removal</button>
+                  <button type="submit" name="remove_cowcode" class="btn btn-danger">Confirm Removal</button>
                 </div>
               </form>
           </div>
@@ -459,6 +476,9 @@
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../js/adminlte.min.js"></script>
+<!-- Bootstrap 4 -->
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>

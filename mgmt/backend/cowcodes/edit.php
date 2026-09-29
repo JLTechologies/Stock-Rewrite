@@ -16,7 +16,7 @@
     $cowcodeid = '$currentcowcodeid';
   }
 
-  $getcowcodeinfo = "SELECT * FROM sites INNER JOIN countries ON sites.countryID = countries.countryid INNER JOIN sitecontact ON sites.site_contactID = sitecontact.sites_contactID WHERE siteID = '$cowcodeid'";
+  $getcowcodeinfo = "SELECT * FROM sites INNER JOIN countries ON sites.countryID = countries.countryid INNER JOIN sitecontact ON sites.site_contactID = sitecontact.sites_contactID INNER JOIN cowcodetype ON sites.site_type_ID = cowcodetype.cowcodetype_ID WHERE siteID = '$cowcodeid';";
   $getinfo = mysqli_query($conn, $getcowcodeinfo);
   if (! $getinfo) {
     die('Could not fetch data: '.mysqli_error($conn));
@@ -33,9 +33,12 @@
     $countryname = htmlspecialchars($fetchsite['nicename']);
     $waze = htmlspecialchars($fetchsite['site_waze']);
     $googlmaps = htmlspecialchars($fetchsite['site_googlemaps']);
-    $contactid = htmlspecialchars($fetchsite['sites_contactID']);
     $contactfirstname = htmlspecialchars($fetchsite['site_contactfirstname']);
     $contactlastname = htmlspecialchars($fetchsite['site_contactlastname']);
+    $contactemail = htmlspecialchars($fetchsite['site_contactemail']);
+    $contactphone = htmlspecialchars($fetchsite['site_contactphone']);
+    $contactfirm = htmlspecialchars($fetchsite['site_contactfirm']);
+    $cowcodetypename = htmlspecialchars($fetchsite['type_Name']);
   }
 
   ?>

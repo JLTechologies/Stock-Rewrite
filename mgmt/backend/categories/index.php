@@ -55,7 +55,8 @@
     </ul>
 
     <!-- Right navbar links -->
-     <button class="btn btn-primary open-createsorting" data-target="#open-createsorting" data-toggle="modal" data-namevalue="" >Create Categories</button>
+     <button class="btn btn-primary open-createrootcat" data-target="#open-createrootcat" data-toggle="modal" data-namevalue="" >Create Root Category</button>
+     <button class="btn btn-info open-createchildcat" data-target="#open-createchildcat" data-toggle="modal" data-namevalue="" >Create Child Category</button>
     
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
@@ -245,9 +246,18 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-    <?php include ('../errors.php'); ?>
         <div class="row">
-          <?php echo $_SESSION['message'];?>
+          <!-- notification message -->
+  	<?php if (isset($_SESSION['success'])) : ?>
+      <div class="error success" >
+      	<h3>
+          <?php 
+          	echo $_SESSION['success'];
+            unset($_SESSION['success']);
+          ?>
+      	</h3>
+      </div>
+  	<?php endif ?>      
           <div class="col-lg-6">
             <div class="card">
               <div class="card-body">
