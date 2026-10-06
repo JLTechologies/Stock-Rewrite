@@ -24,6 +24,12 @@ return [
         'phone' => env('SUPPORT_PHONE'),
         'email' => env('SUPPORT_EMAIL'),
         'vat_number' => env('SUPPORT_VAT_NUMBER'),
+        'social' => [
+            'instagram' => null,
+            'facebook' => null,
+            'linkedin' => null,
+            'twitter' => null,
+        ],
         'opening_hours' => [
             'nl' => 'Maandag - vrijdag: 7u30 - 17u00',
             'fr' => 'Lundi - vendredi : 7h30 - 17h00',

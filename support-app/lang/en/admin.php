@@ -233,6 +233,8 @@ return [
         'street' => 'Street and number',
         'postal_code' => 'Postal code',
         'city' => 'City',
+        'social' => 'Social media',
+        'social_help' => 'Full link to your page. Networks that are filled in appear as an icon in the portal footer.',
         'opening_hours' => 'Opening hours',
         'mail' => 'Outgoing e-mail',
         'mail_help' => 'Server for notifications to clients and agents. Leave empty to use the .env configuration.',

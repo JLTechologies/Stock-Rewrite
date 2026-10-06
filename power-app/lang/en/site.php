@@ -101,6 +101,7 @@ return [
         'navigation' => 'Navigation',
         'contact' => 'Contact',
         'vat' => 'VAT',
+        'social' => 'Follow us on social media',
         'login' => 'Log in',
     ],
     'privacy' => [

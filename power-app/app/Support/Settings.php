@@ -75,6 +75,12 @@ class Settings
                     'en' => 'Brussels, Flanders and Wallonia',
                 ],
                 'notify_email' => null,
+                'social' => [
+                    'instagram' => null,
+                    'facebook' => null,
+                    'linkedin' => null,
+                    'twitter' => null,
+                ],
             ],
             'mail' => [
                 'mailer' => null,
@@ -91,6 +97,7 @@ class Settings
                 'primary_dark' => '#001a2e',
                 'accent' => '#f7941d',
                 'accent_hover' => '#e58413',
+                'logo' => null,
                 'favicon' => null,
                 'custom_css' => null,
             ],
@@ -166,6 +173,16 @@ class Settings
             'mail.from.address' => $mail['from_address'],
             'mail.from.name' => $mail['from_name'],
         ], fn (mixed $value): bool => filled($value)));
+    }
+
+    /**
+     * Public URL of the uploaded logo, or null for the default lightning-bolt mark.
+     */
+    public function logoUrl(): ?string
+    {
+        $logo = $this->get('appearance.logo');
+
+        return filled($logo) ? Storage::disk('public')->url($logo) : null;
     }
 
     /**

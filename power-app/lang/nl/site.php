@@ -101,6 +101,7 @@ return [
         'navigation' => 'Navigatie',
         'contact' => 'Contact',
         'vat' => 'BTW',
+        'social' => 'Volg ons op sociale media',
         'login' => 'Inloggen',
     ],
     'privacy' => [

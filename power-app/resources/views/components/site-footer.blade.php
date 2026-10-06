@@ -1,4 +1,8 @@
-@php($contact = settings('contact'))
+@php
+    $contact = settings('contact');
+    $socialNames = ['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'twitter' => 'X (Twitter)'];
+    $socialLinks = collect($contact['social'] ?? [])->only(array_keys($socialNames))->filter();
+@endphp
 
 <footer class="bg-navy-900 text-white/70">
     <div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
@@ -10,6 +14,20 @@
             <p class="mt-6 max-w-md text-sm leading-relaxed">
                 {{ __('site.footer.about', ['name' => settings('general.site_name'), 'year' => settings('general.founded')]) }}
             </p>
+            @if ($socialLinks->isNotEmpty())
+                <ul class="mt-6 flex gap-3" aria-label="{{ __('site.footer.social') }}">
+                    @foreach ($socialLinks as $network => $url)
+                        <li>
+                            <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                               class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-accent hover:bg-accent"
+                               title="{{ $socialNames[$network] }}">
+                                <x-site-icon :name="$network" class="h-4 w-4" />
+                                <span class="sr-only">{{ $socialNames[$network] }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
 
         <div>

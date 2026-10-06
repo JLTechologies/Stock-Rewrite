@@ -233,6 +233,8 @@ return [
         'street' => 'Rue et numéro',
         'postal_code' => 'Code postal',
         'city' => 'Commune',
+        'social' => 'Réseaux sociaux',
+        'social_help' => 'Lien complet vers votre page. Les réseaux remplis apparaissent sous forme d\'icône dans le pied de page du portail.',
         'opening_hours' => 'Heures d\'ouverture',
         'mail' => 'E-mail sortant',
         'mail_help' => 'Serveur pour les notifications aux clients et agents. Laissez vide pour utiliser la configuration .env.',

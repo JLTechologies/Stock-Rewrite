@@ -233,6 +233,8 @@ return [
         'street' => 'Straat en nummer',
         'postal_code' => 'Postcode',
         'city' => 'Gemeente',
+        'social' => 'Sociale media',
+        'social_help' => 'Volledige link naar je pagina. Ingevulde netwerken verschijnen als icoon in de footer van het portaal.',
         'opening_hours' => 'Openingsuren',
         'mail' => 'Uitgaande e-mail',
         'mail_help' => 'Server voor meldingen aan klanten en agenten. Leeg laten om de instellingen uit .env te gebruiken.',

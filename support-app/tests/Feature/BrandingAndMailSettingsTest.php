@@ -34,6 +34,8 @@ class BrandingAndMailSettingsTest extends TestCase
                 'branding.tagline' => ['nl' => 'Servicedesk', 'fr' => 'Service', 'en' => 'Service desk'],
                 'branding.phone' => '+32 9 123 45 67',
                 'branding.vat_number' => 'BE 0987.654.321',
+                'branding.social.linkedin' => 'https://www.linkedin.com/company/acme',
+                'branding.social.instagram' => 'https://www.instagram.com/acme',
                 'branding.street' => 'Kerkstraat 1',
                 'branding.about' => ['nl' => 'Acme helpt je verder.'],
                 'branding.main_site_url' => 'https://acme.example',
@@ -51,6 +53,9 @@ class BrandingAndMailSettingsTest extends TestCase
             ->assertSee('Acme helpt je verder.')
             ->assertSee('+32 9 123 45 67')
             ->assertSee('Btw BE 0987.654.321')
+            ->assertSee('href="https://www.linkedin.com/company/acme"', false)
+            ->assertSee('href="https://www.instagram.com/acme"', false)
+            ->assertDontSee('title="Facebook"', false)
             ->assertSee('--color-accent:#00a86b', false)
             ->assertDontSee('Power Installation NV');
 
@@ -81,6 +86,14 @@ class BrandingAndMailSettingsTest extends TestCase
         Storage::disk('public')->assertMissing($logo);
         $this->assertNull(app(HelpdeskSettings::class)->logoUrl());
         $this->get('/')->assertDontSee(Storage::disk('public')->url($logo));
+    }
+
+    public function test_social_links_must_be_web_addresses(): void
+    {
+        Livewire::test(Settings::class)
+            ->fillForm(['branding.social.facebook' => 'javascript:alert(1)'])
+            ->call('save')
+            ->assertHasFormErrors(['branding.social.facebook']);
     }
 
     public function test_svg_uploads_are_refused(): void

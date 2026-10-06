@@ -36,8 +36,10 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->profile(EditProfile::class)
             ->brandName(fn (): string => settings('general.site_name').' · Admin')
-            ->colors([
-                'primary' => Color::hex('#f7941d'),
+            ->brandLogo(fn () => view('filament.brand'))
+            ->brandLogoHeight('2.25rem')
+            ->colors(fn (): array => [
+                'primary' => Color::hex(preg_match('/^#[0-9a-f]{6}$/i', (string) settings('appearance.accent')) ? settings('appearance.accent') : '#f7941d'),
                 'gray' => Color::Slate,
             ])
             ->font('Inter')

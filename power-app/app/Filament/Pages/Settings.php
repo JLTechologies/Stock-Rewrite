@@ -129,7 +129,9 @@ class Settings extends Page
         }
 
         if (static::canEdit('appearance')) {
-            $this->deleteReplacedFavicon($settings->get('appearance.favicon'), $data['appearance']['favicon'] ?? null);
+            foreach (['logo', 'favicon'] as $image) {
+                $this->deleteReplacedImage($settings->get("appearance.{$image}"), $data['appearance'][$image] ?? null);
+            }
         }
 
         // Only groups the user may edit are saved, whatever the request contains.
@@ -152,7 +154,7 @@ class Settings extends Page
         return auth()->user()?->hasPermission("settings.{$group}") ?? false;
     }
 
-    protected function deleteReplacedFavicon(?string $old, ?string $new): void
+    protected function deleteReplacedImage(?string $old, ?string $new): void
     {
         if (filled($old) && $old !== $new) {
             Storage::disk('public')->delete($old);
@@ -314,6 +316,19 @@ class Settings extends Page
                         ->maxLength(150),
                 ]),
             ], __('admin.settings.sections.localized_contact')),
+            Section::make(__('admin.settings.sections.social'))
+                ->description(__('admin.settings.help.social'))
+                ->columns(2)
+                ->schema(collect(['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'twitter' => 'X (Twitter)'])
+                    ->map(fn (string $label, string $network): TextInput => TextInput::make("contact.social.{$network}")
+                        ->label($label)
+                        ->url()
+                        ->rule('url:http,https')
+                        ->maxLength(255)
+                        ->placeholder("https://{$network}.com/…")
+                        ->prefixIcon(Heroicon::OutlinedLink))
+                    ->values()
+                    ->all()),
         ];
     }
 
@@ -403,6 +418,20 @@ class Settings extends Page
                         ->label(__('admin.settings.fields.accent_hover'))
                         ->regex('/^#[0-9a-fA-F]{6}$/')
                         ->required(),
+                ]),
+            Section::make(__('admin.settings.sections.logo'))
+                ->description(__('admin.settings.help.logo'))
+                ->schema([
+                    // No SVG uploads: an SVG on the public disk could carry script.
+                    FileUpload::make('appearance.logo')
+                        ->hiddenLabel()
+                        ->image()
+                        ->acceptedFileTypes(['image/png', 'image/webp', 'image/jpeg'])
+                        ->maxSize(1024)
+                        ->disk('public')
+                        ->directory('logo')
+                        ->visibility('public')
+                        ->imagePreviewHeight('80'),
                 ]),
             Section::make(__('admin.settings.sections.favicon'))
                 ->description(__('admin.settings.help.favicon'))

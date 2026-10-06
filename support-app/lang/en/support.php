@@ -30,6 +30,7 @@ return [
         'support' => 'Support',
         'contact' => 'Contact',
         'vat_number' => 'VAT',
+        'social' => 'Follow us on social media',
         'staff_login' => 'Staff',
     ],
 

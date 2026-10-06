@@ -30,6 +30,7 @@ return [
         'support' => 'Support',
         'contact' => 'Contact',
         'vat_number' => 'TVA',
+        'social' => 'Suivez-nous sur les réseaux sociaux',
         'staff_login' => 'Collaborateurs',
     ],
 

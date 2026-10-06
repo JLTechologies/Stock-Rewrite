@@ -9,6 +9,8 @@
     $city = trim(helpdesk()->get('branding.postal_code').' '.helpdesk()->translated('branding.city'));
     $openingHours = helpdesk()->translated('branding.opening_hours');
     $mainSiteUrl = helpdesk()->get('branding.main_site_url');
+    $socialNames = ['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'twitter' => 'X (Twitter)'];
+    $socialLinks = collect(helpdesk()->get('branding.social') ?? [])->only(array_keys($socialNames))->filter();
 @endphp
 
 <footer class="bg-navy-900 text-white/70">
@@ -25,6 +27,20 @@
                 <a href="{{ $mainSiteUrl }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent">
                     {{ __('support.footer.main_site') }} <x-site-icon name="external" class="h-4 w-4" />
                 </a>
+            @endif
+            @if ($socialLinks->isNotEmpty())
+                <ul class="mt-6 flex gap-3" aria-label="{{ __('support.footer.social') }}">
+                    @foreach ($socialLinks as $network => $url)
+                        <li>
+                            <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                               class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-accent hover:bg-accent"
+                               title="{{ $socialNames[$network] }}">
+                                <x-site-icon :name="$network" class="h-4 w-4" />
+                                <span class="sr-only">{{ $socialNames[$network] }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             @endif
         </div>
 

@@ -216,7 +216,28 @@ class Settings extends Page
                     TranslatableField::make('branding.city', __('admin.settings.city'), fn (string $path) => TextInput::make($path)->maxLength(100), required: false),
                     TranslatableField::make('branding.opening_hours', __('admin.settings.opening_hours'), fn (string $path) => TextInput::make($path)->maxLength(150), required: false),
                 ]),
+            Section::make(__('admin.settings.social'))
+                ->description(__('admin.settings.social_help'))
+                ->columns(2)
+                ->schema($this->socialFields()),
         ];
+    }
+
+    /**
+     * @return list<TextInput>
+     */
+    private function socialFields(): array
+    {
+        return collect(['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'twitter' => 'X (Twitter)'])
+            ->map(fn (string $label, string $network): TextInput => TextInput::make("branding.social.{$network}")
+                ->label($label)
+                ->url()
+                ->rule('url:http,https')
+                ->maxLength(255)
+                ->placeholder("https://{$network}.com/…")
+                ->prefixIcon(Heroicon::OutlinedLink))
+            ->values()
+            ->all();
     }
 
     /**
