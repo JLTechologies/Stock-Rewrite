@@ -2,6 +2,7 @@
 
 return [
     'nav' => [
+        'certificates' => 'Certificates',
         'home' => 'Home',
         'expertises' => 'Expertise',
         'projects' => 'Projects',
@@ -34,6 +35,21 @@ return [
         'page_title' => 'Electrical engineering in every aspect',
         'page_intro' => 'From a new switchboard to a complete building installation: our crews master every step, from design to maintenance.',
         'view_projects' => 'View projects (:count)',
+    ],
+    'certificates' => [
+        'label' => 'Certificates',
+        'home_title' => 'Certified and accredited craftsmanship',
+        'all' => 'All certificates',
+        'page_title' => 'Our certificates and accreditations',
+        'page_intro' => 'Safety and quality are at the heart of what we do. These certificates and accreditations show that we work to the strictest standards.',
+        'issuer' => 'Issued by',
+        'number' => 'Number',
+        'valid_until' => 'Valid until',
+        'download' => 'Download certificate (PDF)',
+        'pictures' => 'Pictures of :name',
+        'picture_alt' => ':name, picture :number',
+        'logo_alt' => ':name logo',
+        'empty' => 'No certificates have been published yet.',
     ],
     'featured' => [
         'label' => 'Featured project',

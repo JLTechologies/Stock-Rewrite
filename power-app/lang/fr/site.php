@@ -2,6 +2,7 @@
 
 return [
     'nav' => [
+        'certificates' => 'Certificats',
         'home' => 'Accueil',
         'expertises' => 'Expertises',
         'projects' => 'Réalisations',
@@ -34,6 +35,21 @@ return [
         'page_title' => 'L\'électrotechnique sous toutes ses facettes',
         'page_intro' => 'Du nouveau tableau électrique à l\'installation complète d\'un bâtiment : nos équipes maîtrisent chaque étape, de l\'étude à la maintenance.',
         'view_projects' => 'Voir les réalisations (:count)',
+    ],
+    'certificates' => [
+        'label' => 'Certificats',
+        'home_title' => 'Un savoir-faire certifié et agréé',
+        'all' => 'Tous les certificats',
+        'page_title' => 'Nos certificats et agréments',
+        'page_intro' => 'La sécurité et la qualité sont au cœur de notre travail. Ces certificats et agréments démontrent que nous travaillons selon les normes les plus strictes.',
+        'issuer' => 'Délivré par',
+        'number' => 'Numéro',
+        'valid_until' => 'Valable jusqu\'au',
+        'download' => 'Télécharger le certificat (PDF)',
+        'pictures' => 'Photos de :name',
+        'picture_alt' => ':name, photo :number',
+        'logo_alt' => 'Logo :name',
+        'empty' => 'Aucun certificat n\'a encore été publié.',
     ],
     'featured' => [
         'label' => 'Projet à la une',

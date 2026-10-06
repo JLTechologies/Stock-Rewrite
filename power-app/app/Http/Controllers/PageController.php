@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificate;
 use App\Models\Client;
 use App\Models\Expertise;
 use App\Models\Post;
@@ -29,6 +30,14 @@ class PageController extends Controller
             'featuredProject' => Project::published()->featured()->ordered()->first(),
             'latestPosts' => Post::latestPublished()->limit(3)->get(),
             'clients' => Client::visible()->ordered()->get(),
+            'certificates' => Certificate::published()->ordered()->get(),
+        ]);
+    }
+
+    public function certificates(): View
+    {
+        return view('pages.certificates', [
+            'certificates' => Certificate::published()->ordered()->get(),
         ]);
     }
 

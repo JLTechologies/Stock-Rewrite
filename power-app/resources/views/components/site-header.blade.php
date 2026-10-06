@@ -3,6 +3,7 @@
         ['route' => 'home', 'label' => __('site.nav.home'), 'active' => 'home'],
         ['route' => 'expertises', 'label' => __('site.nav.expertises'), 'active' => 'expertises'],
         ['route' => 'projects.index', 'label' => __('site.nav.projects'), 'active' => 'projects.*'],
+        ...(\App\Models\Certificate::anyPublished() ? [['route' => 'certificates', 'label' => __('site.nav.certificates'), 'active' => 'certificates']] : []),
         ['route' => 'posts.index', 'label' => __('site.nav.news'), 'active' => 'posts.*'],
         ['route' => 'contact', 'label' => __('site.nav.contact'), 'active' => 'contact'],
     ];

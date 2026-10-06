@@ -15,6 +15,7 @@ Route::prefix('{locale}')
     ->group(function () {
         Route::get('/', [PageController::class, 'home'])->name('home');
         Route::get('/expertises', [PageController::class, 'expertises'])->name('expertises');
+        Route::get('/certificates', [PageController::class, 'certificates'])->name('certificates');
         Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');

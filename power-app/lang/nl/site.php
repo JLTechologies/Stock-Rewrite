@@ -2,6 +2,7 @@
 
 return [
     'nav' => [
+        'certificates' => 'Certificaten',
         'home' => 'Home',
         'expertises' => 'Expertises',
         'projects' => 'Realisaties',
@@ -34,6 +35,21 @@ return [
         'page_title' => 'Elektrotechniek in al zijn facetten',
         'page_intro' => 'Van een nieuw verdeelbord tot een volledige gebouwinstallatie: onze ploegen beheersen elke stap, van studie tot onderhoud.',
         'view_projects' => 'Bekijk de realisaties (:count)',
+    ],
+    'certificates' => [
+        'label' => 'Certificaten',
+        'home_title' => 'Gecertificeerd en erkend vakmanschap',
+        'all' => 'Alle certificaten',
+        'page_title' => 'Onze certificaten en erkenningen',
+        'page_intro' => 'Veiligheid en kwaliteit staan centraal. Deze certificaten en erkenningen tonen aan dat we werken volgens de strengste normen.',
+        'issuer' => 'Uitgereikt door',
+        'number' => 'Nummer',
+        'valid_until' => 'Geldig tot',
+        'download' => 'Certificaat downloaden (PDF)',
+        'pictures' => 'Foto\'s bij :name',
+        'picture_alt' => ':name, foto :number',
+        'logo_alt' => 'Logo :name',
+        'empty' => 'Er zijn nog geen certificaten gepubliceerd.',
     ],
     'featured' => [
         'label' => 'Project in de kijker',

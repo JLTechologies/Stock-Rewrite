@@ -127,6 +127,36 @@
         </div>
     </section>
 
+    {{-- Certificates --}}
+    @if ($certificates->isNotEmpty())
+        <section class="border-b border-line py-20">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                    <div>
+                        <p class="eyebrow">{{ __('site.certificates.label') }}</p>
+                        <h2 class="mt-4 max-w-2xl text-4xl font-extrabold tracking-tight">{{ __('site.certificates.home_title') }}</h2>
+                    </div>
+                    <a href="{{ route('certificates') }}" class="btn btn-outline">{{ __('site.certificates.all') }}</a>
+                </div>
+
+                <ul class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+                    @foreach ($certificates as $certificate)
+                        <li data-reveal>
+                            <a href="{{ route('certificates') }}#certificate-{{ $certificate->id }}" class="group flex h-full flex-col items-center justify-center gap-3 rounded-lg border border-line p-6 text-center transition hover:border-accent hover:shadow-lg">
+                                @if ($logoUrl = $certificate->logoUrl())
+                                    <img src="{{ $logoUrl }}" alt="" class="h-16 w-full object-contain" loading="lazy">
+                                @else
+                                    <x-site-icon name="shield" class="h-12 w-12 text-accent" />
+                                @endif
+                                <span class="text-sm font-bold group-hover:text-accent">{{ $certificate->name }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </section>
+    @endif
+
     {{-- Featured project --}}
     @if ($featuredProject)
         <section class="relative overflow-hidden bg-navy-900 py-24 text-white">

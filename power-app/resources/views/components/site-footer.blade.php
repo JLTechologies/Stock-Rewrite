@@ -35,6 +35,9 @@
             <ul class="mt-5 space-y-3 text-sm">
                 <li><a href="{{ route('expertises') }}" class="hover:text-accent">{{ __('site.nav.expertises') }}</a></li>
                 <li><a href="{{ route('projects.index') }}" class="hover:text-accent">{{ __('site.nav.projects') }}</a></li>
+                @if (\App\Models\Certificate::anyPublished())
+                    <li><a href="{{ route('certificates') }}" class="hover:text-accent">{{ __('site.nav.certificates') }}</a></li>
+                @endif
                 <li><a href="{{ route('posts.index') }}" class="hover:text-accent">{{ __('site.nav.news') }}</a></li>
                 <li><a href="{{ route('contact') }}" class="hover:text-accent">{{ __('site.nav.contact') }}</a></li>
                 <li><a href="{{ route('privacy') }}" class="hover:text-accent">{{ __('site.privacy.title') }}</a></li>

@@ -53,6 +53,7 @@ class RoleFactory extends Factory
             'projects' => ['view', 'create', 'update', 'delete'],
             'expertises' => ['view', 'create', 'update', 'delete'],
             'clients' => ['view', 'create', 'update', 'delete'],
+            'certificates' => ['view', 'create', 'update', 'delete'],
             'contact_messages' => ['view', 'update', 'delete'],
         ]);
     }
