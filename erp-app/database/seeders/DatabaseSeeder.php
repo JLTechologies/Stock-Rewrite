@@ -2,8 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ItCategoryType;
+use App\Enums\ItStatusType;
 use App\Models\AssetCategory;
 use App\Models\Distributor;
+use App\Models\ItCategory;
+use App\Models\ItManufacturer;
+use App\Models\ItStatusLabel;
 use App\Models\Location;
 use App\Models\Manufacturer;
 use App\Models\Role;
@@ -31,6 +36,7 @@ class DatabaseSeeder extends Seeder
                 'locations' => ['view'],
                 'stock_items' => ['view'],
                 'stock' => ['adjust'],
+                'it_assets' => ['view'],
             ]],
             'Medewerker' => ['description' => 'Ziet het materieel van de ploeg en kan schade melden.', 'is_admin' => false, 'permissions' => [
                 'asset_logs' => ['create'],
@@ -58,6 +64,47 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->seedStock();
+        $this->seedIt();
+    }
+
+    /**
+     * Status labels and categories in the spirit of Snipe-IT's defaults.
+     */
+    protected function seedIt(): void
+    {
+        foreach ([
+            ['Gebruiksklaar', ItStatusType::Deployable, '#16a34a'],
+            ['In bestelling', ItStatusType::Pending, '#f7941d'],
+            ['In herstelling', ItStatusType::Undeployable, '#dc2626'],
+            ['Defect', ItStatusType::Undeployable, '#991b1b'],
+            ['Afgeschreven', ItStatusType::Archived, '#64748b'],
+        ] as [$name, $type, $color]) {
+            ItStatusLabel::firstOrCreate(['name' => $name], ['type' => $type, 'color' => $color]);
+        }
+
+        foreach ([
+            ItCategoryType::Asset->value => ['Laptops', 'Desktops', 'Monitoren', 'Smartphones', 'Tablets', 'Printers', 'Netwerk'],
+            ItCategoryType::Accessory->value => ['Muizen', 'Toetsenborden', 'Headsets', 'Dockingstations', 'Kabels & adapters'],
+            ItCategoryType::Consumable->value => ['Toner & inkt', 'Batterijen'],
+            ItCategoryType::Component->value => ['Geheugen (RAM)', 'Opslag (SSD/HDD)'],
+            ItCategoryType::License->value => ['Kantoorsoftware', 'Besturingssystemen', 'Beveiliging', 'Vakspecifieke software'],
+        ] as $type => $names) {
+            foreach ($names as $name) {
+                ItCategory::firstOrCreate(['type' => $type, 'name' => $name]);
+            }
+        }
+
+        foreach ([
+            'Dell' => 'https://www.dell.com/nl-be',
+            'HP' => 'https://www.hp.com/be-nl',
+            'Lenovo' => 'https://www.lenovo.com/be/nl',
+            'Apple' => 'https://www.apple.com/befr',
+            'Microsoft' => 'https://www.microsoft.com/nl-be',
+            'Samsung' => 'https://www.samsung.com/be',
+            'Ubiquiti' => 'https://www.ui.com',
+        ] as $name => $website) {
+            ItManufacturer::firstOrCreate(['name' => $name], ['website' => $website]);
+        }
     }
 
     /**

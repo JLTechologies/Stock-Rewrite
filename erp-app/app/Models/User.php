@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 #[Fillable(['name', 'initials', 'email', 'password', 'role_id', 'job_title', 'phone', 'locale', 'is_active', 'vacation_days'])]
@@ -166,6 +167,20 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
     public function flushTeamIds(): void
     {
         $this->teamIdsCache = null;
+    }
+
+    /**
+     * The user and everyone who shares a team with them.
+     *
+     * @return list<int>
+     */
+    public function teamMemberIds(): array
+    {
+        if ($this->teamIds() === []) {
+            return [$this->id];
+        }
+
+        return array_values(array_unique([$this->id, ...DB::table('team_user')->whereIn('team_id', $this->teamIds())->pluck('user_id')->map(fn (mixed $id): int => (int) $id)->all()]));
     }
 
     /**

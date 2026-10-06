@@ -22,7 +22,9 @@ class Modules
 
     public const STOCK = 'stock';
 
-    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK];
+    public const IT = 'it';
+
+    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT];
 
     public function __construct(protected Settings $settings) {}
 
@@ -83,5 +85,10 @@ class Modules
     public function stock(): bool
     {
         return $this->enabled(self::STOCK);
+    }
+
+    public function it(): bool
+    {
+        return $this->enabled(self::IT);
     }
 }

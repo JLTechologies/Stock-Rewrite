@@ -32,6 +32,7 @@ class Settings
                 'site_name' => 'ERP',
                 'company_name' => null,
                 'warning_days' => 30,
+                'it_audit_months' => 12,
             ],
             'modules' => [
                 Modules::FLEET => true,
@@ -41,6 +42,7 @@ class Settings
                 Modules::ORDERS => true,
                 Modules::LOCATIONS => true,
                 Modules::STOCK => true,
+                Modules::IT => true,
             ],
             'mail' => [
                 'mailer' => null,
@@ -149,6 +151,14 @@ class Settings
         $favicon = $this->get('appearance.favicon');
 
         return filled($favicon) ? Storage::disk('public')->url($favicon) : null;
+    }
+
+    /**
+     * Months between two audits of an IT asset.
+     */
+    public function itAuditMonths(): int
+    {
+        return max(1, (int) $this->get('general.it_audit_months', 12));
     }
 
     public function color(string $name): string

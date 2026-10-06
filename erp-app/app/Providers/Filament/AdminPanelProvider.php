@@ -6,6 +6,7 @@ use App\Filament\Pages\VacationCalendar;
 use App\Filament\Widgets\ControlsDue;
 use App\Filament\Widgets\ErpStats;
 use App\Filament\Widgets\InspectionsDue;
+use App\Filament\Widgets\ItOverview;
 use App\Filament\Widgets\LowStock;
 use App\Filament\Widgets\OpenDamages;
 use App\Providers\Filament\Concerns\ConfiguresErpPanel;
@@ -36,6 +37,7 @@ class AdminPanelProvider extends PanelProvider
                 InspectionsDue::class,
                 OpenDamages::class,
                 LowStock::class,
+                ItOverview::class,
             ]);
     }
 }

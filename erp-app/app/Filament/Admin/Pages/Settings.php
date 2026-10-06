@@ -212,6 +212,15 @@ class Settings extends Page
                         ->maxValue(365)
                         ->suffix(__('erp.settings.fields.days'))
                         ->required(),
+                    TextInput::make('general.it_audit_months')
+                        ->label(__('erp.settings.fields.it_audit_months'))
+                        ->helperText(__('erp.settings.help.it_audit_months'))
+                        ->numeric()
+                        ->minValue(1)
+                        ->maxValue(60)
+                        ->suffix(__('erp.fields.months'))
+                        ->visible(fn (): bool => modules()->it())
+                        ->required(),
                 ]),
         ];
     }
@@ -229,6 +238,7 @@ class Settings extends Page
             Modules::ORDERS => Heroicon::OutlinedHashtag,
             Modules::LOCATIONS => Heroicon::OutlinedMapPin,
             Modules::STOCK => Heroicon::OutlinedArchiveBox,
+            Modules::IT => Heroicon::OutlinedComputerDesktop,
         ];
 
         return [
