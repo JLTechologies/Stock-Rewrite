@@ -1,1 +1,4 @@
 config.php
+
+# Claude Code agent files (skills, settings): local only
+.claude/
