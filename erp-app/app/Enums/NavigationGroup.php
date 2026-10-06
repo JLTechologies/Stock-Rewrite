@@ -11,6 +11,7 @@ enum NavigationGroup implements HasLabel
     case HumanResources;
     case Fleet;
     case Assets;
+    case Stock;
     case Purchasing;
     case System;
 

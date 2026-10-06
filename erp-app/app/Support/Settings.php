@@ -39,6 +39,8 @@ class Settings
                 Modules::ASSETS => true,
                 Modules::VACATIONS => true,
                 Modules::ORDERS => true,
+                Modules::LOCATIONS => true,
+                Modules::STOCK => true,
             ],
             'mail' => [
                 'mailer' => null,

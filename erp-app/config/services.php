@@ -22,6 +22,19 @@ return [
         'key' => env('RESEND_API_KEY'),
     ],
 
+    /*
+    | Distributor catalogue APIs (prices, images). Credentials are stored per distributor
+    | in the admin panel; only the API addresses live here.
+    */
+
+    'cebeo' => [
+        'url' => env('CEBEO_API_URL'),
+    ],
+
+    'rexel' => [
+        'url' => env('REXEL_API_URL'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

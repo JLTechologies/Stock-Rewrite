@@ -19,7 +19,7 @@ class TeamsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->with('leader')->withCount(array_keys(array_filter([
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['leader', 'location'])->withCount(array_keys(array_filter([
                 'members' => true,
                 'vehicles' => modules()->fleet(),
                 'assets' => modules()->assets(),
@@ -34,6 +34,11 @@ class TeamsTable
                     ->description(fn (Team $record): ?string => str($record->description)->limit(60)->toString() ?: null)
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('location.name')
+                    ->label(__('erp.resources.location.singular'))
+                    ->placeholder('—')
+                    ->visible(fn (): bool => modules()->locations())
+                    ->toggleable(),
                 TextColumn::make('leader.name')
                     ->label(__('erp.fields.leader'))
                     ->placeholder('—'),

@@ -11,11 +11,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'color', 'description', 'leader_id', 'is_active'])]
+#[Fillable(['name', 'color', 'description', 'leader_id', 'location_id', 'is_active'])]
 class Team extends Model
 {
     /** @use HasFactory<TeamFactory> */
     use HasFactory;
+
+    /**
+     * @return BelongsTo<Location, $this>
+     */
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
+    }
 
     /**
      * @return BelongsToMany<User, $this>

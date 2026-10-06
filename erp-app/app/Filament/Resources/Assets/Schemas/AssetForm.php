@@ -101,6 +101,11 @@ class AssetForm
                                 Section::make(__('erp.sections.assignment'))
                                     ->description(__('erp.help.assignment'))
                                     ->schema([
+                                        Select::make('location_id')
+                                            ->label(__('erp.resources.location.singular'))
+                                            ->relationship('location', 'name', fn (Builder $query) => $query->where('is_active', true)->visibleTo(auth()->user()))
+                                            ->preload()
+                                            ->visible(fn (): bool => modules()->locations()),
                                         Select::make('team_id')
                                             ->label(__('erp.resources.team.singular'))
                                             ->relationship('team', 'name', fn (Builder $query) => $query->where('is_active', true)->visibleTo(auth()->user()))

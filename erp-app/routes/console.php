@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+// Needs the server cron entry: * * * * * php8.4 /path/to/erp-app/artisan schedule:run
+Schedule::command('stock:update-prices')->dailyAt('05:30')->withoutOverlapping();

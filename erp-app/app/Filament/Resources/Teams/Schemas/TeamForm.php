@@ -31,6 +31,11 @@ class TeamForm
                             ->relationship('leader', 'name', fn (Builder $query) => $query->where('is_active', true))
                             ->searchable()
                             ->preload(),
+                        Select::make('location_id')
+                            ->label(__('erp.resources.location.singular'))
+                            ->relationship('location', 'name', fn (Builder $query) => $query->where('is_active', true)->visibleTo(auth()->user()))
+                            ->preload()
+                            ->visible(fn (): bool => modules()->locations()),
                         ColorPicker::make('color')
                             ->label(__('erp.fields.color'))
                             ->regex('/^#[0-9a-fA-F]{6}$/'),

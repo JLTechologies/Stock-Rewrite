@@ -227,6 +227,8 @@ class Settings extends Page
             Modules::ASSETS => Heroicon::OutlinedBolt,
             Modules::VACATIONS => Heroicon::OutlinedSun,
             Modules::ORDERS => Heroicon::OutlinedHashtag,
+            Modules::LOCATIONS => Heroicon::OutlinedMapPin,
+            Modules::STOCK => Heroicon::OutlinedArchiveBox,
         ];
 
         return [

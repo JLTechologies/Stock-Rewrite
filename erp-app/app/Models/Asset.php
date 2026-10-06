@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable([
     'asset_tag', 'name', 'asset_category_id', 'brand', 'model', 'serial_number', 'status',
     'purchase_date', 'purchase_price', 'warranty_until', 'inspection_date', 'next_inspection_date',
-    'team_id', 'vehicle_id', 'user_id', 'photo', 'notes',
+    'team_id', 'vehicle_id', 'user_id', 'location_id', 'photo', 'notes',
 ])]
 class Asset extends Model
 {
@@ -28,6 +28,14 @@ class Asset extends Model
     public function storedFiles(): array
     {
         return ['photo'];
+    }
+
+    /**
+     * @return BelongsTo<Location, $this>
+     */
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
     }
 
     /**

@@ -23,7 +23,7 @@ class AssetsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->with(['category', 'team', 'vehicle', 'user'])->withCount('openDamages'))
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['category', 'team', 'vehicle', 'user', 'location'])->withCount('openDamages'))
             ->defaultSort('asset_tag')
             ->columns([
                 ImageColumn::make('photo')
@@ -66,6 +66,11 @@ class AssetsTable
                     ->fontFamily(FontFamily::Mono)
                     ->placeholder('—')
                     ->visible(fn (): bool => modules()->fleet()),
+                TextColumn::make('location.name')
+                    ->label(__('erp.resources.location.singular'))
+                    ->placeholder('—')
+                    ->visible(fn (): bool => modules()->locations())
+                    ->toggleable(),
                 TextColumn::make('user.name')
                     ->label(__('erp.fields.employee'))
                     ->placeholder('—')

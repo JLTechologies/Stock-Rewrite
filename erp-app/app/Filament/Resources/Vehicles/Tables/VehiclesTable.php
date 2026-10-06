@@ -24,7 +24,7 @@ class VehiclesTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->with(['team', 'driver']))
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['team', 'driver', 'location']))
             ->defaultSort('next_control_date')
             ->columns([
                 ImageColumn::make('photo')
@@ -58,6 +58,11 @@ class VehiclesTable
                     ->color('gray')
                     ->placeholder('—')
                     ->visible(fn (): bool => modules()->teams()),
+                TextColumn::make('location.name')
+                    ->label(__('erp.resources.location.singular'))
+                    ->placeholder('—')
+                    ->visible(fn (): bool => modules()->locations())
+                    ->toggleable(),
                 TextColumn::make('driver.name')
                     ->label(__('erp.fields.driver'))
                     ->placeholder('—')

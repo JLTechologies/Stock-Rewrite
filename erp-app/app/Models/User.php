@@ -137,6 +137,14 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
     }
 
     /**
+     * Whether the user may see market prices and stock values (the distributors' special prices).
+     */
+    public function canSeePrices(): bool
+    {
+        return modules()->stock() && $this->hasPermission('stock_prices.view');
+    }
+
+    /**
      * Whether visible records must be limited to the user's own teams.
      * Administrators see everything; without the teams module there is nothing to limit by.
      */
@@ -158,6 +166,20 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
     public function flushTeamIds(): void
     {
         $this->teamIdsCache = null;
+    }
+
+    /**
+     * Ids of the locations the user's teams are based at.
+     *
+     * @return list<int>
+     */
+    public function locationIds(): array
+    {
+        if ($this->teamIds() === []) {
+            return [];
+        }
+
+        return Team::query()->whereKey($this->teamIds())->whereNotNull('location_id')->distinct()->pluck('location_id')->map(fn (mixed $id): int => (int) $id)->all();
     }
 
     /**
