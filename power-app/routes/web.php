@@ -16,6 +16,7 @@ Route::prefix('{locale}')
         Route::get('/', [PageController::class, 'home'])->name('home');
         Route::get('/expertises', [PageController::class, 'expertises'])->name('expertises');
         Route::get('/certificates', [PageController::class, 'certificates'])->name('certificates');
+        Route::get('/who-is-who', [PageController::class, 'whoIsWho'])->name('who-is-who');
         Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 
         Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');

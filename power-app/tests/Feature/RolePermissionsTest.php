@@ -8,6 +8,7 @@ use App\Filament\Resources\Roles\Pages\EditRole;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Models\Client;
 use App\Models\ContactMessage;
+use App\Models\Employee;
 use App\Models\Expertise;
 use App\Models\FooterLink;
 use App\Models\Post;
@@ -36,6 +37,7 @@ class RolePermissionsTest extends TestCase
             'expertises' => [Expertise::class, 'expertises', '/admin/expertises'],
             'clients' => [Client::class, 'clients', '/admin/clients'],
             'footer links' => [FooterLink::class, 'footer_links', '/admin/footer-links'],
+            'who is who' => [Employee::class, 'employees', '/admin/who-is-who'],
             'contact messages' => [ContactMessage::class, 'contact_messages', '/admin/contact-messages'],
             'users' => [User::class, 'users', '/admin/users'],
             'roles' => [Role::class, 'roles', '/admin/roles'],

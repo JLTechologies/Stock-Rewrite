@@ -336,10 +336,11 @@ The panel uses each user's own language (set per user, and in the profile menu).
 1. **Settings > General:** site name, founding year, taglines and hero texts (NL/FR/EN), key figures.
 2. **Settings > Contact details:** address, phone, e-mail, VAT number, the address that receives contact-form messages, social media links.
 3. **Settings > Email:** SMTP server, port, encryption, user and password, sender. Click **Send test email** to check.
-4. **Settings > Appearance:** colours, logo, favicon, optional custom CSS.
+4. **Settings > Appearance:** colours, logo, favicon, the homepage background picture behind the slogan (optional – without it the default navy background stays), optional custom CSS.
 5. **Content:** expertises, projects, news, clients and certificates. Replace or delete the example content if you seeded it.
-6. **Content > Footer links:** extra links (e.g. terms and conditions, vacancies, a partner site) that appear in their own row at the bottom of every page. The row only shows when at least one visible link exists. Each link has a text per language, an address (`https://…`, a page path like `/nl/contact`, `mailto:` or `tel:`) and an option to open in a new tab. Drag the rows to change their order.
-7. **Users / Roles:** add editors. The "Editor" role manages content but not users or settings. Footer links have their own permission ("Footer links"): tick it for every role that may manage them.
+6. **Content > Who is who:** the people on the "who is who" page: name, job title per language, phone, mobile, e-mail and a photo (without a photo the website logo is shown). Drag the rows to change their order. The page appears in the menu as soon as one person is visible; switch the whole page off in **Settings > General > Pages**.
+7. **Content > Footer links:** extra links (e.g. terms and conditions, vacancies, a partner site) that appear in their own row at the bottom of every page. The row only shows when at least one visible link exists. Each link has a text per language, an address (`https://…`, a page path like `/nl/contact`, `mailto:` or `tel:`) and an option to open in a new tab. Drag the rows to change their order.
+8. **Users / Roles:** add editors. The "Editor" role manages content but not users or settings. "Who is who" and "Footer links" have their own permissions: tick them for every role that may manage them.
 
 The public website is at `https://www.example.be/nl` (also `/fr` and `/en`).
 

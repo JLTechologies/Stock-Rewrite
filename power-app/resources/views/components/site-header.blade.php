@@ -4,6 +4,7 @@
         ['route' => 'expertises', 'label' => __('site.nav.expertises'), 'active' => 'expertises'],
         ['route' => 'projects.index', 'label' => __('site.nav.projects'), 'active' => 'projects.*'],
         ...(\App\Models\Certificate::anyPublished() ? [['route' => 'certificates', 'label' => __('site.nav.certificates'), 'active' => 'certificates']] : []),
+        ...(\App\Models\Employee::pageIsAvailable() ? [['route' => 'who-is-who', 'label' => __('site.nav.who_is_who'), 'active' => 'who-is-who']] : []),
         ['route' => 'posts.index', 'label' => __('site.nav.news'), 'active' => 'posts.*'],
         ['route' => 'contact', 'label' => __('site.nav.contact'), 'active' => 'contact'],
     ];

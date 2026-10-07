@@ -2,6 +2,7 @@
 
 return [
     'nav' => [
+        'who_is_who' => 'Qui est qui',
         'certificates' => 'Certificats',
         'home' => 'Accueil',
         'expertises' => 'Expertises',
@@ -35,6 +36,13 @@ return [
         'page_title' => 'L\'électrotechnique sous toutes ses facettes',
         'page_intro' => 'Du nouveau tableau électrique à l\'installation complète d\'un bâtiment : nos équipes maîtrisent chaque étape, de l\'étude à la maintenance.',
         'view_projects' => 'Voir les réalisations (:count)',
+    ],
+    'who_is_who' => [
+        'label' => 'Notre équipe',
+        'title' => 'Qui est qui',
+        'page_title' => 'Qui est qui',
+        'page_intro' => "Découvrez les personnes derrière nos projets. N'hésitez pas à les contacter directement.",
+        'mobile' => 'GSM',
     ],
     'certificates' => [
         'label' => 'Certificats',

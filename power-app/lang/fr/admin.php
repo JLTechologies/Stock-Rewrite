@@ -17,6 +17,7 @@ return [
         'user' => ['singular' => 'utilisateur', 'plural' => 'Utilisateurs'],
         'certificate' => ['singular' => 'certificat', 'plural' => 'Certificats'],
         'footer_link' => ['singular' => 'lien de pied de page', 'plural' => 'Liens de pied de page'],
+        'employee' => ['singular' => 'personne', 'plural' => 'Qui est qui'],
         'client' => ['singular' => 'client', 'plural' => 'Clients'],
         'role' => ['singular' => 'rôle', 'plural' => 'Rôles'],
     ],
@@ -33,6 +34,7 @@ return [
             'clients' => 'Clients',
             'certificates' => 'Certificats',
             'footer_links' => 'Liens de pied de page',
+            'employees' => 'Qui est qui',
             'posts' => 'Actualités',
             'projects' => 'Réalisations',
             'expertises' => 'Expertises',
@@ -76,6 +78,9 @@ return [
         'sender' => 'Expéditeur',
     ],
     'fields' => [
+        'mobile' => 'GSM',
+        'job_title' => 'Fonction',
+        'photo' => 'Photo',
         'link_text' => 'Texte du lien',
         'link_url' => 'Lien (URL)',
         'open_in_new_tab' => 'Ouvrir dans un nouvel onglet',
@@ -117,6 +122,9 @@ return [
         'website' => 'Site web',
     ],
     'help' => [
+        'employee_photo' => 'Une photo carrée convient le mieux. Sans photo, le logo du site est affiché.',
+        'employees_empty' => 'Personne pour le moment',
+        'who_is_who_disabled' => 'La page « qui est qui » est désactivée. Activez-la dans Paramètres du site > Général.',
         'footer_link_label' => 'Affiché dans une ligne séparée en bas de chaque page. Laissez les autres langues vides pour utiliser ce texte.',
         'footer_link_url' => 'Une adresse web (https://…), une page de ce site (/fr/contact), mailto:… ou tel:…',
         'footer_link_url_invalid' => 'Utilisez une adresse web commençant par https://, un chemin commençant par /, mailto: ou tel:.',
@@ -166,6 +174,8 @@ return [
             'appearance' => 'Apparence',
         ],
         'sections' => [
+            'hero_image' => "Photo de fond de la page d'accueil",
+            'pages' => 'Pages',
             'identity' => 'Entreprise',
             'texts' => 'Textes de la page d\'accueil',
             'figures' => 'Chiffres & clients',
@@ -179,6 +189,7 @@ return [
             'custom_css' => 'CSS personnalisé',
         ],
         'fields' => [
+            'show_who_is_who' => 'Afficher la page « qui est qui »',
             'site_name' => 'Nom du site',
             'founded' => 'Année de fondation',
             'tagline' => 'Slogan',
@@ -208,6 +219,8 @@ return [
             'accent_hover' => 'Couleur d\'accent (survol)',
         ],
         'help' => [
+            'hero_image' => "Affichée derrière le slogan en haut de la page d'accueil, avec un voile sombre pour que le texte reste lisible. Une large photo paysage (au moins 1920 px) convient le mieux ; JPG, PNG ou WebP, max. 5 Mo. Sans photo, le fond bleu marine par défaut est utilisé.",
+            'show_who_is_who' => 'Visible uniquement si au moins une personne est visible. Désactivée, la page et ses liens de menu disparaissent.',
             'logo' => 'Affiché dans l\'en-tête, le pied de page, le panneau d\'administration et en filigrane. PNG, WebP ou JPG, de préférence carré avec fond transparent. Vide = logo par défaut aux couleurs du site.',
             'social' => 'Lien complet vers votre page. Les réseaux remplis apparaissent sous forme d\'icône dans le pied de page.',
             'tagline' => 'Utilisé dans le titre du navigateur et par les moteurs de recherche.',

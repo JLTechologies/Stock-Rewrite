@@ -29,6 +29,7 @@ class Settings
             'general' => [
                 'site_name' => 'Power Installation NV',
                 'founded' => 1998,
+                'show_who_is_who' => true,
                 'tagline' => [
                     'nl' => 'Elektrotechnische installaties sinds 1998',
                     'fr' => 'Installations électrotechniques depuis 1998',
@@ -99,6 +100,7 @@ class Settings
                 'accent_hover' => '#e58413',
                 'logo' => null,
                 'favicon' => null,
+                'hero_image' => null,
                 'custom_css' => null,
             ],
         ];
@@ -188,6 +190,16 @@ class Settings
     /**
      * Public URL of the uploaded favicon, or null to use the default.
      */
+    /**
+     * Public URL of the homepage hero background, or null to keep the default navy background.
+     */
+    public function heroImageUrl(): ?string
+    {
+        $image = $this->get('appearance.hero_image');
+
+        return filled($image) ? Storage::disk('public')->url($image) : null;
+    }
+
     public function faviconUrl(): ?string
     {
         $favicon = $this->get('appearance.favicon');

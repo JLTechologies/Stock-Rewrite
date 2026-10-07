@@ -39,6 +39,9 @@
                 @if (\App\Models\Certificate::anyPublished())
                     <li><a href="{{ route('certificates') }}" class="hover:text-accent">{{ __('site.nav.certificates') }}</a></li>
                 @endif
+                @if (\App\Models\Employee::pageIsAvailable())
+                    <li><a href="{{ route('who-is-who') }}" class="hover:text-accent">{{ __('site.nav.who_is_who') }}</a></li>
+                @endif
                 <li><a href="{{ route('posts.index') }}" class="hover:text-accent">{{ __('site.nav.news') }}</a></li>
                 <li><a href="{{ route('contact') }}" class="hover:text-accent">{{ __('site.nav.contact') }}</a></li>
                 <li><a href="{{ route('privacy') }}" class="hover:text-accent">{{ __('site.privacy.title') }}</a></li>

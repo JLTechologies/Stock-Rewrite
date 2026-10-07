@@ -3,14 +3,21 @@
     $years = now()->year - (int) settings('general.founded');
     // Words wrapped in *asterisks* in the hero title are highlighted.
     $heroTitle = preg_replace('/\*(.+?)\*/u', '<span class="text-accent">$1</span>', e(settings()->translated('general.hero_title')));
+    $heroImage = settings()->heroImageUrl();
 @endphp
 
 <x-layouts.app>
     {{-- Hero --}}
     <section class="relative flex min-h-[calc(100vh-72px)] items-center overflow-hidden bg-navy-950 text-white">
-        <div class="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-800 to-navy-700" aria-hidden="true"></div>
-        <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
-        <x-logo class="absolute top-1/2 -right-32 hidden h-[640px] w-[640px] -translate-y-1/2 opacity-[0.04] lg:block" />
+        @if ($heroImage)
+            {{-- Custom background picture with a navy overlay, so the slogan stays readable. --}}
+            <img src="{{ $heroImage }}" alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" data-hero-image>
+            <div class="absolute inset-0 bg-gradient-to-br from-navy-950/90 via-navy-900/75 to-navy-800/50" aria-hidden="true"></div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-800 to-navy-700" aria-hidden="true"></div>
+            <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
+            <x-logo class="absolute top-1/2 -right-32 hidden h-[640px] w-[640px] -translate-y-1/2 opacity-[0.04] lg:block" />
+        @endif
         <div class="absolute top-[15%] right-14 hidden h-28 w-px bg-accent/40 lg:block" aria-hidden="true"></div>
         <div class="absolute bottom-[20%] left-14 hidden h-px w-28 bg-accent/30 lg:block" aria-hidden="true"></div>
 

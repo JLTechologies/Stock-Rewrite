@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificate;
 use App\Models\Client;
+use App\Models\Employee;
 use App\Models\Expertise;
 use App\Models\Post;
 use App\Models\Project;
@@ -38,6 +39,18 @@ class PageController extends Controller
     {
         return view('pages.certificates', [
             'certificates' => Certificate::published()->ordered()->get(),
+        ]);
+    }
+
+    /**
+     * The "who is who" page; gone (404) when switched off in the settings or when nobody is listed.
+     */
+    public function whoIsWho(): View
+    {
+        abort_unless(Employee::pageIsAvailable(), 404);
+
+        return view('pages.who-is-who', [
+            'employees' => Employee::published()->ordered()->get(),
         ]);
     }
 

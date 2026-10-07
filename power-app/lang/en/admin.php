@@ -17,6 +17,7 @@ return [
         'user' => ['singular' => 'user', 'plural' => 'Users'],
         'certificate' => ['singular' => 'certificate', 'plural' => 'Certificates'],
         'footer_link' => ['singular' => 'footer link', 'plural' => 'Footer links'],
+        'employee' => ['singular' => 'person', 'plural' => 'Who is who'],
         'client' => ['singular' => 'client', 'plural' => 'Clients'],
         'role' => ['singular' => 'role', 'plural' => 'Roles'],
     ],
@@ -33,6 +34,7 @@ return [
             'clients' => 'Clients',
             'certificates' => 'Certificates',
             'footer_links' => 'Footer links',
+            'employees' => 'Who is who',
             'posts' => 'News',
             'projects' => 'Projects',
             'expertises' => 'Expertise',
@@ -76,6 +78,9 @@ return [
         'sender' => 'Sender',
     ],
     'fields' => [
+        'mobile' => 'Mobile',
+        'job_title' => 'Job title',
+        'photo' => 'Photo',
         'link_text' => 'Link text',
         'link_url' => 'Link (URL)',
         'open_in_new_tab' => 'Open in a new tab',
@@ -117,6 +122,9 @@ return [
         'website' => 'Website',
     ],
     'help' => [
+        'employee_photo' => 'Square photo works best. Without a photo, the website logo is shown.',
+        'employees_empty' => 'Nobody listed yet',
+        'who_is_who_disabled' => 'The "who is who" page is switched off. Switch it on in Website settings > General.',
         'footer_link_label' => 'Shown in a separate row at the bottom of every page. Leave other languages empty to use this text.',
         'footer_link_url' => 'A web address (https://…), a page of this site (/nl/contact), mailto:… or tel:…',
         'footer_link_url_invalid' => 'Use a web address starting with https://, a path starting with /, mailto: or tel:.',
@@ -166,6 +174,8 @@ return [
             'appearance' => 'Appearance',
         ],
         'sections' => [
+            'hero_image' => 'Homepage background picture',
+            'pages' => 'Pages',
             'identity' => 'Company',
             'texts' => 'Homepage texts',
             'figures' => 'Figures & clients',
@@ -179,6 +189,7 @@ return [
             'custom_css' => 'Custom CSS',
         ],
         'fields' => [
+            'show_who_is_who' => 'Show the "who is who" page',
             'site_name' => 'Website name',
             'founded' => 'Founded in',
             'tagline' => 'Tagline',
@@ -208,6 +219,8 @@ return [
             'accent_hover' => 'Accent colour (hover)',
         ],
         'help' => [
+            'hero_image' => 'Shown behind the slogan at the top of the homepage, with a dark overlay so the text stays readable. A wide landscape picture (at least 1920 px) works best; JPG, PNG or WebP, max. 5 MB. Without a picture the default navy background is used.',
+            'show_who_is_who' => 'Only shown when at least one person is visible. Switched off, the page and its menu links disappear.',
             'logo' => 'Shown in the header, footer, admin panel and as a watermark. PNG, WebP or JPG, preferably square with a transparent background. Empty = default logo in your brand colours.',
             'social' => 'Full link to your page. Networks that are filled in appear as an icon in the footer.',
             'tagline' => 'Used in the browser title and by search engines.',

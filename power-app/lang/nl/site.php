@@ -2,6 +2,7 @@
 
 return [
     'nav' => [
+        'who_is_who' => 'Wie is wie',
         'certificates' => 'Certificaten',
         'home' => 'Home',
         'expertises' => 'Expertises',
@@ -35,6 +36,13 @@ return [
         'page_title' => 'Elektrotechniek in al zijn facetten',
         'page_intro' => 'Van een nieuw verdeelbord tot een volledige gebouwinstallatie: onze ploegen beheersen elke stap, van studie tot onderhoud.',
         'view_projects' => 'Bekijk de realisaties (:count)',
+    ],
+    'who_is_who' => [
+        'label' => 'Ons team',
+        'title' => 'Wie is wie',
+        'page_title' => 'Wie is wie',
+        'page_intro' => 'Maak kennis met de mensen achter onze projecten. Neem gerust rechtstreeks contact op.',
+        'mobile' => 'gsm',
     ],
     'certificates' => [
         'label' => 'Certificaten',

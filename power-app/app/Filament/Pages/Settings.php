@@ -14,6 +14,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
@@ -129,7 +130,7 @@ class Settings extends Page
         }
 
         if (static::canEdit('appearance')) {
-            foreach (['logo', 'favicon'] as $image) {
+            foreach (['logo', 'favicon', 'hero_image'] as $image) {
                 $this->deleteReplacedImage($settings->get("appearance.{$image}"), $data['appearance'][$image] ?? null);
             }
         }
@@ -202,6 +203,12 @@ class Settings extends Page
     protected function generalFields(): array
     {
         return [
+            Section::make(__('admin.settings.sections.pages'))
+                ->schema([
+                    Toggle::make('general.show_who_is_who')
+                        ->label(__('admin.settings.fields.show_who_is_who'))
+                        ->helperText(__('admin.settings.help.show_who_is_who')),
+                ]),
             Section::make(__('admin.settings.sections.identity'))
                 ->columns(2)
                 ->schema([
@@ -432,6 +439,21 @@ class Settings extends Page
                         ->directory('logo')
                         ->visibility('public')
                         ->imagePreviewHeight('80'),
+                ]),
+            Section::make(__('admin.settings.sections.hero_image'))
+                ->description(__('admin.settings.help.hero_image'))
+                ->schema([
+                    // No SVG uploads: an SVG on the public disk could carry script.
+                    FileUpload::make('appearance.hero_image')
+                        ->hiddenLabel()
+                        ->image()
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120)
+                        ->disk('public')
+                        ->directory('hero')
+                        ->visibility('public')
+                        ->imageEditor()
+                        ->imagePreviewHeight('160'),
                 ]),
             Section::make(__('admin.settings.sections.favicon'))
                 ->description(__('admin.settings.help.favicon'))

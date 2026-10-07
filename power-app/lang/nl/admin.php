@@ -17,6 +17,7 @@ return [
         'user' => ['singular' => 'gebruiker', 'plural' => 'Gebruikers'],
         'certificate' => ['singular' => 'certificaat', 'plural' => 'Certificaten'],
         'footer_link' => ['singular' => 'footerlink', 'plural' => 'Footerlinks'],
+        'employee' => ['singular' => 'persoon', 'plural' => 'Wie is wie'],
         'client' => ['singular' => 'klant', 'plural' => 'Klanten'],
         'role' => ['singular' => 'rol', 'plural' => 'Rollen'],
     ],
@@ -33,6 +34,7 @@ return [
             'clients' => 'Klanten',
             'certificates' => 'Certificaten',
             'footer_links' => 'Footerlinks',
+            'employees' => 'Wie is wie',
             'posts' => 'Nieuws',
             'projects' => 'Realisaties',
             'expertises' => 'Expertises',
@@ -76,6 +78,9 @@ return [
         'sender' => 'Afzender',
     ],
     'fields' => [
+        'mobile' => 'Gsm',
+        'job_title' => 'Functie',
+        'photo' => 'Foto',
         'link_text' => 'Linktekst',
         'link_url' => 'Link (URL)',
         'open_in_new_tab' => 'Openen in een nieuw tabblad',
@@ -117,6 +122,9 @@ return [
         'website' => 'Website',
     ],
     'help' => [
+        'employee_photo' => 'Een vierkante foto werkt het best. Zonder foto wordt het logo van de website getoond.',
+        'employees_empty' => 'Nog niemand toegevoegd',
+        'who_is_who_disabled' => 'De pagina "wie is wie" staat uit. Zet ze aan bij Website-instellingen > Algemeen.',
         'footer_link_label' => 'Verschijnt in een aparte rij onderaan elke pagina. Laat andere talen leeg om deze tekst te gebruiken.',
         'footer_link_url' => 'Een webadres (https://…), een pagina van deze site (/nl/contact), mailto:… of tel:…',
         'footer_link_url_invalid' => 'Gebruik een webadres dat begint met https://, een pad dat begint met /, mailto: of tel:.',
@@ -166,6 +174,8 @@ return [
             'appearance' => 'Opmaak',
         ],
         'sections' => [
+            'hero_image' => 'Achtergrondfoto homepage',
+            'pages' => "Pagina's",
             'identity' => 'Bedrijf',
             'texts' => 'Teksten homepagina',
             'figures' => 'Cijfers & klanten',
@@ -179,6 +189,7 @@ return [
             'custom_css' => 'Eigen CSS',
         ],
         'fields' => [
+            'show_who_is_who' => 'Pagina "wie is wie" tonen',
             'site_name' => 'Websitenaam',
             'founded' => 'Opgericht in',
             'tagline' => 'Slogan',
@@ -208,6 +219,8 @@ return [
             'accent_hover' => 'Accentkleur (hover)',
         ],
         'help' => [
+            'hero_image' => 'Wordt getoond achter de slogan bovenaan de homepage, met een donkere laag zodat de tekst leesbaar blijft. Een brede liggende foto (minstens 1920 px) werkt het best; JPG, PNG of WebP, max. 5 MB. Zonder foto blijft de standaard donkerblauwe achtergrond.',
+            'show_who_is_who' => 'Enkel zichtbaar als er minstens één persoon zichtbaar is. Uitgeschakeld verdwijnen de pagina en de links in het menu.',
             'logo' => 'Verschijnt in de header, de footer, het beheerpaneel en als watermerk. PNG, WebP of JPG, bij voorkeur vierkant met transparante achtergrond. Leeg = standaardlogo in je huisstijlkleuren.',
             'social' => 'Volledige link naar je pagina. Ingevulde netwerken verschijnen als icoon in de footer.',
             'tagline' => 'Wordt gebruikt in de titel van de browser en in zoekmachines.',

@@ -2,6 +2,7 @@
 
 return [
     'nav' => [
+        'who_is_who' => 'Who is who',
         'certificates' => 'Certificates',
         'home' => 'Home',
         'expertises' => 'Expertise',
@@ -35,6 +36,13 @@ return [
         'page_title' => 'Electrical engineering in every aspect',
         'page_intro' => 'From a new switchboard to a complete building installation: our crews master every step, from design to maintenance.',
         'view_projects' => 'View projects (:count)',
+    ],
+    'who_is_who' => [
+        'label' => 'Our team',
+        'title' => 'Who is who',
+        'page_title' => 'Who is who',
+        'page_intro' => 'Meet the people behind our projects. Contact them directly for any question.',
+        'mobile' => 'mobile',
     ],
     'certificates' => [
         'label' => 'Certificates',
