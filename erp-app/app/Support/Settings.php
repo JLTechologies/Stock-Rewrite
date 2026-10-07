@@ -44,6 +44,8 @@ class Settings
                 Modules::STOCK => true,
                 Modules::IT => true,
                 Modules::WORK_SITES => true,
+                Modules::INCIDENTS => true,
+                Modules::SUGGESTIONS => true,
             ],
             'mail' => [
                 'mailer' => null,

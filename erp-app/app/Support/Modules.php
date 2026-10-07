@@ -26,7 +26,11 @@ class Modules
 
     public const WORK_SITES = 'work_sites';
 
-    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES];
+    public const INCIDENTS = 'incidents';
+
+    public const SUGGESTIONS = 'suggestions';
+
+    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES, self::INCIDENTS, self::SUGGESTIONS];
 
     public function __construct(protected Settings $settings) {}
 
@@ -97,5 +101,15 @@ class Modules
     public function workSites(): bool
     {
         return $this->enabled(self::WORK_SITES);
+    }
+
+    public function incidents(): bool
+    {
+        return $this->enabled(self::INCIDENTS);
+    }
+
+    public function suggestions(): bool
+    {
+        return $this->enabled(self::SUGGESTIONS);
     }
 }

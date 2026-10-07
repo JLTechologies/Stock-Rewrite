@@ -240,6 +240,8 @@ class Settings extends Page
             Modules::STOCK => Heroicon::OutlinedArchiveBox,
             Modules::IT => Heroicon::OutlinedComputerDesktop,
             Modules::WORK_SITES => Heroicon::OutlinedBuildingOffice,
+            Modules::INCIDENTS => Heroicon::OutlinedExclamationTriangle,
+            Modules::SUGGESTIONS => Heroicon::OutlinedLightBulb,
         ];
 
         return [

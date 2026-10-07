@@ -15,6 +15,8 @@
 
     .erp-mono { font-family: var(--erp-mono); }
     .erp-mark { background: var(--erp-accent); color: #fff; }
+    /* The idea box link in the top bar keeps only its icon on small screens. */
+    @media (max-width: 639px) { .erp-suggestion-label { display: none; } }
 
     /* Sidebar: navy panel with light text and an orange marker on the active item. */
     @media (min-width: 1024px) {

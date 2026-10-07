@@ -13,6 +13,7 @@ use App\Providers\Filament\Concerns\ConfiguresErpPanel;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\View\PanelsRenderHook;
 
 /**
  * The employee side: every active user, with access to modules based on their role's permissions.
@@ -25,6 +26,8 @@ class AppPanelProvider extends PanelProvider
     {
         return $this->configureErpPanel($panel, 'app', '', 'ERP')
             ->default()
+            // The idea/complaint box sits in the top bar, left of the search field.
+            ->renderHook(PanelsRenderHook::GLOBAL_SEARCH_BEFORE, fn () => view('filament.app.suggestion-link'))
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\Filament\App\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\Filament\App\Pages')
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\Filament\App\Widgets')
