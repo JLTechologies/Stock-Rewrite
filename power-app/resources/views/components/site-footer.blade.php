@@ -2,6 +2,7 @@
     $contact = settings('contact');
     $socialNames = ['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'twitter' => 'X (Twitter)'];
     $socialLinks = collect($contact['social'] ?? [])->only(array_keys($socialNames))->filter();
+    $customLinks = \App\Models\FooterLink::forFooter();
 @endphp
 
 <footer class="bg-navy-900 text-white/70">
@@ -66,6 +67,20 @@
             </ul>
         </div>
     </div>
+
+    {{-- Custom links from the admin panel: their own row, only when there are any. --}}
+    @if ($customLinks->isNotEmpty())
+        <nav class="border-t border-white/10" aria-label="{{ __('site.footer.links') }}">
+            <ul class="mx-auto flex max-w-7xl flex-wrap gap-x-6 gap-y-2 px-4 py-5 text-sm sm:px-6 lg:px-8">
+                @foreach ($customLinks as $link)
+                    <li>
+                        <a href="{{ $link->url }}" class="hover:text-accent"
+                           @if ($link->open_in_new_tab) target="_blank" rel="noopener noreferrer" @endif>{{ $link->translate('label') }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+    @endif
 
     <div class="border-t border-white/10">
         <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 font-mono text-xs sm:flex-row sm:justify-between sm:px-6 lg:px-8">

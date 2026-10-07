@@ -9,6 +9,7 @@ use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Models\Client;
 use App\Models\ContactMessage;
 use App\Models\Expertise;
+use App\Models\FooterLink;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Role;
@@ -34,6 +35,7 @@ class RolePermissionsTest extends TestCase
             'projects' => [Project::class, 'projects', '/admin/projects'],
             'expertises' => [Expertise::class, 'expertises', '/admin/expertises'],
             'clients' => [Client::class, 'clients', '/admin/clients'],
+            'footer links' => [FooterLink::class, 'footer_links', '/admin/footer-links'],
             'contact messages' => [ContactMessage::class, 'contact_messages', '/admin/contact-messages'],
             'users' => [User::class, 'users', '/admin/users'],
             'roles' => [Role::class, 'roles', '/admin/roles'],

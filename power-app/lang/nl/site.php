@@ -113,6 +113,7 @@ return [
         'spam' => 'Uw bericht kon niet worden verzonden.',
     ],
     'footer' => [
+        'links' => 'Meer links',
         'about' => 'Sinds :year ontwerpt, installeert en onderhoudt :name elektrische installaties voor bedrijven, overheden en particulieren.',
         'navigation' => 'Navigatie',
         'contact' => 'Contact',

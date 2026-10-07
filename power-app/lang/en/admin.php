@@ -16,6 +16,7 @@ return [
         'contact_message' => ['singular' => 'message', 'plural' => 'Contact messages'],
         'user' => ['singular' => 'user', 'plural' => 'Users'],
         'certificate' => ['singular' => 'certificate', 'plural' => 'Certificates'],
+        'footer_link' => ['singular' => 'footer link', 'plural' => 'Footer links'],
         'client' => ['singular' => 'client', 'plural' => 'Clients'],
         'role' => ['singular' => 'role', 'plural' => 'Roles'],
     ],
@@ -31,6 +32,7 @@ return [
         'areas' => [
             'clients' => 'Clients',
             'certificates' => 'Certificates',
+            'footer_links' => 'Footer links',
             'posts' => 'News',
             'projects' => 'Projects',
             'expertises' => 'Expertise',
@@ -74,6 +76,9 @@ return [
         'sender' => 'Sender',
     ],
     'fields' => [
+        'link_text' => 'Link text',
+        'link_url' => 'Link (URL)',
+        'open_in_new_tab' => 'Open in a new tab',
         'issuer' => 'Issuing body',
         'certificate_number' => 'Certificate number',
         'valid_until' => 'Valid until',
@@ -112,6 +117,11 @@ return [
         'website' => 'Website',
     ],
     'help' => [
+        'footer_link_label' => 'Shown in a separate row at the bottom of every page. Leave other languages empty to use this text.',
+        'footer_link_url' => 'A web address (https://…), a page of this site (/nl/contact), mailto:… or tel:…',
+        'footer_link_url_invalid' => 'Use a web address starting with https://, a path starting with /, mailto: or tel:.',
+        'footer_links_empty' => 'No footer links yet',
+        'footer_links_empty_description' => 'Links you add here appear in their own row in the website footer.',
         'certificate_name' => 'As written on the certificate, e.g. VCA**, ISO 9001.',
         'valid_until' => 'After this date the certificate disappears from the website automatically. Empty = no expiry.',
         'certificate_description' => 'Short explanation for visitors: what does this certificate cover?',

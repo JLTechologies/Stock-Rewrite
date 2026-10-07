@@ -16,6 +16,7 @@ return [
         'contact_message' => ['singular' => 'message', 'plural' => 'Messages de contact'],
         'user' => ['singular' => 'utilisateur', 'plural' => 'Utilisateurs'],
         'certificate' => ['singular' => 'certificat', 'plural' => 'Certificats'],
+        'footer_link' => ['singular' => 'lien de pied de page', 'plural' => 'Liens de pied de page'],
         'client' => ['singular' => 'client', 'plural' => 'Clients'],
         'role' => ['singular' => 'rôle', 'plural' => 'Rôles'],
     ],
@@ -31,6 +32,7 @@ return [
         'areas' => [
             'clients' => 'Clients',
             'certificates' => 'Certificats',
+            'footer_links' => 'Liens de pied de page',
             'posts' => 'Actualités',
             'projects' => 'Réalisations',
             'expertises' => 'Expertises',
@@ -74,6 +76,9 @@ return [
         'sender' => 'Expéditeur',
     ],
     'fields' => [
+        'link_text' => 'Texte du lien',
+        'link_url' => 'Lien (URL)',
+        'open_in_new_tab' => 'Ouvrir dans un nouvel onglet',
         'issuer' => 'Organisme émetteur',
         'certificate_number' => 'Numéro de certificat',
         'valid_until' => 'Valable jusqu\'au',
@@ -112,6 +117,11 @@ return [
         'website' => 'Site web',
     ],
     'help' => [
+        'footer_link_label' => 'Affiché dans une ligne séparée en bas de chaque page. Laissez les autres langues vides pour utiliser ce texte.',
+        'footer_link_url' => 'Une adresse web (https://…), une page de ce site (/fr/contact), mailto:… ou tel:…',
+        'footer_link_url_invalid' => 'Utilisez une adresse web commençant par https://, un chemin commençant par /, mailto: ou tel:.',
+        'footer_links_empty' => 'Pas encore de liens de pied de page',
+        'footer_links_empty_description' => 'Les liens ajoutés ici apparaissent dans une ligne à part dans le pied de page du site.',
         'certificate_name' => 'Tel qu\'indiqué sur le certificat, p. ex. VCA**, ISO 9001.',
         'valid_until' => 'Après cette date, le certificat disparaît automatiquement du site. Vide = pas d\'échéance.',
         'certificate_description' => 'Brève explication pour les visiteurs : que couvre ce certificat ?',

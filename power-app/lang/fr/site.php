@@ -113,6 +113,7 @@ return [
         'spam' => 'Votre message n\'a pas pu être envoyé.',
     ],
     'footer' => [
+        'links' => 'Plus de liens',
         'about' => 'Depuis :year, :name conçoit, installe et entretient des installations électriques pour les entreprises, les pouvoirs publics et les particuliers.',
         'navigation' => 'Navigation',
         'contact' => 'Contact',

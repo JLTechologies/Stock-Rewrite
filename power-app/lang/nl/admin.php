@@ -16,6 +16,7 @@ return [
         'contact_message' => ['singular' => 'bericht', 'plural' => 'Contactberichten'],
         'user' => ['singular' => 'gebruiker', 'plural' => 'Gebruikers'],
         'certificate' => ['singular' => 'certificaat', 'plural' => 'Certificaten'],
+        'footer_link' => ['singular' => 'footerlink', 'plural' => 'Footerlinks'],
         'client' => ['singular' => 'klant', 'plural' => 'Klanten'],
         'role' => ['singular' => 'rol', 'plural' => 'Rollen'],
     ],
@@ -31,6 +32,7 @@ return [
         'areas' => [
             'clients' => 'Klanten',
             'certificates' => 'Certificaten',
+            'footer_links' => 'Footerlinks',
             'posts' => 'Nieuws',
             'projects' => 'Realisaties',
             'expertises' => 'Expertises',
@@ -74,6 +76,9 @@ return [
         'sender' => 'Afzender',
     ],
     'fields' => [
+        'link_text' => 'Linktekst',
+        'link_url' => 'Link (URL)',
+        'open_in_new_tab' => 'Openen in een nieuw tabblad',
         'issuer' => 'Uitgevende instantie',
         'certificate_number' => 'Certificaatnummer',
         'valid_until' => 'Geldig tot',
@@ -112,6 +117,11 @@ return [
         'website' => 'Website',
     ],
     'help' => [
+        'footer_link_label' => 'Verschijnt in een aparte rij onderaan elke pagina. Laat andere talen leeg om deze tekst te gebruiken.',
+        'footer_link_url' => 'Een webadres (https://…), een pagina van deze site (/nl/contact), mailto:… of tel:…',
+        'footer_link_url_invalid' => 'Gebruik een webadres dat begint met https://, een pad dat begint met /, mailto: of tel:.',
+        'footer_links_empty' => 'Nog geen footerlinks',
+        'footer_links_empty_description' => 'Links die je hier toevoegt, verschijnen in een eigen rij in de footer van de website.',
         'certificate_name' => 'Zoals het op het certificaat staat, bv. VCA**, ISO 9001.',
         'valid_until' => 'Na deze datum verdwijnt het certificaat automatisch van de website. Leeg = geen vervaldatum.',
         'certificate_description' => 'Korte uitleg voor bezoekers: wat houdt dit certificaat in?',

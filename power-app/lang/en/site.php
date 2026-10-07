@@ -113,6 +113,7 @@ return [
         'spam' => 'Your message could not be sent.',
     ],
     'footer' => [
+        'links' => 'More links',
         'about' => 'Since :year, :name has designed, installed and maintained electrical installations for businesses, public authorities and private clients.',
         'navigation' => 'Navigation',
         'contact' => 'Contact',
