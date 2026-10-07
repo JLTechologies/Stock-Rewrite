@@ -36,7 +36,9 @@ class Modules
 
     public const EMPLOYEES = 'employees';
 
-    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES, self::INCIDENTS, self::SUGGESTIONS, self::PROJECTS, self::KNOWLEDGE_BASE, self::EMPLOYEES];
+    public const WASTE = 'waste';
+
+    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES, self::INCIDENTS, self::SUGGESTIONS, self::PROJECTS, self::KNOWLEDGE_BASE, self::EMPLOYEES, self::WASTE];
 
     public function __construct(protected Settings $settings) {}
 
@@ -132,5 +134,10 @@ class Modules
     public function employees(): bool
     {
         return $this->enabled(self::EMPLOYEES);
+    }
+
+    public function waste(): bool
+    {
+        return $this->enabled(self::WASTE);
     }
 }

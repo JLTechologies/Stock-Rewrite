@@ -76,7 +76,7 @@ class KbArticleResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        $imageTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
+        $imageTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/avif'];
 
         return $schema->components([
             Section::make()
@@ -102,19 +102,32 @@ class KbArticleResource extends Resource
                         ->live()
                         ->required()
                         ->columnSpanFull(),
+                    // Pictures go anywhere in the text: the image button (or paste / drag and drop) places
+                    // one at the cursor, the corners resize it, columns put a picture beside the text.
                     self::bodyEditor(KbFormat::RichText, fn (string $path) => RichEditor::make($path)
+                        ->helperText(__('erp.kb.images_help'))
+                        ->toolbarButtons([
+                            ['bold', 'italic', 'underline', 'strike', 'textColor', 'highlight', 'link'],
+                            ['h2', 'h3', 'paragraph'],
+                            ['alignStart', 'alignCenter', 'alignEnd'],
+                            ['bulletList', 'orderedList', 'blockquote', 'codeBlock', 'horizontalRule'],
+                            ['attachFiles', 'grid', 'table', 'details'],
+                            ['clearFormatting', 'undo', 'redo'],
+                        ])
+                        ->resizableImages()
                         ->fileAttachmentsDisk(KbArticle::IMAGE_DISK)
                         ->fileAttachmentsDirectory('kb/images')
                         ->fileAttachmentsVisibility('public')
                         ->fileAttachmentsAcceptedFileTypes($imageTypes)
-                        ->fileAttachmentsMaxSize(5120)
-                        ->extraInputAttributes(['style' => 'min-height: 16rem'])),
+                        ->fileAttachmentsMaxSize(KbArticle::IMAGE_MAX_KILOBYTES)
+                        ->extraInputAttributes(['style' => 'min-height: 20rem'])),
                     self::bodyEditor(KbFormat::Markdown, fn (string $path) => MarkdownEditor::make($path)
+                        ->helperText(__('erp.kb.images_help_markdown'))
                         ->fileAttachmentsDisk(KbArticle::IMAGE_DISK)
                         ->fileAttachmentsDirectory('kb/images')
                         ->fileAttachmentsAcceptedFileTypes($imageTypes)
-                        ->fileAttachmentsMaxSize(5120)
-                        ->minHeight('16rem')),
+                        ->fileAttachmentsMaxSize(KbArticle::IMAGE_MAX_KILOBYTES)
+                        ->minHeight('20rem')),
                     FileUpload::make('attachments')
                         ->label(__('erp.kb.downloads'))
                         ->helperText(__('erp.kb.downloads_help'))

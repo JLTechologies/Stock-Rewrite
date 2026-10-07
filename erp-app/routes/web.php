@@ -11,6 +11,7 @@ use App\Http\Controllers\StockLabelController;
 use App\Http\Controllers\StockQrController;
 use App\Http\Controllers\SuggestionPdfController;
 use App\Http\Controllers\SuggestionPhotoController;
+use App\Http\Controllers\WastePdfController;
 use App\Http\Controllers\WelcomeLinkController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,8 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/idea-box/{suggestion}/photos/{index}', SuggestionPhotoController::class)->whereNumber('index')->name('suggestions.photo');
     Route::get('/idea-box-pdf', SuggestionPdfController::class)->name('suggestions.pdf');
     Route::get('/projects/{project}/files/{file}/{version?}', ProjectFileController::class)->whereNumber(['project', 'file', 'version'])->name('projects.file');
+    Route::get('/waste-pdf/{token}', [WastePdfController::class, 'list'])->name('waste.pdf');
+    Route::get('/waste-totals-pdf', [WastePdfController::class, 'totals'])->name('waste.totals-pdf');
     Route::get('/knowledge-base/{article}/files/{index}', KbDownloadController::class)->whereNumber(['article', 'index'])->name('kb.download');
     Route::get('/employee-documents/{employee}/{kind}/{id}', EmployeeDocumentController::class)->whereIn('kind', ['certificate', 'medical'])->whereNumber(['employee', 'id'])->name('employees.document');
 });

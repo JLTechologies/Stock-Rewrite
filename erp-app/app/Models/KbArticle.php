@@ -33,6 +33,11 @@ class KbArticle extends Model
     public const FILE_DISK = 'local';
 
     /**
+     * Largest picture in the text (10 MB); PHP's own upload limit must allow it too.
+     */
+    public const IMAGE_MAX_KILOBYTES = 10240;
+
+    /**
      * @var array<string, mixed>
      */
     protected $attributes = [

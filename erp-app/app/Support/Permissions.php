@@ -43,6 +43,8 @@ class Permissions
         'projects' => ['module' => Modules::PROJECTS, 'abilities' => ['view', 'create', 'update', 'delete', 'files', 'parts']],
         'project_finance' => ['module' => Modules::PROJECTS, 'abilities' => ['view', 'manage']],
         'knowledge_base' => ['module' => Modules::KNOWLEDGE_BASE, 'abilities' => ['create', 'update', 'delete']],
+        'waste' => ['module' => Modules::WASTE, 'abilities' => ['view', 'create', 'update', 'delete']],
+        'waste_master_data' => ['module' => Modules::WASTE, 'abilities' => ['view', 'create', 'update', 'delete']],
     ];
 
     /**

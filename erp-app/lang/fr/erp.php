@@ -18,6 +18,7 @@ return [
         'safety' => 'Sécurité',
         'projects' => 'Projets',
         'knowledge_base' => 'Base de connaissances',
+        'waste' => 'Déchets',
     ],
     'resources' => [
         'user' => ['singular' => 'utilisateur', 'plural' => 'Utilisateurs'],
@@ -58,6 +59,9 @@ return [
         'employee' => ['singular' => 'collaborateur', 'plural' => 'Registre du personnel'],
         'kb_article' => ['singular' => 'article', 'plural' => 'Articles'],
         'kb_category' => ['singular' => 'catégorie', 'plural' => 'Catégories'],
+        'waste_entry' => ['singular' => 'enregistrement de déchets', 'plural' => 'Registre des déchets'],
+        'waste_category' => ['singular' => 'catégorie de déchets', 'plural' => 'Catégories de déchets'],
+        'waste_processor' => ['singular' => 'collecteur de déchets', 'plural' => 'Collecteurs de déchets'],
     ],
     'modules' => [
         'fleet' => [
@@ -112,6 +116,10 @@ return [
         'employees' => [
             'label' => 'Registre du personnel',
             'help' => 'Données personnelles, contacts d\'urgence, certificats avec date d\'expiration et PDF, et l\'examen médical annuel. Ajouter un collaborateur crée l\'accès et envoie un e-mail de bienvenue. Les comptes peuvent aussi être créés sans ce module sous Utilisateurs.',
+        ],
+        'waste' => [
+            'label' => 'Registre des déchets',
+            'help' => 'Registre des déchets évacués par catégorie et code déchet, avec les collecteurs, les listes de piles par région et les totaux ; tout exportable en PDF.',
         ],
     ],
     'sections' => [
@@ -392,6 +400,8 @@ return [
             'projects' => 'Projets',
             'project_finance' => 'Offres & factures des projets',
             'knowledge_base' => 'Base de connaissances (rédiger)',
+            'waste' => 'Registre des déchets',
+            'waste_master_data' => 'Catégories & collecteurs de déchets',
         ],
         'abilities' => [
             'view' => 'Consulter',
@@ -650,6 +660,11 @@ return [
             'bachelor' => 'Bachelier',
             'master' => 'Master',
             'doctorate' => 'Doctorat',
+        ],
+        'waste_region' => [
+            'flanders' => 'Flandre',
+            'brussels' => 'Bruxelles',
+            'wallonia' => 'Wallonie',
         ],
     ],
     'vacations' => [
@@ -1060,6 +1075,8 @@ return [
         'is_visible_help' => 'Les catégories masquées (et leurs articles) ne sont visibles que pour les rédacteurs.',
         'updated' => 'Dernière modification',
         'delete_category_help' => 'Tous les articles de cette catégorie sont également supprimés.',
+        'images_help' => 'Photos : cliquez à l\'endroit voulu et utilisez le bouton image de la barre d\'outils (ou collez / glissez une photo dans le texte). Tirez sur les coins pour la redimensionner, centrez-la avec les boutons d\'alignement, ou utilisez « colonnes » pour mettre une photo à côté du texte. JPG, PNG, GIF, WebP, AVIF, max. 10 Mo.',
+        'images_help_markdown' => 'Photos : placez le curseur à l\'endroit voulu et utilisez le bouton image (ou glissez une photo dans le texte) ; elle est insérée comme ![](…). JPG, PNG, GIF, WebP, AVIF, max. 10 Mo.',
     ],
     'employees' => [
         'tabs' => [
@@ -1175,5 +1192,44 @@ return [
             'salutation' => 'Cordialement, :site',
             'link_used' => 'Ce lien de bienvenue a déjà été utilisé ou a expiré. Connectez-vous, ou utilisez « Mot de passe oublié ? ».',
         ],
+    ],
+    'waste' => [
+        'title' => 'Registre des déchets',
+        'registry' => 'Registre des déchets',
+        'type' => 'Type de déchet',
+        'waste_code' => 'Code déchet',
+        'waste_code_help' => 'Code EURAL, p. ex. 16 06 01*. L\'astérisque indique un déchet dangereux.',
+        'weight' => 'Poids',
+        'total_weight' => 'Poids total',
+        'total' => 'Total',
+        'grand_total' => 'Total général',
+        'entries' => 'Enregistrements',
+        'entry_count' => '{0} aucun enregistrement|{1} 1 enregistrement|[2,*] :count enregistrements',
+        'no_entries' => 'Aucun enregistrement sur cette période.',
+        'processor_reference' => 'Référence du collecteur',
+        'processor_reference_help' => 'La référence du collecteur, p. ex. le numéro du bon de transport ou du formulaire d\'identification.',
+        'ref' => 'Réf. :reference',
+        'batteries' => 'Piles et batteries',
+        'batteries_help' => 'Les piles et batteries sont aussi déclarées par région.',
+        'batteries_region' => 'Piles et batteries – :region',
+        'region' => 'Région',
+        'destruction_certificate' => 'N° certificat de destruction',
+        'destruction_certificate_short' => 'Certificat',
+        'destruction_certificate_help' => '3 chiffres.',
+        'po_number' => 'Numéro PO',
+        'export_pdf' => 'PDF de cette liste',
+        'totals' => 'Totaux par catégorie',
+        'period' => 'Période',
+        'period_indicator' => 'Période : :from – :until',
+        'all_time' => 'Tout',
+        'parent_category' => 'Catégorie principale',
+        'parent_category_help' => 'Laisser vide pour une catégorie principale ; en choisir une pour en faire une sous-catégorie.',
+        'is_batteries' => 'Piles et batteries',
+        'is_batteries_help' => 'Pour les piles et batteries (et leurs sous-catégories), la région, le certificat de destruction, le code COW et le numéro PO sont demandés.',
+        'category_active_help' => 'Les catégories inactives ne peuvent plus être choisies pour de nouveaux enregistrements.',
+        'vat_number' => 'Numéro de TVA',
+        'permit_number' => 'Numéro de permis / d\'enregistrement',
+        'permit_number_help' => 'p. ex. enregistrement OVAM ou permis d\'environnement.',
+        'processor_active_help' => 'Les collecteurs inactifs ne peuvent plus être choisis pour de nouveaux enregistrements.',
     ],
 ];

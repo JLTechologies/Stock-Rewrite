@@ -18,6 +18,7 @@ return [
         'safety' => 'Veiligheid',
         'projects' => 'Projecten',
         'knowledge_base' => 'Kennisbank',
+        'waste' => 'Afval',
     ],
     'resources' => [
         'user' => ['singular' => 'gebruiker', 'plural' => 'Gebruikers'],
@@ -58,6 +59,9 @@ return [
         'employee' => ['singular' => 'medewerker', 'plural' => 'Personeelsregister'],
         'kb_article' => ['singular' => 'artikel', 'plural' => 'Artikels'],
         'kb_category' => ['singular' => 'categorie', 'plural' => 'Categorieën'],
+        'waste_entry' => ['singular' => 'afvalregistratie', 'plural' => 'Afvalregister'],
+        'waste_category' => ['singular' => 'afvalcategorie', 'plural' => 'Afvalcategorieën'],
+        'waste_processor' => ['singular' => 'afvalverwerker', 'plural' => 'Afvalverwerkers'],
     ],
     'modules' => [
         'fleet' => [
@@ -112,6 +116,10 @@ return [
         'employees' => [
             'label' => 'Personeelsregister',
             'help' => 'Persoonsgegevens, noodcontacten, certificaten met vervaldatum en PDF, en het jaarlijkse medisch onderzoek. Een medewerker toevoegen maakt de login aan en verstuurt een welkomstmail. Accounts kunnen ook zonder deze module aangemaakt worden onder Gebruikers.',
+        ],
+        'waste' => [
+            'label' => 'Afvalregister',
+            'help' => 'Register van afgevoerd afval per categorie en afvalcode, met afvalverwerkers, batterijlijsten per gewest en totalen; alles te exporteren naar PDF.',
         ],
     ],
     'sections' => [
@@ -392,6 +400,8 @@ return [
             'projects' => 'Projecten',
             'project_finance' => 'Offertes & facturen van projecten',
             'knowledge_base' => 'Kennisbank (schrijven)',
+            'waste' => 'Afvalregister',
+            'waste_master_data' => 'Afvalcategorieën & -verwerkers',
         ],
         'abilities' => [
             'view' => 'Bekijken',
@@ -650,6 +660,11 @@ return [
             'bachelor' => 'Bachelor',
             'master' => 'Master',
             'doctorate' => 'Doctoraat',
+        ],
+        'waste_region' => [
+            'flanders' => 'Vlaanderen',
+            'brussels' => 'Brussel',
+            'wallonia' => 'Wallonië',
         ],
     ],
     'vacations' => [
@@ -1060,6 +1075,8 @@ return [
         'is_visible_help' => 'Verborgen categorieën (en hun artikels) zijn alleen zichtbaar voor wie de kennisbank beheert.',
         'updated' => 'Laatste wijziging',
         'delete_category_help' => 'Alle artikels in deze categorie worden ook verwijderd.',
+        'images_help' => 'Foto\'s: klik waar de foto moet komen en gebruik de afbeeldingsknop in de werkbalk (of plak / sleep een foto in de tekst). Sleep aan de hoeken om de grootte te wijzigen, centreer met de uitlijnknoppen, of gebruik "kolommen" om een foto naast de tekst te zetten. JPG, PNG, GIF, WebP, AVIF, max. 10 MB.',
+        'images_help_markdown' => 'Foto\'s: zet de cursor waar de foto moet komen en gebruik de afbeeldingsknop (of sleep een foto in de tekst); ze wordt ingevoegd als ![](…). JPG, PNG, GIF, WebP, AVIF, max. 10 MB.',
     ],
     'employees' => [
         'tabs' => [
@@ -1175,5 +1192,44 @@ return [
             'salutation' => 'Met vriendelijke groeten, :site',
             'link_used' => 'Deze welkomstlink is al gebruikt of verlopen. Log in, of gebruik "Wachtwoord vergeten?".',
         ],
+    ],
+    'waste' => [
+        'title' => 'Afvalregister',
+        'registry' => 'Afvalregister',
+        'type' => 'Soort afval',
+        'waste_code' => 'Afvalcode',
+        'waste_code_help' => 'EURAL-code, bv. 16 06 01*. Een sterretje duidt gevaarlijk afval aan.',
+        'weight' => 'Gewicht',
+        'total_weight' => 'Totaal gewicht',
+        'total' => 'Totaal',
+        'grand_total' => 'Algemeen totaal',
+        'entries' => 'Registraties',
+        'entry_count' => '{0} geen registraties|{1} 1 registratie|[2,*] :count registraties',
+        'no_entries' => 'Geen registraties in deze periode.',
+        'processor_reference' => 'Referentie verwerker',
+        'processor_reference_help' => 'De referentie van de afvalverwerker, bv. het nummer van de vrachtbrief of het identificatieformulier.',
+        'ref' => 'Ref. :reference',
+        'batteries' => 'Batterijen',
+        'batteries_help' => 'Batterijafval wordt ook per gewest gerapporteerd.',
+        'batteries_region' => 'Batterijen – :region',
+        'region' => 'Gewest',
+        'destruction_certificate' => 'Nr. vernietigingsattest',
+        'destruction_certificate_short' => 'Attest',
+        'destruction_certificate_help' => '3 cijfers.',
+        'po_number' => 'PO-nummer',
+        'export_pdf' => 'PDF van deze lijst',
+        'totals' => 'Totalen per categorie',
+        'period' => 'Periode',
+        'period_indicator' => 'Periode: :from – :until',
+        'all_time' => 'Alles',
+        'parent_category' => 'Hoofdcategorie',
+        'parent_category_help' => 'Leeg laten voor een hoofdcategorie; kies er een om dit een subcategorie te maken.',
+        'is_batteries' => 'Batterijen',
+        'is_batteries_help' => 'Bij batterijafval (en de subcategorieën) worden gewest, vernietigingsattest, COW-code en PO-nummer gevraagd.',
+        'category_active_help' => 'Inactieve categorieën kunnen niet meer gekozen worden voor nieuwe registraties.',
+        'vat_number' => 'Btw-nummer',
+        'permit_number' => 'Vergunnings- / registratienummer',
+        'permit_number_help' => 'bv. OVAM-registratie of omgevingsvergunning.',
+        'processor_active_help' => 'Inactieve verwerkers kunnen niet meer gekozen worden voor nieuwe registraties.',
     ],
 ];

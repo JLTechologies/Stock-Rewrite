@@ -49,6 +49,7 @@ class Settings
                 Modules::PROJECTS => true,
                 Modules::KNOWLEDGE_BASE => true,
                 Modules::EMPLOYEES => true,
+                Modules::WASTE => true,
             ],
             'mail' => [
                 'mailer' => null,

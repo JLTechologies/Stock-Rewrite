@@ -245,6 +245,7 @@ class Settings extends Page
             Modules::PROJECTS => Heroicon::OutlinedBriefcase,
             Modules::KNOWLEDGE_BASE => Heroicon::OutlinedBookOpen,
             Modules::EMPLOYEES => Heroicon::OutlinedIdentification,
+            Modules::WASTE => Heroicon::OutlinedTrash,
         ];
 
         return [

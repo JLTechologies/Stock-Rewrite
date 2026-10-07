@@ -18,6 +18,7 @@ return [
         'safety' => 'Safety',
         'projects' => 'Projects',
         'knowledge_base' => 'Knowledge base',
+        'waste' => 'Waste',
     ],
     'resources' => [
         'user' => ['singular' => 'user', 'plural' => 'Users'],
@@ -58,6 +59,9 @@ return [
         'employee' => ['singular' => 'employee', 'plural' => 'Employee register'],
         'kb_article' => ['singular' => 'article', 'plural' => 'Articles'],
         'kb_category' => ['singular' => 'category', 'plural' => 'Categories'],
+        'waste_entry' => ['singular' => 'waste entry', 'plural' => 'Waste registry'],
+        'waste_category' => ['singular' => 'waste category', 'plural' => 'Waste categories'],
+        'waste_processor' => ['singular' => 'waste processor', 'plural' => 'Waste processors'],
     ],
     'modules' => [
         'fleet' => [
@@ -112,6 +116,10 @@ return [
         'employees' => [
             'label' => 'Employee register',
             'help' => 'Personal details, emergency contacts, certificates with expiry date and PDF, and the yearly medical check-up. Adding an employee creates the login and sends a welcome mail. Accounts can still be made under Users without this module.',
+        ],
+        'waste' => [
+            'label' => 'Waste registry',
+            'help' => 'Registry of disposed waste per category and waste code, with waste processors, battery lists per region and totals; all exportable to PDF.',
         ],
     ],
     'sections' => [
@@ -392,6 +400,8 @@ return [
             'projects' => 'Projects',
             'project_finance' => 'Project offers & invoices',
             'knowledge_base' => 'Knowledge base (write)',
+            'waste' => 'Waste registry',
+            'waste_master_data' => 'Waste categories & processors',
         ],
         'abilities' => [
             'view' => 'View',
@@ -650,6 +660,11 @@ return [
             'bachelor' => 'Bachelor',
             'master' => 'Master',
             'doctorate' => 'Doctorate',
+        ],
+        'waste_region' => [
+            'flanders' => 'Flanders',
+            'brussels' => 'Brussels',
+            'wallonia' => 'Wallonia',
         ],
     ],
     'vacations' => [
@@ -1060,6 +1075,8 @@ return [
         'is_visible_help' => 'Hidden categories (and their articles) are only shown to knowledge base editors.',
         'updated' => 'Last change',
         'delete_category_help' => 'All articles in this category are deleted as well.',
+        'images_help' => 'Pictures: click where the picture should go and use the image button in the toolbar (or paste / drag a picture into the text). Drag the corners to resize it, use the alignment buttons to centre it, or "columns" to put a picture beside the text. JPG, PNG, GIF, WebP, AVIF, max. 10 MB.',
+        'images_help_markdown' => 'Pictures: put the cursor where the picture should go and use the image button (or drag a picture into the text); it is inserted as ![](…). JPG, PNG, GIF, WebP, AVIF, max. 10 MB.',
     ],
     'employees' => [
         'tabs' => [
@@ -1175,5 +1192,44 @@ return [
             'salutation' => 'Kind regards, :site',
             'link_used' => 'This welcome link has already been used or has expired. Log in, or use "Forgot password?".',
         ],
+    ],
+    'waste' => [
+        'title' => 'Waste registry',
+        'registry' => 'Waste registry',
+        'type' => 'Type of waste',
+        'waste_code' => 'Waste code',
+        'waste_code_help' => 'EURAL code, e.g. 16 06 01*. An asterisk marks hazardous waste.',
+        'weight' => 'Weight',
+        'total_weight' => 'Total weight',
+        'total' => 'Total',
+        'grand_total' => 'Grand total',
+        'entries' => 'Entries',
+        'entry_count' => '{0} no entries|{1} 1 entry|[2,*] :count entries',
+        'no_entries' => 'No entries in this period.',
+        'processor_reference' => 'Processor reference',
+        'processor_reference_help' => 'The reference of the waste processor, e.g. their waybill or identification form number.',
+        'ref' => 'Ref. :reference',
+        'batteries' => 'Batteries',
+        'batteries_help' => 'Battery waste is also reported per region.',
+        'batteries_region' => 'Batteries – :region',
+        'region' => 'Region',
+        'destruction_certificate' => 'Certificate of destruction no.',
+        'destruction_certificate_short' => 'Certificate',
+        'destruction_certificate_help' => '3 digits.',
+        'po_number' => 'PO number',
+        'export_pdf' => 'PDF of this list',
+        'totals' => 'Totals per category',
+        'period' => 'Period',
+        'period_indicator' => 'Period: :from – :until',
+        'all_time' => 'All time',
+        'parent_category' => 'Main category',
+        'parent_category_help' => 'Leave empty for a main category; choose one to make this a subcategory.',
+        'is_batteries' => 'Batteries',
+        'is_batteries_help' => 'Battery waste (and its subcategories) asks for region, certificate of destruction, COW code and PO number.',
+        'category_active_help' => 'Inactive categories can no longer be chosen for new entries.',
+        'vat_number' => 'VAT number',
+        'permit_number' => 'Permit / registration number',
+        'permit_number_help' => 'e.g. OVAM registration or environmental permit.',
+        'processor_active_help' => 'Inactive processors can no longer be chosen for new entries.',
     ],
 ];

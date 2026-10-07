@@ -99,6 +99,33 @@ class KnowledgeBaseTest extends TestCase
     }
 
     #[Test]
+    public function pictures_can_be_placed_anywhere_in_the_text_and_beside_it_in_columns(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('kb/images/schema.png', UploadedFile::fake()->image('schema.png')->getContent());
+        // The editor stores HTML; pictures carry the stored path in data-id.
+        $image = '<img data-id="kb/images/schema.png" alt="Schema" width="320">';
+
+        $article = KbArticle::factory()->create([
+            'format' => KbFormat::RichText,
+            'body' => ['nl' => '<p>Eerst de inleiding.</p><p>'.$image.'</p><p>Daarna meer uitleg.</p>'
+                .'<div class="grid-layout" data-cols="2" data-from-breakpoint="md">'
+                .'<div class="grid-layout-col" data-col-span="1"><p>'.$image.'</p></div>'
+                .'<div class="grid-layout-col" data-col-span="1"><p>Tekst naast de foto.</p></div></div>'],
+        ]);
+
+        $html = $article->renderedBody('nl')->toHtml();
+        $url = Storage::disk('public')->url('kb/images/schema.png');
+
+        $this->assertSame(2, substr_count($html, $url), 'Both pictures point to the stored file.');
+        $this->assertStringContainsString('width: 320px', $html);
+        $this->assertStringContainsString('class="grid-layout"', $html);
+        $this->assertTrue(strpos($html, 'Eerst de inleiding') < strpos($html, $url) && strpos($html, $url) < strpos($html, 'Daarna meer uitleg'), 'The picture stays where it was placed.');
+
+        $this->actingAs(User::factory()->inTeam()->create())->get('/knowledge-base?article='.$article->id)->assertOk()->assertSee($url, escape: false);
+    }
+
+    #[Test]
     public function the_module_can_be_switched_off(): void
     {
         KbArticle::factory()->create();
