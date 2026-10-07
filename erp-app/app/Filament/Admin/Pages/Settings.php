@@ -239,6 +239,7 @@ class Settings extends Page
             Modules::LOCATIONS => Heroicon::OutlinedMapPin,
             Modules::STOCK => Heroicon::OutlinedArchiveBox,
             Modules::IT => Heroicon::OutlinedComputerDesktop,
+            Modules::WORK_SITES => Heroicon::OutlinedBuildingOffice,
         ];
 
         return [

@@ -43,6 +43,7 @@ class Settings
                 Modules::LOCATIONS => true,
                 Modules::STOCK => true,
                 Modules::IT => true,
+                Modules::WORK_SITES => true,
             ],
             'mail' => [
                 'mailer' => null,

@@ -24,7 +24,9 @@ class Modules
 
     public const IT = 'it';
 
-    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT];
+    public const WORK_SITES = 'work_sites';
+
+    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES];
 
     public function __construct(protected Settings $settings) {}
 
@@ -90,5 +92,10 @@ class Modules
     public function it(): bool
     {
         return $this->enabled(self::IT);
+    }
+
+    public function workSites(): bool
+    {
+        return $this->enabled(self::WORK_SITES);
     }
 }
