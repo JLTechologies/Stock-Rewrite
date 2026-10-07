@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Enums\AbsenceType;
 use App\Enums\NavigationGroup;
 use App\Filament\App\Resources\MyVacations\MyVacationResource;
 use App\Models\Team;
@@ -15,8 +16,9 @@ use Livewire\Attributes\Url;
 use UnitEnum;
 
 /**
- * Month view of public holidays and vacation (approved and still pending) of the people the user may see:
- * themselves and their team members, or everyone for administrators.
+ * Month view of public holidays, vacation (approved and still pending) and absences (medical, overtime
+ * as leave, family leave) of the people the user may see: themselves and their team members, or
+ * everyone for administrators.
  */
 class VacationCalendar extends Page
 {
@@ -111,6 +113,7 @@ class VacationCalendar extends Page
             'weeks' => $calendar['weeks'],
             'people' => $calendar['people'],
             'teams' => $this->teamOptions(),
+            'absenceLegend' => $this->absenceLegend(),
             'dayNames' => collect(range(0, 6))->map(fn (int $offset): string => now()->startOfWeek()->addDays($offset)->locale(app()->getLocale())->translatedFormat('D'))->all(),
         ];
     }
@@ -127,6 +130,27 @@ class VacationCalendar extends Page
                 ->url(fn (): string => MyVacationResource::getUrl(panel: 'app'))
                 ->visible(fn (): bool => filament()->getCurrentPanel()?->getId() === 'app'),
         ];
+    }
+
+    /**
+     * Legend entries for absences. Non-administrators see the private reasons (medical, family)
+     * of colleagues only as "absent", in a neutral colour; their own absences keep the type colour.
+     *
+     * @return list<array{label: string, color: string}>
+     */
+    protected function absenceLegend(): array
+    {
+        if (! modules()->vacations()) {
+            return [];
+        }
+
+        $legend = array_map(fn (AbsenceType $type): array => ['label' => $type->getLabel(), 'color' => $type->hex()], AbsenceType::cases());
+
+        if (! auth()->user()?->isAdmin()) {
+            $legend[] = ['label' => __('erp.absences.absent_legend'), 'color' => Calendar::PRIVATE_ABSENCE_COLOR];
+        }
+
+        return $legend;
     }
 
     protected function current(): CarbonImmutable

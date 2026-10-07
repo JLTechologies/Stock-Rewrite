@@ -32,6 +32,7 @@
         .erp-cal-chip.is-pending { background: transparent !important; border-style: dashed; }
         .erp-cal-chip.is-mine { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .55); }
         .erp-cal-chip svg { width: .75rem; height: .75rem; flex-shrink: 0; }
+        .erp-cal-absence { color: #fff; background: repeating-linear-gradient(135deg, var(--absence), var(--absence) 6px, color-mix(in srgb, var(--absence) 82%, black) 6px, color-mix(in srgb, var(--absence) 82%, black) 12px); }
         .erp-cal-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.25rem; margin-top: 1rem; font-size: .8125rem; color: var(--cal-muted); }
         .erp-cal-legend span { display: inline-flex; align-items: center; gap: .375rem; }
         .erp-cal-swatch { display: inline-block; width: 1.75rem; height: .875rem; border-radius: .25rem; border: 1px solid transparent; }
@@ -99,6 +100,25 @@
                                     @endif
                                 </div>
                             @endforeach
+
+                            {{-- Absences entered by an administrator: striped, in the colour of the type. --}}
+                            @foreach ($day['absences'] as $entry)
+                                @php($absence = $entry['absence'])
+                                <div @class(['erp-cal-chip', 'erp-cal-absence', 'is-mine' => $entry['mine']])
+                                    style="--absence: {{ $entry['color'] }};"
+                                    data-absence="{{ $absence->id }}"
+                                    title="{{ $absence->user->name }} · {{ $entry['label'] }} · {{ $absence->start_date->format('d/m') }} → {{ $absence->end_date->format('d/m') }}">
+                                    @if ($entry['icon'])
+                                        <x-filament::icon :icon="$entry['icon']" />
+                                    @else
+                                        <x-filament::icon icon="heroicon-m-minus-circle" />
+                                    @endif
+                                    <span style="overflow: hidden; text-overflow: ellipsis;">{{ $absence->user->name }}</span>
+                                    @if ($entry['half_day'])
+                                        <span>½</span>
+                                    @endif
+                                </div>
+                            @endforeach
                         </div>
                     @endforeach
                 @endforeach
@@ -109,6 +129,9 @@
             <span><i class="erp-cal-swatch" style="background: var(--erp-navy);"></i>{{ __('erp.enums.vacation_status.approved') }}</span>
             <span><i class="erp-cal-swatch" style="border: 1px dashed var(--erp-navy);"></i>{{ __('erp.calendar.pending_legend') }}</span>
             <span><i class="erp-cal-swatch" style="background: var(--cal-holiday); border-color: var(--erp-accent);"></i>{{ __('erp.resources.holiday.singular') }}</span>
+            @foreach ($absenceLegend as $item)
+                <span><i class="erp-cal-swatch erp-cal-absence" style="--absence: {{ $item['color'] }};"></i>{{ $item['label'] }}</span>
+            @endforeach
             <span><i class="erp-cal-swatch" style="background: var(--cal-weekend); border-color: var(--cal-border);"></i>{{ __('erp.calendar.weekend') }}</span>
         </div>
 

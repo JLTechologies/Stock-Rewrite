@@ -6,6 +6,7 @@ use App\Enums\NavigationGroup;
 use App\Enums\VacationStatus;
 use App\Filament\Concerns\ScopesToVisibleRecords;
 use App\Filament\Resources\VacationRequests\Pages\ManageVacationRequests;
+use App\Models\Absence;
 use App\Models\User;
 use App\Models\VacationRequest;
 use App\Support\WorkingDays;
@@ -220,7 +221,7 @@ class VacationRequestResource extends Resource
             ]);
     }
 
-    public static function period(VacationRequest $record): string
+    public static function period(VacationRequest|Absence $record): string
     {
         return $record->start_date->isSameDay($record->end_date)
             ? $record->start_date->translatedFormat('D d/m/Y')
