@@ -1,6 +1,6 @@
 ERP (erpdev.jl-tech.be) - open server changes and API information
 =================================================================
-Last updated: 2026-10-07
+Last updated: 2026-10-08
 
 This file lists what still has to happen outside the application code:
 1. server changes (to be run by you as root),
@@ -13,6 +13,22 @@ This file lists what still has to happen outside the application code:
 [DONE]  PHP-FPM write access for erp-app
         /etc/systemd/system/php8.4-fpm.service.d/erp-app-writable.conf
         allows storage/ and bootstrap/cache/ to be written. Nothing to do.
+
+[TODO]  PHP upload size - needed for project files (plans, PDFs, pictures)
+        PHP-FPM currently accepts uploads of max. 2 MB (upload_max_filesize = 2M,
+        post_max_size = 8M in /etc/php/8.4/fpm/php.ini). Larger files fail
+        before they reach the application. This also affects the incident and
+        idea box photos (max. 12 MB) and the other apps on this server.
+        nginx already allows 100 MB (client_max_body_size 100m).
+
+        Run as root:
+
+          printf 'upload_max_filesize = 100M\npost_max_size = 110M\n' > /etc/php/8.4/fpm/conf.d/99-uploads.ini
+          systemctl restart php8.4-fpm
+
+        Check:
+
+          php-fpm8.4 -i | grep -E 'upload_max_filesize|post_max_size'
 
 [TODO]  Scheduler (cron) - needed for the daily price update
         The app runs "stock:update-prices" every day at 05:30, but only if

@@ -8,6 +8,10 @@ namespace App\Support;
  * requesting your own vacation needs no permission. "stock.adjust" lets employees raise or lower
  * quantities (e.g. after scanning a QR code) at the locations of their teams. "stock_prices.view"
  * shows market prices and stock values, which hold the special prices agreed with distributors.
+ * "projects" only reaches the projects a user leads or one of their teams is assigned to;
+ * "projects.files" and "projects.parts" allow uploading/replacing/removing files and editing the
+ * part list. "project_finance" shows (view) or edits (manage) offers and invoices of those projects;
+ * project leaders always have it for their own projects.
  * A role stores them as {"vehicles": ["view", "update"], "assets": ["view"], ...}.
  * Administrator roles are granted everything and may also use the admin panel.
  */
@@ -36,6 +40,9 @@ class Permissions
         'it_master_data' => ['module' => Modules::IT, 'abilities' => ['view', 'create', 'update', 'delete']],
         'work_sites' => ['module' => Modules::WORK_SITES, 'abilities' => ['view', 'create', 'update', 'delete', 'change_type', 'remarks']],
         'work_site_master_data' => ['module' => Modules::WORK_SITES, 'abilities' => ['view', 'create', 'update', 'delete']],
+        'projects' => ['module' => Modules::PROJECTS, 'abilities' => ['view', 'create', 'update', 'delete', 'files', 'parts']],
+        'project_finance' => ['module' => Modules::PROJECTS, 'abilities' => ['view', 'manage']],
+        'knowledge_base' => ['module' => Modules::KNOWLEDGE_BASE, 'abilities' => ['create', 'update', 'delete']],
     ];
 
     /**

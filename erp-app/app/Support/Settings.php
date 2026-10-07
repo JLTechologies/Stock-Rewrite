@@ -46,6 +46,9 @@ class Settings
                 Modules::WORK_SITES => true,
                 Modules::INCIDENTS => true,
                 Modules::SUGGESTIONS => true,
+                Modules::PROJECTS => true,
+                Modules::KNOWLEDGE_BASE => true,
+                Modules::EMPLOYEES => true,
             ],
             'mail' => [
                 'mailer' => null,

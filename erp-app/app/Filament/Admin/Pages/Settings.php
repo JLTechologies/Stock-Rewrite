@@ -242,6 +242,9 @@ class Settings extends Page
             Modules::WORK_SITES => Heroicon::OutlinedBuildingOffice,
             Modules::INCIDENTS => Heroicon::OutlinedExclamationTriangle,
             Modules::SUGGESTIONS => Heroicon::OutlinedLightBulb,
+            Modules::PROJECTS => Heroicon::OutlinedBriefcase,
+            Modules::KNOWLEDGE_BASE => Heroicon::OutlinedBookOpen,
+            Modules::EMPLOYEES => Heroicon::OutlinedIdentification,
         ];
 
         return [

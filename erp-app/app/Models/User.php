@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -143,6 +144,26 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
     public function canSeePrices(): bool
     {
         return modules()->stock() && $this->hasPermission('stock_prices.view');
+    }
+
+    /**
+     * Knowledge base editors also see hidden categories and unpublished articles.
+     */
+    public function canEditKnowledgeBase(): bool
+    {
+        return modules()->knowledgeBase()
+            && ($this->hasPermission('knowledge_base.create') || $this->hasPermission('knowledge_base.update') || $this->hasPermission('knowledge_base.delete'));
+    }
+
+    /**
+     * The employee record in the employee register, if any. Accounts can exist without one
+     * (e.g. an administrator or a temporary account).
+     *
+     * @return HasOne<Employee, $this>
+     */
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class);
     }
 
     /**

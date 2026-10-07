@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
                 'asset_logs' => ['view', 'create', 'update'],
                 'vacations' => ['view', 'approve'],
                 'order_references' => ['view', 'create', 'update'],
+                'projects' => ['view', 'create', 'update', 'files', 'parts'],
                 'locations' => ['view'],
                 'stock_items' => ['view'],
                 'stock' => ['adjust'],
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
                 'asset_logs' => ['create'],
                 'stock_items' => ['view'],
                 'stock' => ['adjust'],
+                'projects' => ['view', 'files'],
             ]],
             'Gast / Magazijn' => ['description' => 'Medewerkers zonder ploeg: geen rechten.', 'is_admin' => false, 'is_guest' => true, 'permissions' => []],
         ];

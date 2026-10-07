@@ -30,7 +30,13 @@ class Modules
 
     public const SUGGESTIONS = 'suggestions';
 
-    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES, self::INCIDENTS, self::SUGGESTIONS];
+    public const PROJECTS = 'projects';
+
+    public const KNOWLEDGE_BASE = 'knowledge_base';
+
+    public const EMPLOYEES = 'employees';
+
+    public const ALL = [self::FLEET, self::TEAMS, self::ASSETS, self::VACATIONS, self::ORDERS, self::LOCATIONS, self::STOCK, self::IT, self::WORK_SITES, self::INCIDENTS, self::SUGGESTIONS, self::PROJECTS, self::KNOWLEDGE_BASE, self::EMPLOYEES];
 
     public function __construct(protected Settings $settings) {}
 
@@ -111,5 +117,20 @@ class Modules
     public function suggestions(): bool
     {
         return $this->enabled(self::SUGGESTIONS);
+    }
+
+    public function projects(): bool
+    {
+        return $this->enabled(self::PROJECTS);
+    }
+
+    public function knowledgeBase(): bool
+    {
+        return $this->enabled(self::KNOWLEDGE_BASE);
+    }
+
+    public function employees(): bool
+    {
+        return $this->enabled(self::EMPLOYEES);
     }
 }
