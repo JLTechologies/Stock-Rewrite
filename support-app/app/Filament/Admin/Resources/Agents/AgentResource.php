@@ -7,6 +7,7 @@ use App\Enums\UserRole;
 use App\Filament\Admin\Resources\Agents\Pages\CreateAgent;
 use App\Filament\Admin\Resources\Agents\Pages\EditAgent;
 use App\Filament\Admin\Resources\Agents\Pages\ListAgents;
+use App\Filament\Support\ResetTwoFactorAction;
 use App\Models\User;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
@@ -185,6 +186,7 @@ class AgentResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
+                ResetTwoFactorAction::make(),
                 DeleteAction::make()
                     ->hidden(fn (User $record): bool => $record->is(auth()->user())),
             ]);

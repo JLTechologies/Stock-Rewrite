@@ -230,6 +230,14 @@ return [
         'departments' => ':count afdelingen',
     ],
 
+    'two_factor' => [
+        'reset' => 'Tweestapsverificatie resetten',
+        'reset_confirm' => ':name kan daarna aanmelden met enkel het wachtwoord en de tweestapsverificatie opnieuw instellen. Doe dit pas nadat je hebt nagegaan wie het vraagt.',
+        'reset_done' => 'Tweestapsverificatie gereset',
+        'reminder_title' => 'Beveilig je account met tweestapsverificatie',
+        'reminder_text' => 'Aangeraden: na je wachtwoord geef je ook een code van een authenticator-app of je e-mail in. Stel het in via je profiel.',
+        'reminder_action' => 'Instellen',
+    ],
     'settings' => [
         'show_who_is_who' => 'Pagina "wie is wie" tonen',
         'show_who_is_who_help' => 'Enkel zichtbaar als er minstens één persoon zichtbaar is.',

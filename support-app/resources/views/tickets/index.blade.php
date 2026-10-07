@@ -10,6 +10,7 @@
 
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <x-flash class="mb-6" />
+        <x-two-factor-reminder class="mb-6" />
 
         <dl class="grid gap-4 sm:grid-cols-3">
             @foreach (['active' => 'clock', 'waiting' => 'chat', 'closed' => 'check'] as $key => $icon)

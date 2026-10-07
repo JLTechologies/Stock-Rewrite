@@ -230,6 +230,14 @@ return [
         'departments' => ':count départements',
     ],
 
+    'two_factor' => [
+        'reset' => 'Réinitialiser la vérification en deux étapes',
+        'reset_confirm' => ':name pourra ensuite se connecter avec le seul mot de passe et reconfigurer la vérification en deux étapes. Ne le faites qu\'après avoir vérifié qui le demande.',
+        'reset_done' => 'Vérification en deux étapes réinitialisée',
+        'reminder_title' => 'Protégez votre compte avec la vérification en deux étapes',
+        'reminder_text' => 'Recommandé : après votre mot de passe, vous saisissez aussi un code d\'une application d\'authentification ou de votre e-mail. Configurez-la dans votre profil.',
+        'reminder_action' => 'Configurer',
+    ],
     'settings' => [
         'show_who_is_who' => 'Afficher la page « qui est qui »',
         'show_who_is_who_help' => 'Visible uniquement si au moins une personne est visible.',

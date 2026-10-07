@@ -25,7 +25,7 @@ How to install the helpdesk on a new server, from an empty machine to a working 
 | Web server | nginx |
 | Composer | 2.x |
 | Node.js | 20+ with npm – only needed to build the front-end assets (can be done on another machine) |
-| Other | git, unzip, certbot (Let's Encrypt) |
+| Other | git, unzip, certbot (Let's Encrypt), time sync (NTP) – the authenticator-app codes depend on a correct server clock |
 | Mail | An SMTP account: new tickets are e-mailed to the agents of the department, replies and status changes to the client |
 | Network | Outbound internet during the build: `npm run build` downloads fonts from fonts.bunny.net |
 
@@ -351,7 +351,8 @@ The panels use each user's own language (chosen when the user is created, change
 6. **Agents:** add the people who handle tickets and put them in their departments. An agent without departments sees all tickets.
 7. **Who is who** (`/admin`): the people on the portal's "who is who" page: name, job title per language, phone, mobile, e-mail and a photo (without a photo the portal logo is shown). Drag the rows to change their order. The page appears in the portal menu as soon as one person is visible; switch it off in **Settings > Helpdesk > Client portal**.
 8. **Footer links** (`/admin`): extra links (e.g. terms and conditions, the main website) in their own row at the bottom of every portal page. The row only shows when at least one visible link exists. Allowed addresses: `https://…`, a portal path like `/kb`, `mailto:` or `tel:`.
-9. In `/agent`: **Knowledge base** (FAQ categories and articles), **Canned responses**, **Clients / Organizations**.
+9. **Two-step verification** (recommended, not required): every user (clients, agents and admins) can switch it on in their own profile – in the portal under *Profile*, in `/agent` and `/admin` via the user menu > *Profile*. Two methods: an authenticator app (Google/Microsoft Authenticator…, with one-time recovery codes) and a code by e-mail. One set-up works for the portal and both panels. Users without it see a reminder. If someone loses both phone and recovery codes, an admin (for agents, in `/admin` > Agents) or an agent (for clients, in `/agent` > Clients) can use **Reset two-step verification**.
+10. In `/agent`: **Knowledge base** (FAQ categories and articles), **Canned responses**, **Clients / Organizations**.
 
 The client portal is at `https://support.example.be/`, the knowledge base at `/kb`.
 
@@ -431,6 +432,8 @@ Back up these three things; everything else can be rebuilt from git:
 | Logo / favicon / KB images give 404 | `php8.4 artisan storage:link` is missing |
 | Attachments give 404 after a move | `storage/app/private` was not copied (section 13) |
 | No ticket e-mails | Check Settings > E-mail and use **Send test e-mail**; errors are in `storage/logs/laravel.log` |
+| Authenticator codes are always "not valid" | The server clock is off: the codes depend on the time. Check `timedatectl` and enable time sync (`timedatectl set-ntp true`). |
+| No two-step verification e-mail arrives | E-mail codes need working mail (Settings > E-mail). Users can fall back on the authenticator app or a recovery code |
 | A new agent sees no tickets / too many tickets | Agent visibility follows departments: no departments = all tickets |
 | Changes do not show up | Caches are on: `php8.4 artisan optimize:clear`, then `optimize` + `filament:optimize` again, then restart php8.4-fpm |
 | Logged out immediately / 419 errors | `SESSION_SECURE_COOKIE=true` on a site without HTTPS, or a wrong `APP_URL` |
@@ -447,5 +450,6 @@ Logs: `storage/logs/laravel.log` (application), `/var/log/nginx/support-app.erro
 - [ ] A test ticket from the portal (with an attachment) arrives in `/agent`, the agents of its department receive an e-mail, and the attachment can be opened
 - [ ] A reply from `/agent` reaches the client by e-mail
 - [ ] Self-registration on or off as intended (Settings > Helpdesk)
+- [ ] Two-step verification: set up the authenticator app on the first admin account, log out and back in with a code
 - [ ] `APP_ENV=production` and `APP_DEBUG=false` in `.env`
 - [ ] Backups of the database, `storage/app/private`, `storage/app/public` and `.env` are scheduled

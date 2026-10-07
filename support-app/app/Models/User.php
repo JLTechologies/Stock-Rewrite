@@ -4,6 +4,12 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Database\Factories\UserFactory;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthentication;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthenticationRecovery;
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
+use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
+use Filament\Auth\MultiFactor\Email\Concerns\InteractsWithEmailAuthentication;
+use Filament\Auth\MultiFactor\Email\Contracts\HasEmailAuthentication;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Translation\HasLocalePreference;
@@ -19,10 +25,12 @@ use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'company', 'organization_id', 'email', 'phone', 'password', 'role', 'locale', 'is_active', 'signature'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements FilamentUser, HasLocalePreference
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasEmailAuthentication, HasLocalePreference
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    use InteractsWithAppAuthentication, InteractsWithAppAuthenticationRecovery, InteractsWithEmailAuthentication;
 
     protected $attributes = [
         'role' => 'customer',
@@ -43,6 +51,14 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference
             'role' => UserRole::class,
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Whether the user protects their account with a second step (authenticator app or e-mail code).
+     */
+    public function hasTwoFactor(): bool
+    {
+        return filled($this->app_authentication_secret) || $this->has_email_authentication;
     }
 
     protected static function booted(): void

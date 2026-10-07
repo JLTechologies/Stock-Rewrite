@@ -8,6 +8,7 @@ use App\Filament\Agent\Resources\Clients\Pages\CreateClient;
 use App\Filament\Agent\Resources\Clients\Pages\EditClient;
 use App\Filament\Agent\Resources\Clients\Pages\ListClients;
 use App\Filament\Agent\Resources\Clients\RelationManagers\TicketsRelationManager;
+use App\Filament\Support\ResetTwoFactorAction;
 use App\Models\User;
 use BackedEnum;
 use Filament\Actions\EditAction;
@@ -164,6 +165,7 @@ class ClientResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
+                ResetTwoFactorAction::make(),
             ]);
     }
 

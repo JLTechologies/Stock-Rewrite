@@ -4,6 +4,7 @@ namespace App\Providers\Filament\Concerns;
 
 use App\Http\Middleware\SetLocale;
 use App\Support\HelpdeskSettings;
+use App\Support\TwoFactor;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -12,6 +13,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\Support\Colors\Color;
 use Filament\Support\Icons\Heroicon;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -30,6 +32,9 @@ trait ConfiguresSupportPanel
             ->login()
             ->passwordReset()
             ->profile(isSimple: false)
+            // Recommended, not required: users switch it on in their profile.
+            ->multiFactorAuthentication(fn (): array => [TwoFactor::app(), TwoFactor::email()], isRequired: false)
+            ->renderHook(PanelsRenderHook::CONTENT_START, fn () => view('filament.two-factor-reminder'))
             ->brandName(fn (): string => app(HelpdeskSettings::class)->companyName().' '.$label)
             ->brandLogo(fn () => view('filament.brand', ['label' => $label]))
             ->brandLogoHeight('2.25rem')

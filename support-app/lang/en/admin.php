@@ -230,6 +230,14 @@ return [
         'departments' => ':count departments',
     ],
 
+    'two_factor' => [
+        'reset' => 'Reset two-step verification',
+        'reset_confirm' => ':name can then log in with just the password and set up two-step verification again. Only do this after checking who is asking.',
+        'reset_done' => 'Two-step verification reset',
+        'reminder_title' => 'Protect your account with two-step verification',
+        'reminder_text' => 'Recommended: after your password you also enter a code from an authenticator app or your e-mail. Set it up in your profile.',
+        'reminder_action' => 'Set up',
+    ],
     'settings' => [
         'show_who_is_who' => 'Show the "who is who" page',
         'show_who_is_who_help' => 'Only shown when at least one person is visible.',
