@@ -7,6 +7,7 @@ return [
     ],
 
     'nav' => [
+        'who_is_who' => 'Qui est qui',
         'kb' => 'Base de connaissances',
         'agent_panel' => 'Panneau agent',
         'skip' => 'Aller au contenu',
@@ -25,6 +26,7 @@ return [
     ],
 
     'footer' => [
+        'links' => 'Plus de liens',
         'about' => 'Ce portail permet à :company de suivre vos questions et signalements.',
         'main_site' => 'Vers le site principal',
         'support' => 'Support',
@@ -198,6 +200,12 @@ return [
         'profile_saved' => 'Vos données ont été enregistrées.',
     ],
 
+    'who_is_who' => [
+        'label' => 'Notre équipe',
+        'title' => 'Qui est qui',
+        'intro' => 'Découvrez l\'équipe de :company. N\'hésitez pas à les contacter directement.',
+        'mobile' => 'GSM',
+    ],
     'kb' => [
         'downloads' => 'Téléchargements',
         'eyebrow' => 'Base de connaissances',

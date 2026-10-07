@@ -10,9 +10,15 @@
 <x-layouts.app>
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-navy-950 text-white">
-        <div class="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-800 to-navy-700" aria-hidden="true"></div>
-        <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
-        <x-logo class="absolute top-1/2 -right-32 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.04] lg:block" />
+        @if ($heroImage = helpdesk()->heroImageUrl())
+            {{-- Custom background picture with a navy overlay, so the slogan stays readable. --}}
+            <img src="{{ $heroImage }}" alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" data-hero-image>
+            <div class="absolute inset-0 bg-gradient-to-br from-navy-950/90 via-navy-900/75 to-navy-800/50" aria-hidden="true"></div>
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-800 to-navy-700" aria-hidden="true"></div>
+            <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
+            <x-logo class="absolute top-1/2 -right-32 hidden h-[560px] w-[560px] -translate-y-1/2 opacity-[0.04] lg:block" />
+        @endif
         <div class="absolute top-[15%] right-14 hidden h-28 w-px bg-accent/40 lg:block" aria-hidden="true"></div>
 
         <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[1.3fr_1fr] lg:px-8 lg:py-28">

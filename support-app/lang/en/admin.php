@@ -17,6 +17,8 @@ return [
     ],
 
     'resources' => [
+        'footer_link' => ['singular' => 'footer link', 'plural' => 'Footer links'],
+        'employee' => ['singular' => 'person', 'plural' => 'Who is who'],
         'ticket' => ['singular' => 'ticket', 'plural' => 'tickets'],
         'client' => ['singular' => 'client', 'plural' => 'clients'],
         'organization' => ['singular' => 'organization', 'plural' => 'organizations'],
@@ -67,6 +69,13 @@ return [
     ],
 
     'fields' => [
+        'mobile' => 'Mobile',
+        'job_title' => 'Job title',
+        'photo' => 'Photo',
+        'is_visible' => 'Visible in the portal',
+        'link_text' => 'Link text',
+        'link_url' => 'Link (URL)',
+        'open_in_new_tab' => 'Open in a new tab',
         'format' => 'Text format',
         'downloads' => 'Downloadable files',
         'reference' => 'Number',
@@ -132,6 +141,13 @@ return [
     ],
 
     'help' => [
+        'footer_link_url' => 'A web address (https://…), a portal page (/kb), mailto:… or tel:…',
+        'footer_link_url_invalid' => 'Use a web address starting with https://, a path starting with /, mailto: or tel:.',
+        'footer_links_empty' => 'No footer links yet',
+        'footer_links_empty_description' => 'Links you add here appear in their own row in the portal footer.',
+        'employee_photo' => 'Square photo works best. Without a photo, the portal logo is shown.',
+        'employees_empty' => 'Nobody listed yet',
+        'who_is_who_disabled' => 'The "who is who" page is switched off. Switch it on in Settings > Helpdesk > Client portal.',
         'faq_format' => 'Choose how to write the answer. Both editors let you insert images (drag or paste).',
         'faq_downloads' => 'Files clients can download below the article, e.g. manuals or forms (max. 10, 10 MB each).',
         'internal' => 'Internal notes are only visible to agents and send no e-mail to the client.',
@@ -215,6 +231,10 @@ return [
     ],
 
     'settings' => [
+        'show_who_is_who' => 'Show the "who is who" page',
+        'show_who_is_who_help' => 'Only shown when at least one person is visible.',
+        'hero_image' => 'Homepage background picture',
+        'hero_image_help' => 'Shown behind the slogan at the top of the portal homepage, with a dark overlay so the text stays readable. A wide landscape picture (at least 1920 px) works best; JPG, PNG or WebP, max. 5 MB. Without a picture the default navy background is used.',
         'tabs' => [
             'organization' => 'Organization',
             'helpdesk' => 'Helpdesk',

@@ -346,10 +346,12 @@ The panels use each user's own language (chosen when the user is created, change
    - ticket settings;
    - portal settings, including whether visitors may **register themselves** (on by default – switch it off if only known clients may open tickets).
 3. **Settings > E-mail:** SMTP server, port, encryption, user and password, sender. Click **Send test e-mail**. **Without working mail, nobody is notified of tickets.**
-4. **Settings > Appearance:** colours, logo, favicon.
+4. **Settings > Appearance:** colours, logo, favicon, and the homepage background picture behind the slogan (optional – without it the default navy background stays).
 5. **Departments, Help topics, SLA plans, Teams:** adapt the defaults from the seeder to your organisation.
 6. **Agents:** add the people who handle tickets and put them in their departments. An agent without departments sees all tickets.
-7. In `/agent`: **Knowledge base** (FAQ categories and articles), **Canned responses**, **Clients / Organizations**.
+7. **Who is who** (`/admin`): the people on the portal's "who is who" page: name, job title per language, phone, mobile, e-mail and a photo (without a photo the portal logo is shown). Drag the rows to change their order. The page appears in the portal menu as soon as one person is visible; switch it off in **Settings > Helpdesk > Client portal**.
+8. **Footer links** (`/admin`): extra links (e.g. terms and conditions, the main website) in their own row at the bottom of every portal page. The row only shows when at least one visible link exists. Allowed addresses: `https://…`, a portal path like `/kb`, `mailto:` or `tel:`.
+9. In `/agent`: **Knowledge base** (FAQ categories and articles), **Canned responses**, **Clients / Organizations**.
 
 The client portal is at `https://support.example.be/`, the knowledge base at `/kb`.
 

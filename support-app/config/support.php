@@ -47,6 +47,7 @@ return [
         'accent' => '#f7941d',
         'logo' => null,
         'favicon' => null,
+        'hero_image' => null,
     ],
 
 ];

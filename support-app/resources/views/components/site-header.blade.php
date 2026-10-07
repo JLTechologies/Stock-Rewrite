@@ -3,6 +3,7 @@
 @php
     $links = array_values(array_filter([
         $helpdesk->get('show_knowledge_base') ? ['route' => 'kb.index', 'label' => __('support.nav.kb'), 'active' => ['kb.*']] : null,
+        \App\Models\Employee::pageIsAvailable() ? ['route' => 'who-is-who', 'label' => __('support.nav.who_is_who'), 'active' => ['who-is-who']] : null,
         auth()->check() ? ['route' => 'tickets.index', 'label' => __('support.nav.tickets'), 'active' => ['tickets.index', 'tickets.show']] : null,
         auth()->check() ? ['route' => 'profile.edit', 'label' => __('support.nav.profile'), 'active' => ['profile.*']] : null,
     ]));

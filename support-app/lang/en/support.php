@@ -7,6 +7,7 @@ return [
     ],
 
     'nav' => [
+        'who_is_who' => 'Who is who',
         'kb' => 'Knowledge base',
         'agent_panel' => 'Agent panel',
         'skip' => 'Skip to content',
@@ -25,6 +26,7 @@ return [
     ],
 
     'footer' => [
+        'links' => 'More links',
         'about' => 'This portal is where :company follows up on your questions and reports.',
         'main_site' => 'Go to the main website',
         'support' => 'Support',
@@ -198,6 +200,12 @@ return [
         'profile_saved' => 'Your details have been saved.',
     ],
 
+    'who_is_who' => [
+        'label' => 'Our team',
+        'title' => 'Who is who',
+        'intro' => 'Meet the people of :company. Contact them directly for any question.',
+        'mobile' => 'mobile',
+    ],
     'kb' => [
         'downloads' => 'Downloads',
         'eyebrow' => 'Knowledge base',

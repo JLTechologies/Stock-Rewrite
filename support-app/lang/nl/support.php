@@ -7,6 +7,7 @@ return [
     ],
 
     'nav' => [
+        'who_is_who' => 'Wie is wie',
         'kb' => 'Kennisbank',
         'agent_panel' => 'Agentenpaneel',
         'skip' => 'Naar de inhoud',
@@ -25,6 +26,7 @@ return [
     ],
 
     'footer' => [
+        'links' => 'Meer links',
         'about' => 'Via dit portaal volgt :company je vragen en meldingen op.',
         'main_site' => 'Naar de hoofdwebsite',
         'support' => 'Support',
@@ -198,6 +200,12 @@ return [
         'profile_saved' => 'Je gegevens zijn opgeslagen.',
     ],
 
+    'who_is_who' => [
+        'label' => 'Ons team',
+        'title' => 'Wie is wie',
+        'intro' => 'Maak kennis met de mensen van :company. Neem gerust rechtstreeks contact op.',
+        'mobile' => 'gsm',
+    ],
     'kb' => [
         'downloads' => 'Downloads',
         'eyebrow' => 'Kennisbank',

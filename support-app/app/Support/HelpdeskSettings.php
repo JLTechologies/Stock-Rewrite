@@ -22,6 +22,7 @@ class HelpdeskSettings
         'auto_assign_on_reply' => true,
         'clients_can_reopen' => true,
         'show_knowledge_base' => true,
+        'show_who_is_who' => true,
         'mail' => [
             'mailer' => null,
             'host' => null,
@@ -154,6 +155,16 @@ class HelpdeskSettings
     /**
      * Public URL of the uploaded logo, or null for the default lightning-bolt mark.
      */
+    /**
+     * Public URL of the homepage hero background, or null to keep the default navy background.
+     */
+    public function heroImageUrl(): ?string
+    {
+        $image = $this->get('appearance.hero_image');
+
+        return filled($image) ? Storage::disk('public')->url($image) : null;
+    }
+
     public function logoUrl(): ?string
     {
         $logo = $this->get('appearance.logo');

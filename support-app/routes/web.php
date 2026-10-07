@@ -10,12 +10,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketMessageController;
+use App\Http\Controllers\WhoIsWhoController;
 use App\Http\Middleware\EnsureKnowledgeBaseIsEnabled;
 use App\Http\Middleware\EnsureRegistrationIsOpen;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 Route::get('/language/{locale}', LocaleController::class)->name('locale');
+Route::get('/who-is-who', WhoIsWhoController::class)->name('who-is-who');
 
 Route::middleware(EnsureKnowledgeBaseIsEnabled::class)->prefix('kb')->name('kb.')->group(function () {
     Route::get('/', [KnowledgeBaseController::class, 'index'])->name('index');

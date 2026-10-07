@@ -11,6 +11,7 @@
     $mainSiteUrl = helpdesk()->get('branding.main_site_url');
     $socialNames = ['instagram' => 'Instagram', 'facebook' => 'Facebook', 'linkedin' => 'LinkedIn', 'twitter' => 'X (Twitter)'];
     $socialLinks = collect(helpdesk()->get('branding.social') ?? [])->only(array_keys($socialNames))->filter();
+    $customLinks = \App\Models\FooterLink::forFooter();
 @endphp
 
 <footer class="bg-navy-900 text-white/70">
@@ -60,6 +61,9 @@
                 @if ($helpdesk->get('show_knowledge_base'))
                     <li><a href="{{ route('kb.index') }}" class="hover:text-accent">{{ __('support.nav.kb') }}</a></li>
                 @endif
+                @if (\App\Models\Employee::pageIsAvailable())
+                    <li><a href="{{ route('who-is-who') }}" class="hover:text-accent">{{ __('support.nav.who_is_who') }}</a></li>
+                @endif
                 @if (filled($openingHours))
                     <li class="flex gap-3 pt-2">
                         <x-site-icon name="clock" class="mt-0.5 h-4 w-4 text-accent" />
@@ -99,6 +103,20 @@
             </ul>
         </div>
     </div>
+
+    {{-- Custom links from the admin panel: their own row, only when there are any. --}}
+    @if ($customLinks->isNotEmpty())
+        <nav class="border-t border-white/10" aria-label="{{ __('support.footer.links') }}">
+            <ul class="mx-auto flex max-w-7xl flex-wrap gap-x-6 gap-y-2 px-4 py-5 text-sm sm:px-6 lg:px-8">
+                @foreach ($customLinks as $link)
+                    <li>
+                        <a href="{{ $link->url }}" class="hover:text-accent"
+                           @if ($link->open_in_new_tab) target="_blank" rel="noopener noreferrer" @endif>{{ $link->translate('label') }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+    @endif
 
     <div class="border-t border-white/10">
         <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 font-mono text-xs sm:flex-row sm:justify-between sm:px-6 lg:px-8">

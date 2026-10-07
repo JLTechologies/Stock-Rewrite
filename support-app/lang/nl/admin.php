@@ -17,6 +17,8 @@ return [
     ],
 
     'resources' => [
+        'footer_link' => ['singular' => 'footerlink', 'plural' => 'Footerlinks'],
+        'employee' => ['singular' => 'persoon', 'plural' => 'Wie is wie'],
         'ticket' => ['singular' => 'ticket', 'plural' => 'tickets'],
         'client' => ['singular' => 'klant', 'plural' => 'klanten'],
         'organization' => ['singular' => 'organisatie', 'plural' => 'organisaties'],
@@ -67,6 +69,13 @@ return [
     ],
 
     'fields' => [
+        'mobile' => 'Gsm',
+        'job_title' => 'Functie',
+        'photo' => 'Foto',
+        'is_visible' => 'Zichtbaar in het portaal',
+        'link_text' => 'Linktekst',
+        'link_url' => 'Link (URL)',
+        'open_in_new_tab' => 'Openen in een nieuw tabblad',
         'format' => 'Tekstformaat',
         'downloads' => 'Bijlagen om te downloaden',
         'reference' => 'Nummer',
@@ -132,6 +141,13 @@ return [
     ],
 
     'help' => [
+        'footer_link_url' => 'Een webadres (https://…), een portaalpagina (/kb), mailto:… of tel:…',
+        'footer_link_url_invalid' => 'Gebruik een webadres dat begint met https://, een pad dat begint met /, mailto: of tel:.',
+        'footer_links_empty' => 'Nog geen footerlinks',
+        'footer_links_empty_description' => 'Links die je hier toevoegt, verschijnen in een eigen rij in de footer van het portaal.',
+        'employee_photo' => 'Een vierkante foto werkt het best. Zonder foto wordt het logo van het portaal getoond.',
+        'employees_empty' => 'Nog niemand toegevoegd',
+        'who_is_who_disabled' => 'De pagina "wie is wie" staat uit. Zet ze aan bij Instellingen > Helpdesk > Klantenportaal.',
         'faq_format' => 'Kies hoe je het antwoord schrijft. In beide editors kan je afbeeldingen invoegen (slepen of plakken).',
         'faq_downloads' => 'Bestanden die klanten onder het artikel kunnen downloaden, bv. handleidingen of formulieren (max. 10, 10 MB per bestand).',
         'internal' => 'Interne notities zijn enkel zichtbaar voor agenten en sturen geen e-mail naar de klant.',
@@ -215,6 +231,10 @@ return [
     ],
 
     'settings' => [
+        'show_who_is_who' => 'Pagina "wie is wie" tonen',
+        'show_who_is_who_help' => 'Enkel zichtbaar als er minstens één persoon zichtbaar is.',
+        'hero_image' => 'Achtergrondfoto homepage',
+        'hero_image_help' => 'Wordt getoond achter de slogan bovenaan de homepage van het portaal, met een donkere laag zodat de tekst leesbaar blijft. Een brede liggende foto (minstens 1920 px) werkt het best; JPG, PNG of WebP, max. 5 MB. Zonder foto blijft de standaard donkerblauwe achtergrond.',
         'tabs' => [
             'organization' => 'Organisatie',
             'helpdesk' => 'Helpdesk',

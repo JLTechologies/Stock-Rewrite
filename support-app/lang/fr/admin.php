@@ -17,6 +17,8 @@ return [
     ],
 
     'resources' => [
+        'footer_link' => ['singular' => 'lien de pied de page', 'plural' => 'Liens de pied de page'],
+        'employee' => ['singular' => 'personne', 'plural' => 'Qui est qui'],
         'ticket' => ['singular' => 'ticket', 'plural' => 'tickets'],
         'client' => ['singular' => 'client', 'plural' => 'clients'],
         'organization' => ['singular' => 'organisation', 'plural' => 'organisations'],
@@ -67,6 +69,13 @@ return [
     ],
 
     'fields' => [
+        'mobile' => 'GSM',
+        'job_title' => 'Fonction',
+        'photo' => 'Photo',
+        'is_visible' => 'Visible dans le portail',
+        'link_text' => 'Texte du lien',
+        'link_url' => 'Lien (URL)',
+        'open_in_new_tab' => 'Ouvrir dans un nouvel onglet',
         'format' => 'Format du texte',
         'downloads' => 'Fichiers à télécharger',
         'reference' => 'Numéro',
@@ -132,6 +141,13 @@ return [
     ],
 
     'help' => [
+        'footer_link_url' => 'Une adresse web (https://…), une page du portail (/kb), mailto:… ou tel:…',
+        'footer_link_url_invalid' => 'Utilisez une adresse web commençant par https://, un chemin commençant par /, mailto: ou tel:.',
+        'footer_links_empty' => 'Pas encore de liens de pied de page',
+        'footer_links_empty_description' => 'Les liens ajoutés ici apparaissent dans une ligne à part dans le pied de page du portail.',
+        'employee_photo' => 'Une photo carrée convient le mieux. Sans photo, le logo du portail est affiché.',
+        'employees_empty' => 'Personne pour le moment',
+        'who_is_who_disabled' => 'La page « qui est qui » est désactivée. Activez-la dans Paramètres > Helpdesk > Portail client.',
         'faq_format' => 'Choisissez comment rédiger la réponse. Les deux éditeurs permettent d\'insérer des images (glisser ou coller).',
         'faq_downloads' => 'Fichiers que les clients peuvent télécharger sous l\'article, p. ex. manuels ou formulaires (max. 10, 10 Mo par fichier).',
         'internal' => 'Les notes internes ne sont visibles que par les agents et n\'envoient pas d\'e-mail au client.',
@@ -215,6 +231,10 @@ return [
     ],
 
     'settings' => [
+        'show_who_is_who' => 'Afficher la page « qui est qui »',
+        'show_who_is_who_help' => 'Visible uniquement si au moins une personne est visible.',
+        'hero_image' => 'Photo de fond de la page d\'accueil',
+        'hero_image_help' => 'Affichée derrière le slogan en haut de la page d\'accueil du portail, avec un voile sombre pour que le texte reste lisible. Une large photo paysage (au moins 1920 px) convient le mieux ; JPG, PNG ou WebP, max. 5 Mo. Sans photo, le fond bleu marine par défaut est utilisé.',
         'tabs' => [
             'organization' => 'Organisation',
             'helpdesk' => 'Helpdesk',

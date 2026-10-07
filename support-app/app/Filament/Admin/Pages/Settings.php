@@ -119,7 +119,7 @@ class Settings extends Page
             ? Crypt::encryptString($data['mail']['password'])
             : $settings->get('mail.password');
 
-        foreach (['logo', 'favicon'] as $image) {
+        foreach (['logo', 'favicon', 'hero_image'] as $image) {
             $old = $settings->get("appearance.{$image}");
             if (filled($old) && $old !== ($data['appearance'][$image] ?? null)) {
                 Storage::disk('public')->delete($old);
@@ -271,6 +271,9 @@ class Settings extends Page
                         ->helperText(__('admin.settings.allow_registration_help')),
                     Toggle::make('show_knowledge_base')
                         ->label(__('admin.settings.show_knowledge_base')),
+                    Toggle::make('show_who_is_who')
+                        ->label(__('admin.settings.show_who_is_who'))
+                        ->helperText(__('admin.settings.show_who_is_who_help')),
                 ]),
         ];
     }
@@ -372,6 +375,21 @@ class Settings extends Page
                         ->directory('branding')
                         ->visibility('public')
                         ->imagePreviewHeight('80'),
+                ]),
+            Section::make(__('admin.settings.hero_image'))
+                ->description(__('admin.settings.hero_image_help'))
+                ->schema([
+                    // No SVG uploads: an SVG on the public disk could carry script.
+                    FileUpload::make('appearance.hero_image')
+                        ->hiddenLabel()
+                        ->image()
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120)
+                        ->disk('public')
+                        ->directory('branding')
+                        ->visibility('public')
+                        ->imageEditor()
+                        ->imagePreviewHeight('160'),
                 ]),
             Section::make(__('admin.settings.favicon'))
                 ->description(__('admin.settings.favicon_help'))
